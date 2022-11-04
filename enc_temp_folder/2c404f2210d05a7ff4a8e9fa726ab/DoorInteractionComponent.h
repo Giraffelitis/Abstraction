@@ -37,7 +37,6 @@ public:
 
 	void OnDebugToggled(IConsoleVariable* Var);
 	void DebugDraw();
-	FRotator GetDoorSwing(APawn* pawn);
 
 protected:
 	// Called when the game starts

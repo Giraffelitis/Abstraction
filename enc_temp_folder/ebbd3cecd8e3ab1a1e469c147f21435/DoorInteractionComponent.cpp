@@ -49,10 +49,16 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 		if (PlayerPawn && TriggerBox->IsOverlappingActor(PlayerPawn))
 		{
+			float SwingDirection = FVector::DotProduct(GetOwner()->GetActorLocation(), PlayerPawn->GetActorForwardVector());
+			FVector Offset2(FLT_METERS(-0.75f), 0.0f, FLT_METERS(3.0f));
+			FVector StartLocation = GetOwner()->GetActorLocation() + Offset2;
+			FString EnumAsString = TEXT("Swing:") + UEnum::GetDisplayValueAsText(DoorSwing).ToString();
+			DrawDebugString(GetWorld(), Offset2, EnumAsString, GetOwner(), FColor::Orange, 0.0f);
+
 			CurrentRotationTime += DeltaTime;
 			const float TimeRatio = FMath::Clamp(CurrentRotationTime / TimeToRotate, 0.0f, 1.0f);
 			const float RotationAlpha = OpenCurve.GetRichCurveConst()->Eval(TimeRatio);
-			const FRotator CurrentRotation = FMath::Lerp(StartRotation, GetDoorSwing(PlayerPawn), RotationAlpha);
+			const FRotator CurrentRotation = FMath::Lerp(StartRotation, FinalRotation, RotationAlpha);
 			GetOwner()->SetActorRotation(CurrentRotation);
 		}
 		else if (GetOwner()->GetActorRotation() != CloseRotation && CurrentRotationTime > 0)
@@ -84,25 +90,13 @@ void UDoorInteractionComponent::OnDebugToggled(IConsoleVariable* Var)
 
 void UDoorInteractionComponent::DebugDraw()
 {
-	if (true || CVarToggleDebugDoor->GetBool())
+	if (true /*CVarToggleDebugDoor->GetBool()*/)
 	{
 		FVector Offset(FLT_METERS(-0.75f), 0.0f, FLT_METERS(2.5f));
 		FVector StartLocation = GetOwner()->GetActorLocation() + Offset;
 		FString EnumAsString = TEXT("Door State:") + UEnum::GetDisplayValueAsText(DoorState).ToString();
 		DrawDebugString(GetWorld(), Offset, EnumAsString, GetOwner(), FColor::Blue, 0.0f);
-	}
-}
 
-// Gets player facing direction compared to door location and sets the rotation accordingly
-FRotator UDoorInteractionComponent::GetDoorSwing(APawn* pawn)
-{
-	float SwingDirection = FVector::DotProduct(GetOwner()->GetActorLocation(), pawn->GetActorForwardVector());
-	
-	if (SwingDirection > 0)
-	{
-		const FRotator ReverseRotation = FinalRotation * (0.0f, 0.0f, -1.0f);
-		return ReverseRotation;
 	}
-	return FinalRotation;
 }
 
