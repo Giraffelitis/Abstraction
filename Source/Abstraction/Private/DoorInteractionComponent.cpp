@@ -2,6 +2,7 @@
 
 
 #include "DoorInteractionComponent.h"
+#include "ObjectiveWorldSubsystem.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/TriggerBox.h"
@@ -23,10 +24,7 @@ UDoorInteractionComponent::UDoorInteractionComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 	DoorState = EDoorState::DS_Closed;
 	DoorSwing = EDoorSwing::Swing_In;
-
-	//CVarToggleDebugDoor.AsVariable()->SetOnChangedCallback(FConsoleVariableDelegate::CreateStatic(&UDoorInteractionComponent::OnDebugToggled));
 }
-
 
 // Called when the game starts
 void UDoorInteractionComponent::BeginPlay()
@@ -39,52 +37,89 @@ void UDoorInteractionComponent::BeginPlay()
 	CurrentRotationTime = 0.0f;
 }
 
-
 // Called every frame
 void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if (TriggerBox && GetWorld() && GetWorld()->GetFirstPlayerController())
+
+	if (DoorState == EDoorState::DS_Closed)
 	{
 		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-		if (PlayerPawn && TriggerBox->IsOverlappingActor(PlayerPawn))
+		if (TriggerBox && GetWorld() && GetWorld()->GetFirstPlayerController())
 		{
-			CurrentRotationTime += DeltaTime;
-			const float TimeRatio = FMath::Clamp(CurrentRotationTime / TimeToRotate, 0.0f, 1.0f);
-			const float RotationAlpha = OpenCurve.GetRichCurveConst()->Eval(TimeRatio);
-			const FRotator CurrentRotation = FMath::Lerp(StartRotation, GetDoorSwing(PlayerPawn), RotationAlpha);
-			GetOwner()->SetActorRotation(CurrentRotation);
-		}
-		else if (GetOwner()->GetActorRotation() != CloseRotation && CurrentRotationTime > 0)
-		{
-			if (CurrentRotationTime > TimeToRotate)
+			if (PlayerPawn && TriggerBox->IsOverlappingActor(PlayerPawn))
 			{
-				CurrentRotationTime = TimeToRotate;
-			}
-
-			CurrentRotationTime -= DeltaTime;
-			const float TimeRatio = FMath::Clamp(CurrentRotationTime / TimeToRotate, 0.0f, 1.0f);
-			const float RotationAlpha = CloseCurve.GetRichCurveConst()->Eval(TimeRatio);
-			const FRotator CurrentRotation = FMath::Lerp(GetOwner()->GetActorRotation(), CloseRotation, RotationAlpha);
-			GetOwner()->SetActorRotation(CurrentRotation);
-
-			if (CurrentRotation == CloseRotation)
-			{
+				DoorState = EDoorState::DS_Opening;
 				CurrentRotationTime = 0.0f;
 			}
 		}
-	}		
+	}
+	else if (DoorState == EDoorState::DS_Opening)
+	{
+		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+		CurrentRotationTime += DeltaTime;
+		const float TimeRatio = FMath::Clamp(CurrentRotationTime / TimeToRotate, 0.0f, 1.0f);
+		const float RotationAlpha = OpenCurve.GetRichCurveConst()->Eval(TimeRatio);
+		const FRotator CurrentRotation = FMath::Lerp(StartRotation, GetDoorSwing(PlayerPawn), RotationAlpha);
+		GetOwner()->SetActorRotation(CurrentRotation);
+		if (TimeRatio >= 1.0f)
+		{
+			OnDoorOpen();
+		}
+	}	
+	else if (DoorState == EDoorState::DS_Open)
+	{
+		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+		if (TriggerBox && GetWorld() && GetWorld()->GetFirstPlayerController())
+		{
+			if (PlayerPawn && !TriggerBox->IsOverlappingActor(PlayerPawn))
+			{
+				DoorState = EDoorState::DS_Closing;
+				CurrentRotationTime = 0.0f;
+			}
+		}
+	}
+	else if (DoorState == EDoorState::DS_Closing)
+	{
+		CurrentRotationTime += DeltaTime;
+		const float TimeRatio = FMath::Clamp(CurrentRotationTime / TimeToRotate, 0.0f, 1.0f);
+		const float RotationAlpha = CloseCurve.GetRichCurveConst()->Eval(TimeRatio);
+		const FRotator CurrentRotation = FMath::Lerp(GetOwner()->GetActorRotation(), CloseRotation, RotationAlpha);
+		GetOwner()->SetActorRotation(CurrentRotation);
+		if (TimeRatio >= 1.0f)
+		{
+			OnDoorClose();
+		}
+	}	
+
 	DebugDraw();
 }
 
-void UDoorInteractionComponent::OnDebugToggled(IConsoleVariable* Var)
+void UDoorInteractionComponent::OnDoorOpen()
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnDebugToggled"))
+	DoorState = EDoorState::DS_Open;
+	UObjectiveComponent* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComponent>();
+	if (ObjectiveComponent)
+	{
+		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("DoorOpened"));
+}
+
+void UDoorInteractionComponent::OnDoorClose()
+{
+	DoorState = EDoorState::DS_Closed;
+	UObjectiveComponent* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComponent>();
+	if (ObjectiveComponent)
+	{
+		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("DoorClosed"));
 }
 
 void UDoorInteractionComponent::DebugDraw()
 {
-	if (true || CVarToggleDebugDoor->GetBool())
+	if (CVarToggleDebugDoor->GetBool())
 	{
 		FVector Offset(FLT_METERS(-0.75f), 0.0f, FLT_METERS(2.5f));
 		FVector StartLocation = GetOwner()->GetActorLocation() + Offset;

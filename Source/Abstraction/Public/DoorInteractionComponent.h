@@ -11,9 +11,11 @@ class IConsoleVariable;
 UENUM()
 enum class EDoorState
 {
-	DS_Closed = 0	UMETA(DisplayName = "Closed"),
-	DS_Open = 1		UMETA(DisplayName = "Open"),
-	DS_Locked = 2	UMETA(DisplayName = "Locked")
+	DS_Closing = 0	UMETA(DisplayName = "Closing"),
+	DS_Closed = 1	UMETA(DisplayName = "Closed"),
+	DS_Opening = 2	UMETA(DisplayName = "Opening"),
+	DS_Open = 3		UMETA(DisplayName = "Open"),
+	DS_Locked = 4	UMETA(DisplayName = "Locked")
 };
 
 UENUM()
@@ -35,7 +37,16 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void OnDebugToggled(IConsoleVariable* Var);
+	DECLARE_EVENT(FDoorInteractionComponent, FOpened)
+	FOpened& OnOpened() { return OpenedEvent; }
+	FOpened OpenedEvent;
+
+	DECLARE_EVENT(FDoorInteractionComponent, FClosed)
+	FClosed& OnClosed() { return ClosedEvent; }
+	FClosed ClosedEvent;
+
+	void OnDoorOpen();
+	void OnDoorClose();
 	void DebugDraw();
 	FRotator GetDoorSwing(APawn* pawn);
 

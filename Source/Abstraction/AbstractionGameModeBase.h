@@ -7,9 +7,6 @@
 #include "Blueprint/UserWidget.h"
 #include "AbstractionGameModeBase.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ABSTRACTION_API AAbstractionGameModeBase : public AGameModeBase
 {
@@ -20,6 +17,4 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUserWidget> ObjectiveWidgetClass;
-	
-	UUserWidget* ObjectiveWidget = nullptr;
 };
