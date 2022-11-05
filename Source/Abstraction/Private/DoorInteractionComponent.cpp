@@ -22,8 +22,6 @@ UDoorInteractionComponent::UDoorInteractionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	DoorState = EDoorState::DS_Closed;
-
-	//CVarToggleDebugDoor.AsVariable()->SetOnChangedCallback(FConsoleVariableDelegate::CreateStatic(&UDoorInteractionComponent::OnDebugToggled));
 }
 
 
@@ -76,10 +74,6 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	DebugDraw();
 }
 
-void UDoorInteractionComponent::OnDebugToggled(IConsoleVariable* Var)
-{
-	UE_LOG(LogTemp, Warning, TEXT("OnDebugToggled"))
-}
 
 void UDoorInteractionComponent::DebugDraw()
 {
