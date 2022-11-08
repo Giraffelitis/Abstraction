@@ -3,20 +3,66 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/StaticMeshActor.h"
+#include "InteractionComponent.h"
 #include "InteractableButton.generated.h"
 
-class UInteractionComponent;
+class ATriggerBox;
+class IConsoleVariable;
 
-UCLASS()
-class ABSTRACTION_API AInteractableButton : public AStaticMeshActor
+UENUM()
+enum class EButtonState
+{
+	BS_In = 0	UMETA(DisplayName = "In"),
+	BS_Out = 1	UMETA(DisplayName = "Out")
+};
+
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class ABSTRACTION_API UInteractableButton : public UInteractionComponent
 {
 	GENERATED_BODY()
 	
 public:
-	AInteractableButton();
+	UInteractableButton();
+
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	static void OnDebugToggled(IConsoleVariable* Var);
 
 protected:
-	UPROPERTY(EditAnywhere, NoClear);
-	UInteractionComponent* InteractionComponent;
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
+	//binded to interaction input from player
+	void InteractionStart() override;
+
+	//request to open the door
+	UFUNCTION(BlueprintCallable)
+	void ButtonPressed();
+
+	//called internally when door has finished opening
+	void OnButtonPressed();
+
+	//request to close the door
+	UFUNCTION(BlueprintCallable)
+	void ButtonReleased();
+
+	//called internally when door has finished Closing
+	void OnButtonReleased();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsPressed() { return ButtonState == EButtonState::BS_In; }
+
+	UFUNCTION(BlueprintCallable)
+	bool IsNotPressed() { return ButtonState == EButtonState::BS_Out; }
+
+	UPROPERTY(EditAnywhere)
+	float TimeToRelease = 1.0f;
+
+	float CurrentPressedTime = 0.0f;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerBox* TriggerBox;
+
+	UPROPERTY(BlueprintReadOnly)
+	EButtonState ButtonState;
 };

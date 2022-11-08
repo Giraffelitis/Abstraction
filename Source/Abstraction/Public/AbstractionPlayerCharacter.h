@@ -7,6 +7,10 @@
 #include "AbstractionPlayerCharacter.generated.h"
 
 class UHealthComponent;
+class UParticleSystemComponent;
+
+DECLARE_MULTICAST_DELEGATE(FOnInteractionStart);
+DECLARE_MULTICAST_DELEGATE(FOnInteractionCancel);
 
 UCLASS()
 class ABSTRACTION_API AAbstractionPlayerCharacter : public ACharacter
@@ -15,7 +19,7 @@ class ABSTRACTION_API AAbstractionPlayerCharacter : public ACharacter
 
 public:
 	// Sets default values for this character's properties
-	AAbstractionPlayerCharacter();
+	AAbstractionPlayerCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -27,6 +31,10 @@ public:
 	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
 
 	float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
+	void SetOnFire(UParticleSystemComponent* FireParticleSystemComponent);
+
+	FOnInteractionStart OnInteractionStart;
+	FOnInteractionCancel OnInteractionCancel;
 
 protected:
 	//Called when the game starts or when spawned
@@ -34,6 +42,13 @@ protected:
 
 	void OnDeath(bool isFellOut);
 
+	//InputBindings
+	void StartInteraction();
+	void StopInteraction();
+
 	UPROPERTY(EditAnywhere)
 	UHealthComponent* HealthComponent;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystemComponent* ParticleSystemComponent;
 };
