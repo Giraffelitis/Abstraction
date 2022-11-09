@@ -7,8 +7,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Engine/TriggerBox.h"
 #include "Engine/World.h"
+
 #include "DrawDebugHelpers.h"
-#include "ObjectiveComponent.h"
 
 constexpr float FLT_METERS(float meters) { return meters * 100.0f; }
 
@@ -19,21 +19,11 @@ static TAutoConsoleVariable<bool> CVarToggleDebugDoor(
 	ECVF_Default);
 
 // Sets default values for this component's properties
-UDoorInteractionComponent::UDoorInteractionComponent() 
+UDoorInteractionComponent::UDoorInteractionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	DoorState = EDoorState::DS_Closed;
 	DoorSwing = EDoorSwing::Swing_In;
-}
-
-
-void UDoorInteractionComponent::InteractionStart()
-{
-	Super::InteractionStart();
-	if (InteractingActor)
-	{
-		OpenDoor();
-	}
 }
 
 // Called when the game starts
@@ -47,33 +37,24 @@ void UDoorInteractionComponent::BeginPlay()
 	CurrentRotationTime = 0.0f;
 }
 
-void UDoorInteractionComponent::OpenDoor()
-{
-	if (IsOpen() || DoorState == EDoorState::DS_Opening)
-	{
-		return;
-	}
-	DoorState = EDoorState::DS_Opening;
-	CurrentRotationTime = 0.0f;
-}
-
-void UDoorInteractionComponent::CloseDoor()
-{
-	if (IsClosed() || DoorState == EDoorState::DS_Closing)
-	{
-		return;
-	}
-	DoorState = EDoorState::DS_Closing;
-	CurrentRotationTime = 0.0f;
-}
-
 // Called every frame
 void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	
-	if (DoorState == EDoorState::DS_Opening)
+	if (DoorState == EDoorState::DS_Closed)
+	{
+		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+		if (TriggerBox && GetWorld() && GetWorld()->GetFirstPlayerController())
+		{
+			if (PlayerPawn && TriggerBox->IsOverlappingActor(PlayerPawn))
+			{
+				DoorState = EDoorState::DS_Opening;
+				CurrentRotationTime = 0.0f;
+			}
+		}
+	}
+	else if (DoorState == EDoorState::DS_Opening)
 	{
 		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 		CurrentRotationTime += DeltaTime;
@@ -83,7 +64,7 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 		GetOwner()->SetActorRotation(CurrentRotation);
 		if (TimeRatio >= 1.0f)
 		{
-			OnDoorOpened();
+			OnDoorOpen();
 		}
 	}	
 	else if (DoorState == EDoorState::DS_Open)
@@ -107,14 +88,14 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 		GetOwner()->SetActorRotation(CurrentRotation);
 		if (TimeRatio >= 1.0f)
 		{
-			OnDoorClosed();
+			OnDoorClose();
 		}
 	}	
+
+	DebugDraw();
 }
 
-//When door is opened set state to open check for objectives tied to door and complete them if applicable
-// Prints debug info to screen and tells any listeners that the interaction was successful
-void UDoorInteractionComponent::OnDoorOpened()
+void UDoorInteractionComponent::OnDoorOpen()
 {
 	DoorState = EDoorState::DS_Open;
 	UObjectiveComponent* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComponent>();
@@ -123,12 +104,9 @@ void UDoorInteractionComponent::OnDoorOpened()
 		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("DoorOpened"));
-	InteractionSuccess.Broadcast();
 }
 
-//When door is closed set state to closed check for objectives tied to door and complete them if applicable
-// Prints debug info to screen and tells any listeners that the interaction was successful
-void UDoorInteractionComponent::OnDoorClosed()
+void UDoorInteractionComponent::OnDoorClose()
 {
 	DoorState = EDoorState::DS_Closed;
 	UObjectiveComponent* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComponent>();
@@ -137,7 +115,17 @@ void UDoorInteractionComponent::OnDoorClosed()
 		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("DoorClosed"));
-	InteractionSuccess.Broadcast();
+}
+
+void UDoorInteractionComponent::DebugDraw()
+{
+	if (CVarToggleDebugDoor->GetBool())
+	{
+		FVector Offset(FLT_METERS(-0.75f), 0.0f, FLT_METERS(2.5f));
+		FVector StartLocation = GetOwner()->GetActorLocation() + Offset;
+		FString EnumAsString = TEXT("Door State:") + UEnum::GetDisplayValueAsText(DoorState).ToString();
+		DrawDebugString(GetWorld(), Offset, EnumAsString, GetOwner(), FColor::Blue, 0.0f);
+	}
 }
 
 // Gets player facing direction compared to door location and sets the rotation accordingly

@@ -2,18 +2,16 @@
 
 
 #include "InteractionComponent.h"
+#include "ObjectiveWorldSubsystem.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-#include "Components/CapsuleComponent.h"
-//#include "Inventory/Component.h"
-#include "AbstractionPlayerCharacter.h"
-//#include "Weapon.h"
-#include "Kismet/GameplayStatics.h"
+
+
 
 constexpr float FLT_METERS(float meters) { return meters * 100.0f; }
 
-//Create Console Cariable for Debug
 static TAutoConsoleVariable<bool> CVarToggleDebugInteraction(
 	TEXT("Abstraction.InteractionComponent.Debug"),
 	false,
@@ -27,54 +25,99 @@ UInteractionComponent::UInteractionComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	//Create triggering capsule
-	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger Capsule"));
-	//Binding to events
-	TriggerCapsule->OnComponentBeginOverlap.AddDynamic(this, &UInteractionComponent::OnOverlapBegin);
-	TriggerCapsule->OnComponentEndOverlap.AddDynamic(this, &UInteractionComponent::OnOverlapEnd);
-
-	InteractingActor = nullptr;
-}
-
-void UInteractionComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	UE_LOG(LogTemp, Warning, TEXT("UInteractionComponent::OnOverlapBegin"));
-
-	if(OtherActor->ActorHasTag("Player"))
+	if (IsToggledOn == true)
 	{
-		InteractingActor = OtherActor;
+		InteractionState = EInteractionState::IS_On;
 	}
-}
+	else
+	{
+		InteractionState = EInteractionState::IS_Off;
+	}
 
-void UInteractionComponent::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	UE_LOG(LogTemp, Warning, TEXT("UInteractionComponent::OnOverlapEnd"));
-	InteractingActor = nullptr;
+	CurrentTimerDuration = 0.0f;
+
 }
 
 // Called when the game starts
 void UInteractionComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	AAbstractionPlayerCharacter* Player = Cast<AAbstractionPlayerCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));	
+
+	// ...
+	
 }
 
 void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (InteractingActor)
+	if (InteractionState == EInteractionState::IS_Off)
 	{
-		FVector Offset(0.0f, 0.0f, 100.0f);
+		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+		if (PlayerPawn && !IsToggledOn)
+		{
+			ToggleOn();
+			if (IsOnTimer)
+			{
+				CurrentTimerDuration = 0.0f;
+			}
+		}
+	}
+	else if (InteractionState == EInteractionState::IS_On)
+	{
+		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+		if (PlayerPawn && IsToggledOn)
+		{
+			if (!IsOnTimer)
+			{
+				ToggleOff();
+			}
+		}
+	}
+	if (InteractionState == EInteractionState::IS_On)
+	{
+		if (CurrentTimerDuration < TurnOffTimerDuration)
+		{
+			CurrentTimerDuration += DeltaTime;
+		}
+		else
+		{
+			ToggleOff();
+		}
+	}
+	DebugDraw();
+}
+
+void UInteractionComponent::ToggleOn()
+{
+	InteractionState = EInteractionState::IS_On;
+	UObjectiveComponent* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComponent>();
+	if (ObjectiveComponent)
+	{
+		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("On"));
+}
+
+void UInteractionComponent::ToggleOff()
+{
+	InteractionState = EInteractionState::IS_Off;
+	UObjectiveComponent* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComponent>();
+	if (ObjectiveComponent)
+	{
+		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("Off"));
+}
+
+void UInteractionComponent::DebugDraw()
+{
+	if (CVarToggleDebugInteraction->GetBool())
+	{
+		FVector Offset(FLT_METERS(-0.75f), 0.0f, FLT_METERS(0.5f));
 		FVector StartLocation = GetOwner()->GetActorLocation() + Offset;
-		DrawDebugString(GetWorld(), Offset, InteractionPrompt.ToString(), GetOwner(), FColor::Blue, 0.0f);
+		FString EnumAsString = TEXT("Interaction State:") + UEnum::GetDisplayValueAsText(InteractionState).ToString();
+		DrawDebugString(GetWorld(), Offset, EnumAsString, GetOwner(), FColor::Blue, 0.0f);
 	}
 }
 
-//BeginPlay Bind
-//EndPlay Unbind
-//Broadcast
-void UInteractionComponent::InteractionStart()
-{
-
-}

@@ -6,11 +6,14 @@
 #include "Components/ActorComponent.h"
 #include "InteractionComponent.generated.h"
 
-class AActor;
-class UCapsuleComponent;
-class UPrimitiveComponent;
+UENUM()
+enum class EInteractionState
+{
+	IS_Off = 0	UMETA(DisplayName = "Off"),
+	IS_On = 1	UMETA(DisplayName = "On")
+};
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInteractionSuccess);
+class IConsoleVariable;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UInteractionComponent : public UActorComponent
@@ -21,33 +24,37 @@ public:
 	// Sets default values for this component's properties
 	UInteractionComponent();
 
-	//this is brodcasted from children, they know when an interaction has been successfully finished
-	UPROPERTY(BlueprintAssignable, Category = "Interaction")
-	FOnInteractionSuccess InteractionSuccess;
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION()
-	virtual void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	DECLARE_EVENT(FInteractionComponent, FActivated)
+	FActivated& IsSwitchedOn() { return ActivatedEvent; }
+	FActivated ActivatedEvent;
 
-	UFUNCTION()
-	virtual void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	DECLARE_EVENT(FInteractionComponent, FDeactivated)
+	FActivated& IsSwitchedOff() { return DeactivatedEvent; }
+	FActivated DeactivatedEvent;
 
-	UCapsuleComponent* GetTriggerCapsule() const { return TriggerCapsule; }
+	void ToggleOn();
+	void ToggleOff();
+	void DebugDraw();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	UFUNCTION(BlueprintCallable)
-	virtual void InteractionStart();
 
 	UPROPERTY(EditAnywhere)
-	FText InteractionPrompt;
+	bool IsToggledOn = false;
 
-	UPROPERTY(EditAnywhere, NoClear)
-	UCapsuleComponent* TriggerCapsule = nullptr;
+	UPROPERTY(EditAnywhere)
+	bool IsOnTimer = false;
 
-	AActor* InteractingActor = nullptr;
+	UPROPERTY(EditAnywhere)
+	float TurnOffTimerDuration = 1.0f;
+	float CurrentTimerDuration = 0.0f;
+
+	UPROPERTY(BlueprintReadOnly)
+	EInteractionState InteractionState;
 
 };
 

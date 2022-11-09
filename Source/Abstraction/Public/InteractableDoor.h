@@ -7,9 +7,6 @@
 #include "InteractableDoor.generated.h"
 
 class UDoorInteractionComponent;
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDoorOpen);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDoorClose);
  
 UCLASS()
 class ABSTRACTION_API AInteractableDoor : public AStaticMeshActor
@@ -18,20 +15,8 @@ class ABSTRACTION_API AInteractableDoor : public AStaticMeshActor
 	
 public:
 	AInteractableDoor();
-	virtual void BeginPlay() override;
-
-	float InteractionTime = 5.0f;
-
-	UPROPERTY(BlueprintAssignable, Category = "Door Interaction")
-	FOnDoorOpen OnDoorOpen;
-
-	UPROPERTY(BlueprintAssignable, Category = "Door Interaction")
-	FOnDoorClose OnDoorClose;
 
 protected:
-	UFUNCTION()
-	void OnInteractionSuccess();
-
 	UPROPERTY(EditAnywhere, NoClear)
 	UDoorInteractionComponent* DoorInteractionComponent;
 };

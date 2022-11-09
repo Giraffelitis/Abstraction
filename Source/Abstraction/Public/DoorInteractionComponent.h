@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InteractionComponent.h"
+#include "Components/ActorComponent.h"
 #include "Curves/CurveFloat.h"
 #include "DoorInteractionComponent.generated.h"
 
@@ -26,7 +26,7 @@ enum class EDoorSwing
 };
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class ABSTRACTION_API UDoorInteractionComponent : public UInteractionComponent
+class ABSTRACTION_API UDoorInteractionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -36,36 +36,23 @@ public:
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	static void OnDebugToggled(IConsoleVariable* Var);
 
+	DECLARE_EVENT(FDoorInteractionComponent, FOpened)
+	FOpened& OnOpened() { return OpenedEvent; }
+	FOpened OpenedEvent;
+
+	DECLARE_EVENT(FDoorInteractionComponent, FClosed)
+	FClosed& OnClosed() { return ClosedEvent; }
+	FClosed ClosedEvent;
+
+	void OnDoorOpen();
+	void OnDoorClose();
+	void DebugDraw();
 	FRotator GetDoorSwing(APawn* pawn);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-	//binded to interaction input from player
-	void InteractionStart() override;
-
-	//request to open the door
-	UFUNCTION(BlueprintCallable)
-	void OpenDoor();
-
-	//called internally when door has finished opening
-	void OnDoorOpened();
-
-	//request to close the door
-	UFUNCTION(BlueprintCallable)
-	void CloseDoor();
-
-	//called internally when door has finished Closing
-	void OnDoorClosed();
-
-	UFUNCTION(BlueprintCallable)
-	bool IsOpen() { return DoorState == EDoorState::DS_Open; }
-
-	UFUNCTION(BlueprintCallable)
-	bool IsClosed() { return DoorState == EDoorState::DS_Closed; }
 
 	UPROPERTY(EditAnywhere)
 	FRotator DesiredRotation = FRotator::ZeroRotator;
