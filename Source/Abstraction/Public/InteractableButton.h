@@ -6,17 +6,32 @@
 #include "Engine/StaticMeshActor.h"
 #include "InteractableButton.generated.h"
 
-class UInteractionComponent;
+class UButtonInteractionComponent;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonPressed);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonReleased);
 
 UCLASS()
 class ABSTRACTION_API AInteractableButton : public AStaticMeshActor
 {
 	GENERATED_BODY()
-	
+
 public:
 	AInteractableButton();
+	virtual void BeginPlay() override;
+
+	float InteractionTime = 1.0f;
+
+	UPROPERTY(BlueprintAssignable, Category = "Button Interaction")
+	FOnButtonPressed OnButtonPressed;
+
+	UPROPERTY(BlueprintAssignable, Category = "Button Interaction")
+	FOnButtonReleased OnButtonReleased;
 
 protected:
-	UPROPERTY(EditAnywhere, NoClear);
-	UInteractionComponent* InteractionComponent;
+	UFUNCTION()
+	void OnInteractionSuccess();
+
+	UPROPERTY(EditAnywhere, NoClear)
+	UButtonInteractionComponent* ButtonInteractionComponent;
 };
