@@ -72,7 +72,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-Content/Funny_Robot/*
 Content/MS_WoodDecEss/*
 Plugins/Developer/RiderLink/*
 Content/AnimStarterPack/*

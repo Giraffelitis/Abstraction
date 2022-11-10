@@ -9,7 +9,12 @@ AInteractableDoor::AInteractableDoor() : Super()
 	DoorInteractionComponent = CreateDefaultSubobject<UDoorInteractionComponent>(TEXT("DoorInteractionComponent"));
 	if (DoorInteractionComponent->GetTriggerCapsule())
 	{
-		DoorInteractionComponent->GetTriggerCapsule()->SetupAttachment(RootComponent);
+		//Commented out sections are an attempt to adjust the attach location for the Trigger Capsule
+		//FVector Offset(-50.0f, 0.0f, 100.0f);
+		//FVector AttachLocation = GetOwner()->GetActorLocation() + Offset;
+
+		DoorInteractionComponent->GetTriggerCapsule()->SetupAttachment(RootComponent);  
+		//DoorInteractionComponent->GetTriggerCapsule()->SetRelativeLocation(AttachLocation);
 	}
 }
 
