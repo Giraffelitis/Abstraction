@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "DealDamageComponent.generated.h"
 
+//forward delcare classes that we use
 class UCapsuleComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -18,24 +19,28 @@ public:
 	UDealDamageComponent();
 
 	UFUNCTION()
-	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
-	virtual void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UCapsuleComponent* GetTriggerCapsule() const { return TriggerCapsule; }
 
 	bool IsActive() const { return bActive; }
-	void SwitchActive(bool IsActive) { bActive = IsActive; } 
+	void SetActive(bool IsActive)  { bActive = IsActive; }
 
 protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
 	float BaseDamage = 50.0f;
 
+	//the base damage is distributed over this time
 	UPROPERTY(EditAnywhere)
 	float DamageTotalTime = 2.0f;
 
+	//teh time interval at which to apply take damage
 	UPROPERTY(EditAnywhere)
 	float TakeDamageInterval = 0.5f;
 

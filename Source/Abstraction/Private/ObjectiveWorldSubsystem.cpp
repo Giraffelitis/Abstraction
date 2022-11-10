@@ -6,21 +6,58 @@
 #include "../AbstractionGameModeBase.h"
 #include "Blueprint/UserWidget.h"
 #include "ObjectiveHud.h"
-#include "ObjectiveComponent.h"
+
+FString UObjectiveWorldSubsystem::GetCurrentObjectiveDescription()
+{
+	if (!Objectives.IsValidIndex(0) || Objectives[0]->GetState() == EObjectiveState::OS_Inactive)
+	{
+		return TEXT("N/A");
+	}
+
+	FString RetObjective = Objectives[0]->GetDescription();
+	if (Objectives[0]->GetState() == EObjectiveState::OS_Completed)
+	{
+		RetObjective += TEXT(" Completed!");
+	}
+
+	return RetObjective;
+}
+
+void UObjectiveWorldSubsystem::AddObjective(UObjectiveComponent* ObjectiveComponent)
+{
+	check(ObjectiveComponent);
+
+	size_t PrevSize = Objectives.Num();
+	Objectives.AddUnique(ObjectiveComponent);
+	if (Objectives.Num() > PrevSize)
+	{
+		ObjectiveComponent->OnStateChanged.AddUObject(this, &UObjectiveWorldSubsystem::OnObjectiveStateChanged);
+	}
+}
+
+void UObjectiveWorldSubsystem::RemoveObjective(UObjectiveComponent* ObjectiveComponent)
+{
+	int32 numRemoved = ObjectiveComponent->OnStateChanged.RemoveAll(this);
+	check(numRemoved);
+	Objectives.Remove(ObjectiveComponent);
+}
+
+void UObjectiveWorldSubsystem::OnMapStart()
+{
+	AAbstractionGameModeBase* GameMode = Cast<AAbstractionGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode)
+	{
+		CreateObjectiveWidgets();
+		DisplayObjectiveWidget();
+	}
+}
 
 void UObjectiveWorldSubsystem::Deinitialize()
 {
-	ObjectiveWidget = nullptr;
-	ObjectivesCompletedWidget = nullptr;
-}
+	Super::Deinitialize();
 
-void UObjectiveWorldSubsystem::CreateObjectiveWidget(TSubclassOf<UUserWidget> ObjectiveWidgetClass)
-{
-	if (ObjectiveWidget == nullptr)
-	{
-		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-		ObjectiveWidget = CreateWidget<UObjectiveHud>(PlayerController, ObjectiveWidgetClass);
-	}
+	ObjectiveWidget = nullptr;
+	ObjectivesCompleteWidget = nullptr;
 }
 
 void UObjectiveWorldSubsystem::CreateObjectiveWidgets()
@@ -32,7 +69,7 @@ void UObjectiveWorldSubsystem::CreateObjectiveWidgets()
 		{
 			APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 			ObjectiveWidget = CreateWidget<UObjectiveHud>(PlayerController, GameMode->ObjectiveWidgetClass);
-			ObjectivesCompletedWidget = CreateWidget<UUserWidget>(PlayerController, GameMode->ObjectivesCompletedWidgetClass);
+			ObjectivesCompleteWidget = CreateWidget<UUserWidget>(PlayerController, GameMode->ObjectivesCompleteWidgetClass);
 		}
 	}
 }
@@ -45,8 +82,9 @@ void UObjectiveWorldSubsystem::DisplayObjectiveWidget()
 		{
 			ObjectiveWidget->AddToViewport();
 		}
+		
+		ObjectiveWidget->UpdateObjectiveText(GetCompletedObjectiveCount(), Objectives.Num());
 	}
-	ObjectiveWidget->UpdateObjectiveText(GetCompletedObjectiveCount(), Objectives.Num()); 
 }
 
 void UObjectiveWorldSubsystem::RemoveObjectiveWidget()
@@ -59,93 +97,53 @@ void UObjectiveWorldSubsystem::RemoveObjectiveWidget()
 
 void UObjectiveWorldSubsystem::DisplayObjectivesCompleteWidget()
 {
-	if (ObjectivesCompletedWidget)
+	if (ObjectivesCompleteWidget)
 	{
-		ObjectivesCompletedWidget->AddToViewport();
+		ObjectivesCompleteWidget->AddToViewport();
 	}
 }
 
 void UObjectiveWorldSubsystem::RemoveObjectivesCompleteWidget()
 {
-	if (ObjectivesCompletedWidget)
+	if (ObjectivesCompleteWidget)
 	{
-		ObjectivesCompletedWidget->RemoveFromViewport();
+		ObjectivesCompleteWidget->RemoveFromViewport();
 	}
-}
-
-FString UObjectiveWorldSubsystem::GetCurrentObjectiveDescription()
-{
-	if (!Objectives.IsValidIndex(0) || Objectives[0]->GetState() == EObjectiveState::OS_Inactive)
-	{
-		return TEXT("N/A");
-	}
-
-	FString RetObjective = Objectives[0]->GetDescription();
-	if (Objectives[0]->GetState() == EObjectiveState::OS_Completed)
-	{
-		RetObjective += TEXT("Completed");
-	}
-
-	return RetObjective;
-}
-
-void UObjectiveWorldSubsystem::AddObjective(UObjectiveComponent* ObjectiveComponent)
-{
-	check(ObjectiveComponent)
-
-	size_t PrevSize = Objectives.Num();
-	Objectives.AddUnique(ObjectiveComponent);
-	if (Objectives.Num() > PrevSize)
-	{
-		ObjectiveComponent->OnStateChanged().AddUObject(this, &UObjectiveWorldSubsystem::OnObjectiveStateChanged);
-	}
-}
-
-void UObjectiveWorldSubsystem::RemoveObjective(UObjectiveComponent* ObjectiveComponent)
-{
-	int32 numRemoved = ObjectiveComponent->OnStateChanged().RemoveAll(this);
-	check(numRemoved)
-	Objectives.Remove(ObjectiveComponent);
 }
 
 uint32 UObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 {
-	uint32 ObjectivesCompleted = 0u;
+	uint32 ObjectivedCompleted = 0u;
 	for (const UObjectiveComponent* OC : Objectives)
 	{
 		if (OC && OC->GetState() == EObjectiveState::OS_Completed)
 		{
-			++ObjectivesCompleted;
+			++ObjectivedCompleted;
 		}
 	}
-	return ObjectivesCompleted;
+
+	return ObjectivedCompleted;
 }
 
-void UObjectiveWorldSubsystem::OnMapStart()
+
+void UObjectiveWorldSubsystem::OnObjectiveStateChanged(const UObjectiveComponent* ObjectiveComponent, EObjectiveState ObjectiveState)
 {
-	AAbstractionGameModeBase* GameMode = Cast<AAbstractionGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (Objectives.Num() == 0 || !Objectives.Contains(ObjectiveComponent))
 	{
-		if (GameMode)
-		{
-			CreateObjectiveWidgets();
-			DisplayObjectiveWidget();
-		}
+		return;
 	}
-}
-void UObjectiveWorldSubsystem::OnObjectiveStateChanged(UObjectiveComponent* ObjectiveComponent, EObjectiveState ObjectiveState)
-{
-	//check if game is over
-	if (ObjectiveWidget && ObjectivesCompletedWidget)
+
+	//check if game is over... 
+	if (ObjectiveWidget && ObjectivesCompleteWidget)
 	{
-		if (GetCompletedObjectiveCount() == Objectives.Num())
+		if ((ObjectiveState == EObjectiveState::OS_Completed) && GetCompletedObjectiveCount() == Objectives.Num())
 		{
 			//GameOver
-			RemoveObjectiveWidget();
 			DisplayObjectivesCompleteWidget();
 		}
-		else
-		{
+		/*else
+		{*/
 			DisplayObjectiveWidget();
-		}
+		/*}*/
 	}
 }

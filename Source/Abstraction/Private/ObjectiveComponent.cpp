@@ -17,19 +17,20 @@ void UObjectiveComponent::SetState(EObjectiveState NewState)
 	if (NewState != State)
 	{
 		State = NewState;
-		StateChangedEvent.Broadcast(this, State);
+		OnStateChanged.Broadcast(this, NewState);
 	}
 }
 
-// Called when the game starts
+
 void UObjectiveComponent::InitializeComponent()
 {
-	// register
+	Super::InitializeComponent();
+	//register
 	UObjectiveWorldSubsystem* ObjectiveWorldSubsystem = GetWorld()->GetSubsystem<UObjectiveWorldSubsystem>();
 	if (ObjectiveWorldSubsystem)
 	{
 		ObjectiveWorldSubsystem->AddObjective(this);
-	}	
+	}
 }
 
 void UObjectiveComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)

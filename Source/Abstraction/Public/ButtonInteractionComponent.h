@@ -3,11 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/ActorComponent.h"
 #include "InteractionComponent.h"
 #include "ButtonInteractionComponent.generated.h"
 
 class ATriggerBox;
 class IConsoleVariable;
+class UAudioComponent;
+class UTextRenderComponent;
 
 UENUM()
 enum class EButtonState
@@ -27,34 +30,28 @@ public:
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	static void OnDebugToggled(IConsoleVariable* Var);
+
+	//request to press the button
+	UFUNCTION(BlueprintCallable)
+	void PressButton();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	//binded to interaction input from player
-	void InteractionStart() override;
+	//UInteractionComponent
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
+	void InteractionRequested() override;
 
-	//request to open the door
-	UFUNCTION(BlueprintCallable)
-	void ButtonPressed();
-
-	//called internally when door has finished opening
+	//called internally when the button has been pressed
 	void OnButtonPressed();
-
-	//request to close the door
-	UFUNCTION(BlueprintCallable)
-	void ButtonReleased();
-
-	//called internally when door has finished Closing
-	void OnButtonReleased();
 
 	UFUNCTION(BlueprintCallable)
 	bool IsPressed() { return ButtonState == EButtonState::BS_In; }
 
-	UFUNCTION(BlueprintCallable)
-	bool IsNotPressed() { return ButtonState == EButtonState::BS_Out; }
+	void DebugDraw();
+	static void OnDebugToggled(IConsoleVariable* Var);
 
 	UPROPERTY(EditAnywhere)
 	float TimeToRelease = 1.0f;
@@ -66,4 +63,10 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	EButtonState ButtonState;
+
+	UPROPERTY()
+	UAudioComponent* AudioComponent = nullptr;
+
+	UPROPERTY()
+	UTextRenderComponent* TextRenderComponent = nullptr;
 };

@@ -1,87 +1,139 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ButtonInteractionComponent.h"
-#include "ObjectiveWorldSubsystem.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
-#include "Engine/TriggerBox.h"
 #include "Engine/World.h"
+#include "Engine/Engine.h"
 #include "DrawDebugHelpers.h"
 #include "ObjectiveComponent.h"
+#include "InteractionComponent.h"
+#include "Components/AudioComponent.h"
+#include "Components/TextRenderComponent.h"
+#include "AbstractionPlayerCharacter.h"
 
-constexpr float FLT_METERS(float meters) { return meters * 100.0f; }
+constexpr float FLT_METERS(float meters) { return meters * 50.0f; }
 
-static TAutoConsoleVariable<bool> CVarToggleDebugDoor(
-	TEXT("Abstraction.DoorInteractionComponent.Debug"),
+static TAutoConsoleVariable<bool> CVarToggleDebugButton(
+	TEXT("Abstraction.ButtonInteractionComponent.Debug"),
 	false,
-	TEXT("Toggle DoorInteractionComponent debug display"),
+	TEXT("Toggle ButtonInteractionComponent debug display"),
 	ECVF_Default);
 
 // Sets default values for this component's properties
 UButtonInteractionComponent::UButtonInteractionComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-	ButtonState = EButtonState::BS_Out;
+	ButtonState = EButtonState::BS_In;
+
+	CVarToggleDebugButton.AsVariable()->SetOnChangedCallback(FConsoleVariableDelegate::CreateStatic(&UButtonInteractionComponent::OnDebugToggled));
 }
 
-void UButtonInteractionComponent::InteractionStart()
-{
-	Super::InteractionStart();
-	if (InteractingActor)
-	{
-		ButtonPressed();
-	}
-}
-
-// Called when the game starts
-void UButtonInteractionComponent::BeginPlay()
-{
-	Super::BeginPlay();
-	// ensure CurrentPressedTime is greater than EPSILON
-	CurrentPressedTime = 0.0f;	
-}
-
-// Called every frame
 void UButtonInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (ButtonState == EButtonState::BS_In)
 	{
-		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 		CurrentPressedTime += DeltaTime;
-		// *** Need to add it button pressed animation here. 
 		if (CurrentPressedTime >= TimeToRelease)
 		{
-			ButtonReleased();
+			ButtonState = EButtonState::BS_Out;
 		}
 	}
+
+	DebugDraw();
 }
 
-void UButtonInteractionComponent::ButtonPressed()
+void UButtonInteractionComponent::PressButton()
 {
-	if (IsPressed() || ButtonState == EButtonState::BS_In)
+	if (ButtonState == EButtonState::BS_In)
 	{
 		return;
 	}
+
+	if (AudioComponent)
+	{
+		AudioComponent->Play();
+	}
+
 	ButtonState = EButtonState::BS_In;
 	CurrentPressedTime = 0.0f;
 }
 
-void UButtonInteractionComponent::ButtonReleased()
+void UButtonInteractionComponent::BeginPlay()
 {
-	if (IsNotPressed() || ButtonState == EButtonState::BS_Out)
+	Super::BeginPlay();
+
+	//ensure TimeToRotate is greater than EPSILON
+	CurrentPressedTime = 0.0f;
+
+	AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
+	//check(AudioComponent);
+	if (!AudioComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UButtonInteractionComponent::BeginPlay() Missing Audio Component"));
+	}
+
+	TextRenderComponent = GetOwner()->FindComponentByClass<UTextRenderComponent>();
+}
+
+void UButtonInteractionComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("UButtonInteractionComponent::OnOverlapBegin"));
+	//we already have somebody interacting, currently we don't support multiple interactions
+	if (InteractingActor || !bActive)
 	{
 		return;
 	}
-	ButtonState = EButtonState::BS_Out;
-	CurrentPressedTime = 0.0f;
+
+	//for now we will get that component and set visible
+	if (OtherActor->ActorHasTag("Player"))
+	{
+		InteractingActor = OtherActor;
+		if (TextRenderComponent)
+		{
+			TextRenderComponent->SetText(InteractionPrompt);
+			TextRenderComponent->SetVisibility(true);
+		}
+	}
 }
 
-//When button is pressed set state to in check for objectives tied to door and complete them if applicable
-// Prints debug info to screen and tells any listeners that the interaction was successful
+void UButtonInteractionComponent::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Warning, TEXT("UButtonInteractionComponent::OnOverlapEnd"));
+	if (OtherActor == InteractingActor)
+	{
+		InteractingActor = nullptr;
+		if (TextRenderComponent)
+		{
+			TextRenderComponent->SetVisibility(false);
+		}
+	}
+}
+
+void UButtonInteractionComponent::InteractionRequested()
+{
+	//ideally we would make sure this is allowed
+	if (InteractingActor)
+	{
+		bActive = false;
+		if (TextRenderComponent)
+		{
+			TextRenderComponent->SetText(InteractionPrompt);
+			TextRenderComponent->SetVisibility(false);
+		}
+
+		AAbstractionPlayerCharacter* APC = Cast<AAbstractionPlayerCharacter>(InteractingActor);
+		if (APC)
+		{
+			APC->ButtonPressInteractionStarted(GetOwner());
+		}
+	}
+}
+
+
+
 void UButtonInteractionComponent::OnButtonPressed()
 {
 	ButtonState = EButtonState::BS_In;
@@ -90,19 +142,25 @@ void UButtonInteractionComponent::OnButtonPressed()
 	{
 		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("ButtonPressed"));
+
+	//hide prompt
+	//disable interaction
+
 	InteractionSuccess.Broadcast();
 }
 
-//When button is released set state to out and check for objectives tied to door and complete them if applicable
-// Prints debug info to screen
-void UButtonInteractionComponent::OnButtonReleased()
+void UButtonInteractionComponent::OnDebugToggled(IConsoleVariable* Var)
 {
-	ButtonState = EButtonState::BS_Out;
-	UObjectiveComponent* ObjectiveComponent = GetOwner()->FindComponentByClass<UObjectiveComponent>();
-	if (ObjectiveComponent)
+	UE_LOG(LogTemp, Warning, TEXT("OnDebugToggled"));
+}
+
+void UButtonInteractionComponent::DebugDraw()
+{
+	if (CVarToggleDebugButton->GetBool())
 	{
-		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
+		FVector Offset(FLT_METERS(-0.75f), 0.0f, FLT_METERS(2.5f));
+		FVector StartLocation = GetOwner()->GetActorLocation() + Offset;
+		FString EnumAsString = TEXT("Button State: ") + UEnum::GetDisplayValueAsText(ButtonState).ToString();
+		DrawDebugString(GetWorld(), Offset, EnumAsString, GetOwner(), FColor::Blue, 0.0f);
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("ButtonReleased"));
 }

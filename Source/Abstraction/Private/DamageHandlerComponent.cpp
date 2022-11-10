@@ -7,18 +7,18 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Misc/ScopeLock.h"
 
+
 UDamageHandlerComponent::UDamageHandlerComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-// Called when the game starts
 void UDamageHandlerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerCharacter = Cast<AAbstractionPlayerCharacter>(GetOwner());	
+	PlayerCharacter = Cast<AAbstractionPlayerCharacter>(GetOwner());
 }
 
 
@@ -32,7 +32,6 @@ void UDamageHandlerComponent::TickComponent(float DeltaTime, ELevelTick TickType
 		FScopeLock Lock(&CriticalSection);
 		if (ActiveDamageInfo.IsSet())
 		{
-			//ActiveDamageInfo.Get()
 			if (ActiveDamageInfo.GetValue().AccumulatedTime > ActiveDamageInfo.GetValue().Lifetime)
 			{
 				if (PlayerCharacter->ParticleSystemComponent)
@@ -46,7 +45,7 @@ void UDamageHandlerComponent::TickComponent(float DeltaTime, ELevelTick TickType
 			{
 				ActiveDamageInfo.GetValue().AccumulatedTime += DeltaTime;
 				ActiveDamageInfo.GetValue().CurrentIntervalTime += DeltaTime;
-				if (ActiveDamageInfo.GetValue().BaseDamage > ActiveDamageInfo.GetValue().IntervalTime)
+				if (ActiveDamageInfo.GetValue().CurrentIntervalTime > ActiveDamageInfo.GetValue().IntervalTime)
 				{
 					float ModifiedDamage = ActiveDamageInfo.GetValue().BaseDamage / (ActiveDamageInfo.GetValue().Lifetime / ActiveDamageInfo.GetValue().IntervalTime);
 					TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
@@ -65,12 +64,11 @@ void UDamageHandlerComponent::TakeFireDamage(float BaseDamage, float DamageTotal
 	if (ActiveDamageInfo.IsSet())
 	{
 		ActiveDamageInfo.GetValue().BaseDamage = FMath::Max(ActiveDamageInfo.GetValue().BaseDamage, BaseDamage);
-		
-		//Extend the Lifetime
+
+		//extend the lifetime
 		if (ActiveDamageInfo.GetValue().Lifetime < DamageTotalTime)
 		{
 			ActiveDamageInfo.GetValue().Lifetime = DamageTotalTime;
-			ActiveDamageInfo.GetValue().AccumulatedTime = 0.0f;
 			ActiveDamageInfo.GetValue().IntervalTime = ActiveDamageInfo.GetValue().IntervalTime;
 		}
 	}
@@ -88,4 +86,3 @@ void UDamageHandlerComponent::TakeFireDamage(float BaseDamage, float DamageTotal
 		}
 	}
 }
-

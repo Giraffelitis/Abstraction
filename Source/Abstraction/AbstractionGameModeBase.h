@@ -7,20 +7,19 @@
 #include "Blueprint/UserWidget.h"
 #include "AbstractionGameModeBase.generated.h"
 
-//To retrieve this object use the code below
-// AGameModeBase* GameMode = Cast<AAbstractionGameModeBase>(World->GetAuthGameMode());
+//to retrieve this object use below code
+//AGameModeBase* GameMode = Cast<AAbstractionGameModeBase>(World->GetAuthGameMode());
 
 UCLASS()
 class ABSTRACTION_API AAbstractionGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-
-public: 
-	void StartPlay() override;
+public:
+	AAbstractionGameModeBase() {}
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUserWidget> ObjectiveWidgetClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> ObjectivesCompletedWidgetClass;
+	TSubclassOf<UUserWidget> ObjectivesCompleteWidgetClass;
 };

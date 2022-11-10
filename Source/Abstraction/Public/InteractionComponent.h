@@ -20,33 +20,34 @@ class ABSTRACTION_API UInteractionComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UInteractionComponent();
-
-	//this is brodcasted from children, they know when an interaction has been successfully finished
+	
+	//this is broadcasted from children, they know when an interaction has successfully finished
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnInteractionSuccess InteractionSuccess;
 
-	UFUNCTION()
-	virtual void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	virtual void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
 	UCapsuleComponent* GetTriggerCapsule() const { return TriggerCapsule; }
-
 protected:
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	UFUNCTION()
+	virtual void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {};
+
+	UFUNCTION()
+	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {};
 
 	UFUNCTION(BlueprintCallable)
-	virtual void InteractionStart();
+	virtual void InteractionRequested() {};
 
 	UPROPERTY(EditAnywhere)
 	FText InteractionPrompt;
 
 	UPROPERTY(EditAnywhere, NoClear)
 	UCapsuleComponent* TriggerCapsule = nullptr;
-
+	
 	AActor* InteractingActor = nullptr;
+	bool bActive = true;
+	FDelegateHandle InteractionBinding;
 };
-

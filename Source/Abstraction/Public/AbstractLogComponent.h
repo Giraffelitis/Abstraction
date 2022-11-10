@@ -4,26 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "HealthComponent.generated.h"
+#include "AbstractLogComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ABSTRACTION_API UHealthComponent : public UActorComponent
+class ABSTRACTION_API UAbstractLogComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UHealthComponent();
-	
-	void TakeDamage(float Damage) { CurrentHealth -= Damage; }
-	bool IsDead() { return CurrentHealth <= FLT_EPSILON; }
+	UAbstractLogComponent();
+
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere)
-	float MaxHealth = 100.0f;
-	
-	float CurrentHealth = 0.0f;
+	UPROPERTY(EditAnywhere,Category=Debug)
+	FString DataString;
+		
 };

@@ -28,8 +28,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Particles)
 	class UParticleSystem* FireTemplate;
 
@@ -46,7 +45,7 @@ protected:
 
 	AAbstractionPlayerCharacter* PlayerCharacter = nullptr;
 
-	/* Holds a Critical section object*/
+	/** Holds a critical section object. */
 	FCriticalSection CriticalSection;
-		
+
 };

@@ -6,14 +6,17 @@
 #include "Components/ActorComponent.h"
 #include "ObjectiveComponent.generated.h"
 
+class UObjectiveComponent;
+
 UENUM()
 enum class EObjectiveState
 {
 	OS_Inactive = 0		UMETA(DisplayName = "Inactive"),
 	OS_Active = 1		UMETA(DisplayName = "Active"),
-	OS_Completed = 2	UMETA(DisplayName = "Completed")
+	OS_Completed = 2	UMETA(DisplayName = "Completed"),
 };
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnObjectiveStateChanged, const UObjectiveComponent*, EObjectiveState);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UObjectiveComponent : public UActorComponent
@@ -27,24 +30,21 @@ public:
 	UFUNCTION(BlueprintCallable)
 	const FString& GetDescription() const { return Description; }
 
-	DECLARE_EVENT_TwoParams(FObjectiveComponent, FStateChanged, UObjectiveComponent*, EObjectiveState)
-	FStateChanged& OnStateChanged() { return StateChangedEvent; }
+	FOnObjectiveStateChanged OnStateChanged;
 
 	UFUNCTION(BlueprintCallable)
 	EObjectiveState GetState() const { return State; }
 
 	void SetState(EObjectiveState NewState);
-
 protected:
-	void InitializeComponent();
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	void InitializeComponent() override;
 
 	UPROPERTY(EditAnywhere)
 	FString Description;
 
 	UPROPERTY(EditAnywhere)
 	EObjectiveState State;
-
-	FStateChanged StateChangedEvent;
 
 };

@@ -6,6 +6,7 @@
 #include "Engine/StaticMeshActor.h"
 #include "InteractableButton.generated.h"
 
+class UAudioComponent;
 class UButtonInteractionComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonPressed);
@@ -19,10 +20,11 @@ public:
 	AInteractableButton();
 	virtual void BeginPlay() override;
 
-	float InteractionTime = 1.0f;
-
 	UPROPERTY(BlueprintAssignable, Category = "Button Interaction")
 	FOnButtonPressed OnButtonPressed;
+
+	UFUNCTION(BlueprintCallable)
+	void PressButton();
 
 protected:
 	UFUNCTION()
@@ -30,4 +32,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, NoClear)
 	UButtonInteractionComponent* ButtonInteractionComponent;
+
+	UPROPERTY(EditAnywhere)
+	UAudioComponent* AudioComponent;
 };

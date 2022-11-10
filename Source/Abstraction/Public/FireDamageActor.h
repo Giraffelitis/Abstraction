@@ -16,9 +16,7 @@ class ABSTRACTION_API AFireDamageActor : public AActor
 	
 public:	
 	// Sets default values for this actor's properties
-	AFireDamageActor();	
-	//virtual void PostActorCreated() override;
-
+	AFireDamageActor();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -34,7 +32,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UDealDamageComponent* DealDamageComponent;
-	
 	UPROPERTY(EditAnywhere)
 	UParticleSystemComponent* ParticleSystemComponent;
 };

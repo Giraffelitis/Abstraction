@@ -13,6 +13,7 @@ UCLASS()
 class ABSTRACTION_API AAbstractionPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
-
+	
+public:
+	AAbstractionPlayerController() {}
 };
