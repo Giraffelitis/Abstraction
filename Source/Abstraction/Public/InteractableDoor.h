@@ -28,6 +28,6 @@ protected:
 	UFUNCTION()
 	void OnInteractionSuccess();
 
-UPROPERTY(EditAnywhere, NoClear)
+	UPROPERTY(EditAnywhere, NoClear)
 	UDoorInteractionComponent* DoorInteractionComponent;
 };

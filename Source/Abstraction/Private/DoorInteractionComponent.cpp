@@ -136,7 +136,6 @@ void UDoorInteractionComponent::OnDoorClosed()
 		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("DoorClosed"));
-	InteractionSuccess.Broadcast();
 }
 
 // Gets player facing direction compared to door location and sets the rotation accordingly

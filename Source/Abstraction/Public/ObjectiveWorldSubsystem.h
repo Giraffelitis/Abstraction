@@ -7,6 +7,7 @@
 #include "Subsystems/WorldSubsystem.h"
 #include "Blueprint/UserWidget.h"
 #include "ObjectiveComponent.h"
+#include "ObjectiveHud.h"
 #include "ObjectiveWorldSubsystem.generated.h"
 
 UCLASS()
@@ -14,6 +15,7 @@ class ABSTRACTION_API UObjectiveWorldSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 public: 
+	
 	void CreateObjectiveWidget(TSubclassOf<UUserWidget> ObjectiveWidgetClass);
 	void DisplayObjectiveWidget();
 
@@ -41,7 +43,7 @@ protected:
 	void OnObjectiveStateChanged(UObjectiveComponent* ObjectiveComponent, EObjectiveState ObjectiveState);
 
 private:
-	UUserWidget* ObjectiveWidget = nullptr;	
+	UObjectiveHud* ObjectiveWidget = nullptr;
 	UUserWidget* ObjectivesCompletedWidget = nullptr;
 
 	//add remove them

@@ -19,7 +19,7 @@ void UObjectiveWorldSubsystem::CreateObjectiveWidget(TSubclassOf<UUserWidget> Ob
 	if (ObjectiveWidget == nullptr)
 	{
 		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-		ObjectiveWidget = CreateWidget<UUserWidget>(PlayerController, ObjectiveWidgetClass);
+		ObjectiveWidget = CreateWidget<UObjectiveHud>(PlayerController, ObjectiveWidgetClass);
 	}
 }
 
@@ -32,7 +32,7 @@ void UObjectiveWorldSubsystem::CreateObjectiveWidgets()
 		{
 			APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 			ObjectiveWidget = CreateWidget<UObjectiveHud>(PlayerController, GameMode->ObjectiveWidgetClass);
-			ObjectivesCompletedWidget = CreateWidget<UObjectiveHud>(PlayerController, GameMode->ObjectivesCompletedWidgetClass);
+			ObjectivesCompletedWidget = CreateWidget<UUserWidget>(PlayerController, GameMode->ObjectivesCompletedWidgetClass);
 		}
 	}
 }
@@ -46,7 +46,7 @@ void UObjectiveWorldSubsystem::DisplayObjectiveWidget()
 			ObjectiveWidget->AddToViewport();
 		}
 	}
-	//ObjectiveWidget->UpdateObjectiveText(GetCompletedObjectiveCount(), Objectives.Num()); //This line isnt declaring properly not sure why its not inhereting liek its supposed to
+	ObjectiveWidget->UpdateObjectiveText(GetCompletedObjectiveCount(), Objectives.Num()); 
 }
 
 void UObjectiveWorldSubsystem::RemoveObjectiveWidget()
