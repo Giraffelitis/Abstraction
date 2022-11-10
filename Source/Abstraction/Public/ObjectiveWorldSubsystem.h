@@ -26,10 +26,23 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveObjective(UObjectiveComponent* ObjectiveComponent);
 
+	UFUNCTION(BlueprintCallable)
+	void OnMapStart();
+protected:
+	
+	virtual void Deinitialize() override;
+	void CreateObjectiveWidgets();
+	void RemoveObjectiveWidget();
+	void DisplayObjectivesCompleteWidget();
+	void RemoveObjectivesCompleteWidget();
+
+	uint32 GetCompletedObjectiveCount();
+
 	void OnObjectiveStateChanged(UObjectiveComponent* ObjectiveComponent, EObjectiveState ObjectiveState);
 
 private:
 	UUserWidget* ObjectiveWidget = nullptr;	
+	UUserWidget* ObjectivesCompletedWidget = nullptr;
 
 	//add remove them
 	//sign up for callback on changed

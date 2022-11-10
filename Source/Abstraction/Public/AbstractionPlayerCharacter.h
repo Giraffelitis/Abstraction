@@ -8,6 +8,7 @@
 
 class UHealthComponent;
 class UParticleSystemComponent;
+class UDamageHandlerComponent;
 
 DECLARE_MULTICAST_DELEGATE(FOnInteractionStart);
 DECLARE_MULTICAST_DELEGATE(FOnInteractionCancel);
@@ -31,10 +32,13 @@ public:
 	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
 
 	float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
-	void SetOnFire(UParticleSystemComponent* FireParticleSystemComponent);
+	void SetOnFire(float BaseDamage, float DamageTotalTime, float TakeDamageInterval);
 
 	FOnInteractionStart OnInteractionStart;
 	FOnInteractionCancel OnInteractionCancel;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystemComponent* ParticleSystemComponent;
 
 protected:
 	//Called when the game starts or when spawned
@@ -48,7 +52,7 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UHealthComponent* HealthComponent;
-
+	
 	UPROPERTY(EditAnywhere)
-	UParticleSystemComponent* ParticleSystemComponent;
+	UDamageHandlerComponent* DamageHandlerComponent;
 };

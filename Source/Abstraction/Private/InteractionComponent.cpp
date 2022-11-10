@@ -71,10 +71,9 @@ void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	}
 }
 
-//BeginPlay Bind
-//EndPlay Unbind
-//Broadcast
 void UInteractionComponent::InteractionStart()
 {
-
+	//BeginPlay Bind
+	//EndPlay Unbind
+	//Broadcast
 }

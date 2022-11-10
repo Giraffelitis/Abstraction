@@ -1,4 +1,4 @@
-
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -82,13 +82,13 @@ protected:
 	float CurrentRotationTime = 0.0f;
 
 	UPROPERTY(EditAnywhere)
-		ATriggerBox* TriggerBox;
+	ATriggerBox* TriggerBox;
 
 	UPROPERTY(EditAnywhere)
-		FRuntimeFloatCurve OpenCurve;
+	FRuntimeFloatCurve OpenCurve;
 
 	UPROPERTY(EditAnywhere)
-		FRuntimeFloatCurve CloseCurve;
+	FRuntimeFloatCurve CloseCurve;
 
 	UPROPERTY(BlueprintReadOnly)
 	EDoorState DoorState;

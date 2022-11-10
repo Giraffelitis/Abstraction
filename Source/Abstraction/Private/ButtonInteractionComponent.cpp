@@ -95,7 +95,7 @@ void UButtonInteractionComponent::OnButtonPressed()
 }
 
 //When button is released set state to out and check for objectives tied to door and complete them if applicable
-// Prints debug info to screen and tells any listeners that the interaction was successful
+// Prints debug info to screen
 void UButtonInteractionComponent::OnButtonReleased()
 {
 	ButtonState = EButtonState::BS_Out;
@@ -105,5 +105,4 @@ void UButtonInteractionComponent::OnButtonReleased()
 		ObjectiveComponent->SetState(EObjectiveState::OS_Completed);
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, TEXT("ButtonReleased"));
-	InteractionSuccess.Broadcast();
 }

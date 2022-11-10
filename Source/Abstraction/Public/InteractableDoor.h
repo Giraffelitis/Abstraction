@@ -9,7 +9,6 @@
 class UDoorInteractionComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDoorOpen);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDoorClose);
  
 UCLASS()
 class ABSTRACTION_API AInteractableDoor : public AStaticMeshActor
@@ -25,13 +24,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Door Interaction")
 	FOnDoorOpen OnDoorOpen;
 
-	UPROPERTY(BlueprintAssignable, Category = "Door Interaction")
-	FOnDoorClose OnDoorClose;
-
 protected:
 	UFUNCTION()
 	void OnInteractionSuccess();
 
-	UPROPERTY(EditAnywhere, NoClear)
+UPROPERTY(EditAnywhere, NoClear)
 	UDoorInteractionComponent* DoorInteractionComponent;
 };

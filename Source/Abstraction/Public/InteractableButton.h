@@ -9,7 +9,6 @@
 class UButtonInteractionComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonPressed);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonReleased);
 
 UCLASS()
 class ABSTRACTION_API AInteractableButton : public AStaticMeshActor
@@ -24,9 +23,6 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Button Interaction")
 	FOnButtonPressed OnButtonPressed;
-
-	UPROPERTY(BlueprintAssignable, Category = "Button Interaction")
-	FOnButtonReleased OnButtonReleased;
 
 protected:
 	UFUNCTION()
