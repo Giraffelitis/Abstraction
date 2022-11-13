@@ -6,9 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "AbstractionPlayerController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ABSTRACTION_API AAbstractionPlayerController : public APlayerController
 {
@@ -16,4 +13,7 @@ class ABSTRACTION_API AAbstractionPlayerController : public APlayerController
 	
 public:
 	AAbstractionPlayerController() {}
+
+protected:
+
 };

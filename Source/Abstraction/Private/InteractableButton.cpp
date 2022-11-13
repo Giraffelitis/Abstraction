@@ -1,31 +1,28 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "InteractableButton.h"
-#include "ButtonInteractionComponent.h"
 #include "Components/AudioComponent.h"
-#include "Components/CapsuleComponent.h"
 
-AInteractableButton::AInteractableButton() : Super()
+AInteractableButton::AInteractableButton()
 {
-	ButtonInteractionComponent = CreateDefaultSubobject<UButtonInteractionComponent>(TEXT("ButtonInteractionComponent"));
-	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
-	AudioComponent->SetupAttachment(RootComponent);
-	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("TriggerComponent"));
-	TriggerCapsule->SetupAttachment(RootComponent);
+	FrameMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FrameMesh"));
+	RootComponent = FrameMesh;
+
+	ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
+	ButtonMesh->SetupAttachment(FrameMesh);
+
+	DepressDepth = 10;
 }
 
-void AInteractableButton::BeginPlay()
+void AInteractableButton::OnInteraction(APawn* InstigatorPawn)
 {
-	Super::BeginPlay();
-	ButtonInteractionComponent->InteractionSuccess.AddDynamic(this, &AInteractableButton::OnInteractionSuccess);
+	bButtonPressed = !bButtonPressed;
+	OnButtonPressed();
 }
 
-void AInteractableButton::PressButton()
+void AInteractableButton::OnButtonPressed()
 {
-	ButtonInteractionComponent->PressButton();
+	float CurrDepth = bButtonPressed ? DepressDepth : 0.0f;
+	ButtonMesh->SetRelativeRotation(FRotator(0, 0, 0));
 }
 
-void AInteractableButton::OnInteractionSuccess()
-{
-	OnButtonPressed.Broadcast();
-}

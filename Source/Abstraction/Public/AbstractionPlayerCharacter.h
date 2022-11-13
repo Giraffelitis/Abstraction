@@ -3,17 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-//#include "IDetailTreeNode.h"
 #include "GameFramework/Character.h"
 #include "AbstractionPlayerCharacter.generated.h"
 
+struct FInputActionValue;
+class UInteractionComponent;
+class UInputConfig;
+class UCameraShakeBase;
 class UDamageHandlerComponent;
+class UGameplayTagsManager;
 class UHealthComponent;
 class UParticleSystemComponent;
-
-//these are input bindings
-DECLARE_MULTICAST_DELEGATE(FInteractionStartRequest);
-DECLARE_MULTICAST_DELEGATE(FInteractionCancelRequest);
 
 UCLASS()
 class ABSTRACTION_API AAbstractionPlayerCharacter : public ACharacter
@@ -49,30 +49,57 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int ItemsCollected = 0;
-
-	//bindings, a hack atm as the interactble components in the game world get the player and sign themselves up to these events
-	//to know when the player has pressed the input binding for interacting
-	FInteractionStartRequest OnInteractionStartRequested;
-	FInteractionCancelRequest OnInteractionCancelRequested;
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void DoorOpenInteractionStarted(AActor* InteractableActor);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void ButtonPressInteractionStarted(AActor* InteractableActor);
-
+	
 	//this can be an array or moved later as needed
 	UPROPERTY(EditAnywhere)
 	UParticleSystemComponent* ParticleSystemComponent;
+
+	/** The input config that maps Input Actions to Input Tags*/
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	UInputConfig* InputConfig;	
+
+	/** Handles moving forward/backward */
+	void Input_Move(const FInputActionValue& InputActionValue);
+
+	/** Handles mouse and stick look */
+	void Input_Look(const FInputActionValue& InputActionValue);
+
+	/** Handles Jumping */
+	void Input_Jump(const FInputActionValue& InputActionValue);
+
+	/** Handles Pew Pew */
+	void Input_Fire(const FInputActionValue& InputActionValue);
+
+	/** Handles Interaction */
+	void Input_Interact(const FInputActionValue& InputActionValue);
+
+	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	float TurnRateGamepad;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/** Activates primary action of held item. */
+	void OnPrimaryAction();
+
+	/**
+	 * Called via input to turn at a given rate.
+	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
+	 */
+	void TurnAtRate(float Rate);
+
+	/**
+	 * Called via input to turn look up/down at a given rate.
+	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
+	 */
+	void LookUpAtRate(float Rate);
+
+
 	void OnDeath(bool IsFellOut);
 
-	//Input Bindings
-	void InteractionStartRequested();
-	void InteractionCancelRequested();
+	void PrimaryInteract();
 
 	UPROPERTY(EditAnywhere)
 	UHealthComponent* HealthComponent;
@@ -80,15 +107,17 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UDamageHandlerComponent* DamageHandlerComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	UInteractionComponent* InteractionComp;
+	
 	APlayerController* PC;
 
-	//UPROPERTY(EditAnywhere, Category="Effects")
-	//TSubclassOf<UCameraShake> CamShake;
+	UPROPERTY(EditAnywhere, Category="Effects")
+	TSubclassOf<UCameraShakeBase> CamShake;
 
 	// Force Feedback values.
 	UPROPERTY(EditAnywhere, Category="Force Feedback")
 	float ForceFeedbackIntensity = 1.0f;
 	UPROPERTY(EditAnywhere, Category="Force Feedback")
 	float ForceFeedbackDuration = 1.0f;
-	
 };

@@ -3,40 +3,34 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/StaticMeshActor.h"
+#include "ABSGameplayInterface.h"
+#include "GameFramework/Actor.h"
 #include "InteractableButton.generated.h"
 
-class UCapsuleComponent;
-class UAudioComponent;
-class UButtonInteractionComponent;
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonPressed);
-
 UCLASS()
-class ABSTRACTION_API AInteractableButton : public AStaticMeshActor
+class ABSTRACTION_API AInteractableButton : public AActor, public IABSGameplayInterface
 {
 	GENERATED_BODY()
-
+	
 public:
 	AInteractableButton();
-	virtual void BeginPlay() override;
-
-	UPROPERTY(BlueprintAssignable, Category = "Button Interaction")
-	FOnButtonPressed OnButtonPressed;
-
-	UFUNCTION(BlueprintCallable)
-	void PressButton();
-
-protected:
-	UFUNCTION()
-	void OnInteractionSuccess();
-
-	UPROPERTY(EditAnywhere, NoClear)
-	UButtonInteractionComponent* ButtonInteractionComponent;
-
-	UPROPERTY(EditAnywhere)
-	UCapsuleComponent* TriggerCapsule;
 	
 	UPROPERTY(EditAnywhere)
-	UAudioComponent* AudioComponent;
+	float DepressDepth;
+
+	void OnInteraction(APawn* InstigatorPawn);
+
+protected:
+
+	UPROPERTY(BlueprintReadOnly, SaveGame)
+	bool bButtonPressed;
+
+	UFUNCTION()
+	void OnButtonPressed();
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* FrameMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UStaticMeshComponent* ButtonMesh;
 };

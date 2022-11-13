@@ -1,34 +1,28 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "InteractableDoor.h"
-#include "DoorInteractionComponent.h"
 #include "Components/AudioComponent.h"
-#include "Components/CapsuleComponent.h"
 
 AInteractableDoor::AInteractableDoor()
 {
-	DoorInteractionComponent = CreateDefaultSubobject<UDoorInteractionComponent>(TEXT("DoorInteractionComponent"));
-	//DoorInteractionComponent->	SetupAttachment(RootComponent);
-	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
-	AudioComponent->SetupAttachment(RootComponent);
-	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("TriggerComponent"));
-	TriggerCapsule->SetupAttachment(RootComponent);
-	
+	FrameMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FrameMesh"));
+	RootComponent = FrameMesh;
+
+	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
+	DoorMesh->SetupAttachment(FrameMesh);
+
+	TargetOpenAngle = 110;
 }
 
-void AInteractableDoor::BeginPlay()
+void AInteractableDoor::OnInteraction(APawn* InstigatorPawn)
 {
-	Super::BeginPlay();
-	DoorInteractionComponent->InteractionSuccess.AddDynamic(this, &AInteractableDoor::OnInteractionSuccess);
+	bDoorOpened = !bDoorOpened;
+	OnDoorOpened();
 }
 
-void AInteractableDoor::OpenDoor()
+void AInteractableDoor::OnDoorOpened()
 {
-	DoorInteractionComponent->OpenDoor();
-}
-
-void AInteractableDoor::OnInteractionSuccess()
-{
-	OnDoorOpen.Broadcast();
+	float CurrAngle = bDoorOpened ? TargetOpenAngle : 0.0f;
+	DoorMesh->SetRelativeRotation(FRotator(0, 0, CurrAngle));
 }
 

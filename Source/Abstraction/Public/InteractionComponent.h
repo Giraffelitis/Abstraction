@@ -6,44 +6,51 @@
 #include "Components/ActorComponent.h"
 #include "InteractionComponent.generated.h"
 
-class AActor;
-class UPrimitiveComponent;
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInteractionSuccess);
+class UWorldUserWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UInteractionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UInteractionComponent();
-	
-	//this is broadcasted from children, they know when an interaction has successfully finished
-	UPROPERTY(BlueprintAssignable, Category = "Interaction")
-	FOnInteractionSuccess InteractionSuccess;
+public:
+
+	void PrimaryInteract();
 
 protected:
 
-	// Called when the game starts
+	// Reliable - Will always arrive, eventually. Request will be re-sent unless an acknowledgment was received.
+	// Unreliable - Not guaranteed, packet can get lost and won't retry.
+
+	UFUNCTION(Server, Reliable)
+	void ServerInteract(AActor* InFocus);
+
+	void FindBestInteractable();
+
 	virtual void BeginPlay() override;
 
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	UPROPERTY()
+	AActor* FocusedActor;
 
-	UFUNCTION()
-	virtual void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {};
+	UPROPERTY(EditDefaultsOnly, Category = "Trace")
+	float TraceDistance;
 
-	UFUNCTION()
-	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {};
+	UPROPERTY(EditDefaultsOnly, Category = "Trace")
+	float TraceRadius;
 
-	UFUNCTION(BlueprintCallable)
-	virtual void InteractionRequested() {};
+	UPROPERTY(EditDefaultsOnly, Category = "Trace")
+	TEnumAsByte<ECollisionChannel> CollisionChannel;
 
-	UPROPERTY(EditAnywhere)
-	FText InteractionPrompt;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UWorldUserWidget> DefaultWidgetClass;
 
-	AActor* InteractingActor = nullptr;
-	bool bActive = true;
-	FDelegateHandle InteractionBinding;
+	UPROPERTY()
+	UWorldUserWidget* DefaultWidgetInstance;
+
+public:	
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UInteractionComponent();
+	
 };

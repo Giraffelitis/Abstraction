@@ -3,42 +3,34 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/StaticMeshActor.h"
+#include "ABSGameplayInterface.h"
+#include "GameFramework/Actor.h"
 #include "InteractableDoor.generated.h"
 
-class UAudioComponent;
-class UCapsuleComponent;
-class UDoorInteractionComponent;
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDoorOpen);
-
 UCLASS()
-class ABSTRACTION_API AInteractableDoor : public AStaticMeshActor
+class ABSTRACTION_API AInteractableDoor : public AActor, public IABSGameplayInterface
 {
 	GENERATED_BODY()
 	
 public:
 	AInteractableDoor();
-	virtual void BeginPlay() override;
+	
+	UPROPERTY(EditAnywhere)
+	float TargetOpenAngle;
 
-	UPROPERTY(BlueprintAssignable, Category = "Door Interaction")
-	FOnDoorOpen OnDoorOpen;
-
-	UFUNCTION(BlueprintCallable)
-	void OpenDoor();
-
+	void OnInteraction(APawn* InstigatorPawn);
 
 protected:
-	
+
+	UPROPERTY(BlueprintReadOnly, SaveGame)
+	bool bDoorOpened;
+
 	UFUNCTION()
-	void OnInteractionSuccess();
+	void OnDoorOpened();
 
-	UPROPERTY(EditAnywhere, NoClear)
-	UDoorInteractionComponent* DoorInteractionComponent;
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* FrameMesh;
 
-	UPROPERTY(EditAnywhere)
-	UCapsuleComponent* TriggerCapsule;
-
-	UPROPERTY(EditAnywhere)
-	UAudioComponent* AudioComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UStaticMeshComponent* DoorMesh;
 };
