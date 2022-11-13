@@ -9,6 +9,7 @@
 #include "ObjectiveComponent.h"
 #include "InteractionComponent.h"
 #include "Components/AudioComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "AbstractionPlayerCharacter.h"
 
@@ -81,6 +82,7 @@ void UDoorInteractionComponent::BeginPlay()
 	}
 	
 	TextRenderComponent = GetOwner()->FindComponentByClass<UTextRenderComponent>();
+	TriggerCapsule = GetOwner()->FindComponentByClass<UCapsuleComponent>();
 }
 
 void UDoorInteractionComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

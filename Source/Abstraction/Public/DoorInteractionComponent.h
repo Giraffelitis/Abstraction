@@ -10,6 +10,7 @@
 
 class ATriggerBox;
 class IConsoleVariable;
+class UCapsuleComponent;
 class UAudioComponent;
 class UTextRenderComponent;
 
@@ -73,6 +74,10 @@ protected:
 
 	UPROPERTY()
 	UAudioComponent* AudioComponent = nullptr;
+
+	UPROPERTY()
+	UCapsuleComponent* TriggerCapsule = nullptr;
+
 	UPROPERTY()
 	UTextRenderComponent* TextRenderComponent = nullptr;
 };

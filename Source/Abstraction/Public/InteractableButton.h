@@ -6,6 +6,7 @@
 #include "Engine/StaticMeshActor.h"
 #include "InteractableButton.generated.h"
 
+class UCapsuleComponent;
 class UAudioComponent;
 class UButtonInteractionComponent;
 
@@ -33,6 +34,9 @@ protected:
 	UPROPERTY(EditAnywhere, NoClear)
 	UButtonInteractionComponent* ButtonInteractionComponent;
 
+	UPROPERTY(EditAnywhere)
+	UCapsuleComponent* TriggerCapsule;
+	
 	UPROPERTY(EditAnywhere)
 	UAudioComponent* AudioComponent;
 };

@@ -8,11 +8,10 @@
 AInteractableButton::AInteractableButton() : Super()
 {
 	ButtonInteractionComponent = CreateDefaultSubobject<UButtonInteractionComponent>(TEXT("ButtonInteractionComponent"));
-	if (ButtonInteractionComponent->GetTriggerCapsule())
-	{
-		ButtonInteractionComponent->GetTriggerCapsule()->SetupAttachment(RootComponent);
-	}
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+	AudioComponent->SetupAttachment(RootComponent);
+	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("TriggerComponent"));
+	TriggerCapsule->SetupAttachment(RootComponent);
 }
 
 void AInteractableButton::BeginPlay()

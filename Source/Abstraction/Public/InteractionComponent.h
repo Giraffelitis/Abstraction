@@ -7,7 +7,6 @@
 #include "InteractionComponent.generated.h"
 
 class AActor;
-class UCapsuleComponent;
 class UPrimitiveComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInteractionSuccess);
@@ -25,11 +24,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnInteractionSuccess InteractionSuccess;
 
-	UCapsuleComponent* GetTriggerCapsule() const { return TriggerCapsule; }
 protected:
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	UFUNCTION()
@@ -44,9 +43,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	FText InteractionPrompt;
 
-	UPROPERTY(EditAnywhere, NoClear)
-	UCapsuleComponent* TriggerCapsule = nullptr;
-	
 	AActor* InteractingActor = nullptr;
 	bool bActive = true;
 	FDelegateHandle InteractionBinding;

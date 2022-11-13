@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "InteractableDoor.h"
 #include "DoorInteractionComponent.h"
 #include "Components/AudioComponent.h"
@@ -9,12 +8,12 @@
 AInteractableDoor::AInteractableDoor()
 {
 	DoorInteractionComponent = CreateDefaultSubobject<UDoorInteractionComponent>(TEXT("DoorInteractionComponent"));
-	if (DoorInteractionComponent->GetTriggerCapsule())
-	{
-		DoorInteractionComponent->GetTriggerCapsule()->SetupAttachment(RootComponent);
-	}
-
+	//DoorInteractionComponent->	SetupAttachment(RootComponent);
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+	AudioComponent->SetupAttachment(RootComponent);
+	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("TriggerComponent"));
+	TriggerCapsule->SetupAttachment(RootComponent);
+	
 }
 
 void AInteractableDoor::BeginPlay()

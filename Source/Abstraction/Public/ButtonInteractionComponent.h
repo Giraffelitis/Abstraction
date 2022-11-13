@@ -58,9 +58,6 @@ protected:
 
 	float CurrentPressedTime = 0.0f;
 
-	UPROPERTY(EditAnywhere)
-	ATriggerBox* TriggerBox;
-
 	UPROPERTY(BlueprintReadOnly)
 	EButtonState ButtonState;
 

@@ -7,6 +7,7 @@
 #include "InteractableDoor.generated.h"
 
 class UAudioComponent;
+class UCapsuleComponent;
 class UDoorInteractionComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDoorOpen);
@@ -25,12 +26,18 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void OpenDoor();
+
+
 protected:
+	
 	UFUNCTION()
 	void OnInteractionSuccess();
 
 	UPROPERTY(EditAnywhere, NoClear)
 	UDoorInteractionComponent* DoorInteractionComponent;
+
+	UPROPERTY(EditAnywhere)
+	UCapsuleComponent* TriggerCapsule;
 
 	UPROPERTY(EditAnywhere)
 	UAudioComponent* AudioComponent;
