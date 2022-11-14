@@ -14,7 +14,10 @@ class ABSTRACTION_API UInteractionComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	UInteractionComponent();
 
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	void PrimaryInteract();
 
 protected:
@@ -46,11 +49,5 @@ protected:
 
 	UPROPERTY()
 	UWorldUserWidget* DefaultWidgetInstance;
-
-public:	
-
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	UInteractionComponent();
 	
 };

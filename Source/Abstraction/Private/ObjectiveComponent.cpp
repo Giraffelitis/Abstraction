@@ -4,21 +4,23 @@
 #include "ObjectiveComponent.h"
 #include "ObjectiveWorldSubsystem.h"
 #include "Engine/World.h"
+#include "AbstractionGameplayTags.h"
+#include "NativeGameplayTags.h"
 
 UObjectiveComponent::UObjectiveComponent()
 {
 	bWantsInitializeComponent = true;
 	PrimaryComponentTick.bCanEverTick = false;
-	State = EObjectiveState::OS_Inactive;
 }
 
-void UObjectiveComponent::SetState(EObjectiveState NewState)
+
+void UObjectiveComponent::SetState()
 {
-	if (NewState != State)
-	{
-		State = NewState;
-		OnStateChanged.Broadcast(this, NewState);
-	}
+//	if (.Objective_Inactive)
+//	{
+//		State = NewState;
+//		OnStateChanged.Broadcast(this, NewState);
+//	}
 }
 
 
@@ -32,6 +34,7 @@ void UObjectiveComponent::InitializeComponent()
 		ObjectiveWorldSubsystem->AddObjective(this);
 	}
 }
+
 
 void UObjectiveComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {

@@ -8,7 +8,7 @@ AInteractableButton::AInteractableButton()
 	FrameMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FrameMesh"));
 	RootComponent = FrameMesh;
 
-	ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
+	ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ButtonMesh"));
 	ButtonMesh->SetupAttachment(FrameMesh);
 
 	DepressDepth = 10;
@@ -23,6 +23,6 @@ void AInteractableButton::OnInteraction(APawn* InstigatorPawn)
 void AInteractableButton::OnButtonPressed()
 {
 	float CurrDepth = bButtonPressed ? DepressDepth : 0.0f;
-	ButtonMesh->SetRelativeRotation(FRotator(0, 0, 0));
+	ButtonMesh->SetRelativeLocation(FVector(0, CurrDepth, 0));
 }
 

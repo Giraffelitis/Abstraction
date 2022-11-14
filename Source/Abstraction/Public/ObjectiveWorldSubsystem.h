@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "ObjectiveComponent.h"
 #include "ObjectiveWorldSubsystem.generated.h"
@@ -11,6 +10,7 @@
 class UObjectiveComponent;
 class UObjectiveHud;
 class UUserWidget;
+
 UCLASS()
 class ABSTRACTION_API UObjectiveWorldSubsystem : public UWorldSubsystem
 {
@@ -46,7 +46,7 @@ protected:
 
 	uint32 GetCompletedObjectiveCount();
 
-	void OnObjectiveStateChanged(const UObjectiveComponent* ObjectiveComponent, EObjectiveState ObjectiveState);
+	void OnObjectiveStateChanged(const UObjectiveComponent* ObjectiveComponent/*, EObjectiveState ObjectiveState*/);
 private:
 	UPROPERTY()
 	UObjectiveHud*	ObjectiveWidget = nullptr;

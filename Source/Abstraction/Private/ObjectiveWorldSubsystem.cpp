@@ -9,13 +9,13 @@
 
 FString UObjectiveWorldSubsystem::GetCurrentObjectiveDescription()
 {
-	if (!Objectives.IsValidIndex(0) || Objectives[0]->GetState() == EObjectiveState::OS_Inactive)
+	if (!Objectives.IsValidIndex(0) /*|| Objectives[0]->GetState() == EObjectiveState::OS_Inactive*/)
 	{
 		return TEXT("N/A");
 	}
 
 	FString RetObjective = Objectives[0]->GetDescription();
-	if (Objectives[0]->GetState() == EObjectiveState::OS_Completed)
+	if (/*Objectives[0]->GetState() == EObjectiveState::OS_Completed*/true)
 	{
 		RetObjective += TEXT(" Completed!");
 	}
@@ -31,14 +31,14 @@ void UObjectiveWorldSubsystem::AddObjective(UObjectiveComponent* ObjectiveCompon
 	Objectives.AddUnique(ObjectiveComponent);
 	if (Objectives.Num() > PrevSize)
 	{
-		ObjectiveComponent->OnStateChanged.AddUObject(this, &UObjectiveWorldSubsystem::OnObjectiveStateChanged);
+//		ObjectiveComponent->OnStateChanged.AddUObject(this, &UObjectiveWorldSubsystem::OnObjectiveStateChanged);
 	}
 }
 
 void UObjectiveWorldSubsystem::RemoveObjective(UObjectiveComponent* ObjectiveComponent)
 {
-	int32 numRemoved = ObjectiveComponent->OnStateChanged.RemoveAll(this);
-	check(numRemoved);
+//	int32 numRemoved = ObjectiveComponent->OnStateChanged.RemoveAll(this);
+//	check(numRemoved);
 	Objectives.Remove(ObjectiveComponent);
 }
 
@@ -116,7 +116,7 @@ uint32 UObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 	uint32 ObjectivedCompleted = 0u;
 	for (const UObjectiveComponent* OC : Objectives)
 	{
-		if (OC && OC->GetState() == EObjectiveState::OS_Completed)
+		if (OC /*&& OC->GetState() == EObjectiveState::OS_Completed*/)
 		{
 			++ObjectivedCompleted;
 		}
@@ -126,7 +126,7 @@ uint32 UObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 }
 
 
-void UObjectiveWorldSubsystem::OnObjectiveStateChanged(const UObjectiveComponent* ObjectiveComponent, EObjectiveState ObjectiveState)
+void UObjectiveWorldSubsystem::OnObjectiveStateChanged(const UObjectiveComponent* ObjectiveComponent/*, EObjectiveState ObjectiveState*/)
 {
 	if (Objectives.Num() == 0 || !Objectives.Contains(ObjectiveComponent))
 	{
@@ -136,7 +136,7 @@ void UObjectiveWorldSubsystem::OnObjectiveStateChanged(const UObjectiveComponent
 	//check if game is over... 
 	if (ObjectiveWidget && ObjectivesCompleteWidget)
 	{
-		if ((ObjectiveState == EObjectiveState::OS_Completed) && GetCompletedObjectiveCount() == Objectives.Num())
+		if (/*(ObjectiveState == EObjectiveState::OS_Completed) &&*/ GetCompletedObjectiveCount() == Objectives.Num())
 		{
 			//GameOver
 			DisplayObjectivesCompleteWidget();

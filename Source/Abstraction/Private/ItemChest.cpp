@@ -11,6 +11,7 @@ AItemChest::AItemChest()
 	LidMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LidMesh"));
 	LidMesh->SetupAttachment(BaseMesh);
 
+	bLidOpened = true;
 	TargetPitch = 110;
 }
 
@@ -26,4 +27,14 @@ void AItemChest::OnLidOpened()
 	LidMesh->SetRelativeRotation(FRotator(CurrPitch, 0, 0));
 }
 
+
+//GetComponentByClass
+//ActionComponent
+//AddGameplayTag --Variable Key
+
+
+//GetComponentByClass
+//ActionComponent
+//ActiveGameplayTags (This is a tag container)
+//HasTag --Variable RequiredKey
 
