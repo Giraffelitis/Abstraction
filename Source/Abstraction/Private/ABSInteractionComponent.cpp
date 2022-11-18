@@ -119,12 +119,20 @@ void UABSInteractionComponent::FindBestInteractable()
 
 void UABSInteractionComponent::PrimaryInteract()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, TEXT("Interact"));
-	APawn* MyPawn = Cast<APawn>(GetOwner());
-	if(FocusedActor)
-	{
-		IABSGameplayInterface::Execute_Interact(FocusedActor, MyPawn);
-	}
+	Interact(FocusedActor);
 }
 
+void UABSInteractionComponent::Interact(AActor* InFocus)
+{
+	if (InFocus == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No Focus Actor to interact.");
+		return;
+	}
+	
+	InFocus->
+	
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	IABSGameplayInterface::Execute_Interact(InFocus, MyPawn);
+}
 

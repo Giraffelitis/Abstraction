@@ -36,11 +36,17 @@ void FABSGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(InputTag_Sprint, "InputTag.Sprint", "Sprint input.");
 	AddTag(InputTag_Parry, "InputTag.Parry", "Parry input.");
 
+	//InteractionTags
+	AddTag(Interaction_Activated, "Interaction.Activated", "Is object activated");
+	AddTag(Interaction_Secure, "Interaction.Secure", "Is object secured?");
+	
 	//Objective Tags
 	AddTag(Objective_Inactive, "ObjectiveTag.Inactive", "Objective Inactive.");
 	AddTag(Objective_Active, "ObjectiveTag.Active", "Object Active.");
-	AddTag(Objective_Complete, "ObjectiveTag.Complete", "Objective Complete.");
-
+	AddTag(Objective_Completed, "ObjectiveTag.Complete", "Objective Complete.");
+	AddTag(Objective_InProgress, "ObjectiveTag.InProgress", "Objective is in progress.");
+	AddTag(Objective_ReadyToTurnIn, "ObjectiveTag.ReadyToTurnIn", "Objective is ready to be turned in.");
+	
 	//Security Tags
 	AddTag(Security_Card_Red, "SecurityTag.Card.Red", "Red Security Card.");
 	AddTag(Security_Card_Green, "SecurityTag.Card.Green", "Green Security Card.");

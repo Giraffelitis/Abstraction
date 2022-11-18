@@ -32,14 +32,17 @@ public:
 	FGameplayTag InputTag_Interact_Secondary;
 	FGameplayTag InputTag_Sprint;
 	FGameplayTag InputTag_Parry;
-	
+
+	//InteractionTags
+	FGameplayTag Interaction_Activated;
+	FGameplayTag Interaction_Secure;
 
 	//ObjectiveTags
 	FGameplayTag Objective_Inactive;		// Not Currently Available
 	FGameplayTag Objective_Active;			// Available to Pickup
 	FGameplayTag Objective_InProgress;		// Currently in Progress
 	FGameplayTag Objective_ReadyToTurnIn;	// All requirements complete and ready to turn in
-	FGameplayTag Objective_Complete;		// Completed
+	FGameplayTag Objective_Completed;		// Completed
 	
 
 	//SecurityTag

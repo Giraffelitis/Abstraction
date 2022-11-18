@@ -15,20 +15,20 @@ class ABSTRACTION_API AABSInteractableButton : public AActor, public IABSGamepla
 public:
 	AABSInteractableButton();
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, Meta =(InstanceEditable="true"))
 	float DepressDepth;
 
 	void OnInteraction(APawn* InstigatorPawn);
 
 protected:
 
-	UPROPERTY(BlueprintReadOnly, SaveGame)
+	UPROPERTY(EditAnywhere)
 	bool bButtonPressed;
 
 	UFUNCTION()
 	void OnButtonPressed();
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* FrameMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "ABSInteractionComponent.generated.h"
 
+class UABSInteraction;
 class UABSWorldUserWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -22,6 +23,8 @@ public:
 
 protected:
 
+	void Interact(AActor* InFocus);
+	
 	void FindBestInteractable();
 
 	virtual void BeginPlay() override;

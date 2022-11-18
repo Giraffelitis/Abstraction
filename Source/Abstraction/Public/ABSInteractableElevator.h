@@ -29,7 +29,7 @@ protected:
 	UFUNCTION()
 	void OnElevatorActivated();
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* PlatformMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

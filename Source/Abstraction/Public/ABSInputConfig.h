@@ -28,9 +28,7 @@ public:
 	FGameplayTag InputTag;
 };
 
-/**
- *
- */
+
 UCLASS()
 class ABSTRACTION_API UABSInputConfig : public UDataAsset
 {

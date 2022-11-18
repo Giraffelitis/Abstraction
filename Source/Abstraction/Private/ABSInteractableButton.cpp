@@ -11,7 +11,7 @@ AABSInteractableButton::AABSInteractableButton()
 	ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ButtonMesh"));
 	ButtonMesh->SetupAttachment(FrameMesh);
 
-	DepressDepth = 10;
+	DepressDepth = 4;
 }
 
 void AABSInteractableButton::OnInteraction(APawn* InstigatorPawn)
