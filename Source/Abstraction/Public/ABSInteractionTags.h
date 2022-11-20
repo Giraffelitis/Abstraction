@@ -7,7 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "ABSInteractionTags.generated.h"
 
-class UABSInteractionTagsComponent;
+class UABSInteractionComponent;
 
 UCLASS()
 class ABSTRACTION_API UABSInteractionTags : public UObject
@@ -16,7 +16,7 @@ class ABSTRACTION_API UABSInteractionTags : public UObject
 
 	/* Call this Object to add action functionality to actors and other objects */
 	UPROPERTY()
-	UABSInteractionTagsComponent* InteractionTagsComp;
+	UABSInteractionComponent* InteractionComp;
 
 	/* Tag Container used to add Tags to owning actor when activated, and to remove when action stops */
 	UPROPERTY(EditDefaultsOnly, Category = "Tags")
@@ -28,11 +28,11 @@ class ABSTRACTION_API UABSInteractionTags : public UObject
 
 	/* Tag Container used to get the parent component the actions are attached to */
 	UFUNCTION(BlueprintCallable, Category = "Action")
-	UABSInteractionTagsComponent* GetOwningComponent() const;
+	UABSInteractionComponent* GetOwningComponent() const;
 	
 public:
 
-	void Initialize(UABSInteractionTagsComponent* NewInteractionComp);
+	void Initialize(UABSInteractionComponent* NewInteractionComp);
 	
 	UFUNCTION(BlueprintNativeEvent, Category = "Interaction")
 	bool CanStart(AActor* Instigator);

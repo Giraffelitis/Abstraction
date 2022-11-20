@@ -3,11 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "GameplayTagContainer.h"
 #include "ABSInteractionComponent.generated.h"
 
-class UABSInteraction;
-class UABSWorldUserWidget;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractedWith, class AActor*, FocusedActor);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UABSInteractionComponent : public UActorComponent
@@ -15,36 +14,13 @@ class ABSTRACTION_API UABSInteractionComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	UABSInteractionComponent();
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(BlueprintAssignable)
+	FOnInteractedWith OnInteractedWith;
 	
-	void PrimaryInteract();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
+	FGameplayTagContainer ActiveGameplayTags;
 
-protected:
-
-	void Interact(AActor* InFocus);
-	
-	void FindBestInteractable();
-
-	virtual void BeginPlay() override;
-
-	UPROPERTY()
-	AActor* FocusedActor;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Trace")
-	float TraceDistance;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Trace")
-	float TraceRadius;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Trace")
-	TEnumAsByte<ECollisionChannel> CollisionChannel;
-
-	UPROPERTY(EditDefaultsOnly, Category = "UI")
-	TSubclassOf<UABSWorldUserWidget> DefaultWidgetClass;
-
-	UPROPERTY()
-	UABSWorldUserWidget* DefaultWidgetInstance;
+	void InteractedWith(AActor* FocusedActor) const;
 	
 };

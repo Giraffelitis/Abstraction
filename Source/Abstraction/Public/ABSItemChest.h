@@ -7,7 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "ABSItemChest.generated.h"
 
-class UABSInteractionTagsComponent;
+class UABSInteractionComponent;
 
 UCLASS()
 class ABSTRACTION_API AABSItemChest : public AActor, public IABSGameplayInterface
@@ -20,13 +20,17 @@ public:
 	UPROPERTY(EditAnywhere)
 	float TargetPitch;
 
+	UFUNCTION()
 	void OnInteraction(AActor* Instigator);
 
 protected:
 	virtual void BeginPlay() override;
 	
 	UFUNCTION(BlueprintCallable)
-	void OnLidOpened();
+	void StartInteract();
+
+	UFUNCTION(BlueprintCallable)
+	void EndInteract();
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
@@ -35,6 +39,12 @@ protected:
 	UStaticMeshComponent* LidMesh;
 
 	UPROPERTY(VisibleAnywhere)
-	UABSInteractionTagsComponent* InteractionTagsComp;
+	UABSInteractionComponent* InteractionComp;
+ 
+	void BindWithComponent();
+
+	void OnInteractedWithCallback(AActor* FocusedActor);
+
+	UABSInteractionComponent* GetOwningComponent() const;
 
 };

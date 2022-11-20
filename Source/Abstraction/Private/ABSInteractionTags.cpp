@@ -2,18 +2,18 @@
 
 
 #include "ABSInteractionTags.h"
-#include "ABSInteractionTagsComponent.h"
+#include "ABSInteractionComponent.h"
 
-void UABSInteractionTags::Initialize(UABSInteractionTagsComponent* NewActionComp)
+void UABSInteractionTags::Initialize(UABSInteractionComponent* NewActionComp)
 {
-	InteractionTagsComp->ActiveGameplayTags.AppendTags(InteractionTags);
-	InteractionTagsComp->ActiveGameplayTags.AppendTags(SecurityTags);
-	InteractionTagsComp = NewActionComp;
+	InteractionComp->ActiveGameplayTags.AppendTags(InteractionTags);
+	InteractionComp->ActiveGameplayTags.AppendTags(SecurityTags);
+	InteractionComp = NewActionComp;
 }
 
 bool UABSInteractionTags::CanStart_Implementation(AActor* Instigator)
 {
-	UABSInteractionTagsComponent* Comp = GetOwningComponent();
+	UABSInteractionComponent* Comp = GetOwningComponent();
 	
 	if (Comp->ActiveGameplayTags.HasAny(SecurityTags))
 	{
@@ -31,13 +31,13 @@ void UABSInteractionTags::StartInteraction_Implementation(AActor* Instigator)
 	UE_LOG(LogTemp, Log, TEXT("Started: %s"), *GetNameSafe(this));
 	//LogOnScreen(this, FString::Printf(TEXT("Started: %s"), *ActionName.ToString()), FColor::Green);
 
-	UABSInteractionTagsComponent* Comp = GetOwningComponent();	
+	UABSInteractionComponent* Comp = GetOwningComponent();	
 	Comp->ActiveGameplayTags.AppendTags(InteractionTags);
 
 //	GetOwningComponent()->OnInteractionStarted.Broadcast(GetOwningComponent(), this);
 }
 
-UABSInteractionTagsComponent* UABSInteractionTags::GetOwningComponent() const
+UABSInteractionComponent* UABSInteractionTags::GetOwningComponent() const
 {
-	return InteractionTagsComp;
+	return InteractionComp;
 }

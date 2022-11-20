@@ -11,7 +11,7 @@
 #include "EnhancedInput/Public/InputAction.h"
 #include "ABSEnhancedInputComponent.h"
 #include "ABSGameplayTags.h"
-#include "ABSInteractionComponent.h"
+#include "ABSInteractAction.h"
 #include "ABSActionComponent.h"
 
 // Sets default values
@@ -21,7 +21,7 @@ AABSPlayerCharacter::AABSPlayerCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	InteractionComp = CreateDefaultSubobject<UABSInteractionComponent>("InteractionComp");
+	InteractAction = CreateDefaultSubobject<UABSInteractAction>("InteractAction");
 	ActionComp = CreateDefaultSubobject<UABSActionComponent>("ActionComp");
 
 	// Set size for collision capsule
@@ -163,17 +163,17 @@ void AABSPlayerCharacter::Parry(const FInputActionValue& InputActionValue)
 
 void AABSPlayerCharacter::PrimaryInteract(const FInputActionValue& InputActionValue)
 {
-	if (InteractionComp)
+	if (InteractAction)
 	{
-		InteractionComp->PrimaryInteract();
+		InteractAction->PrimaryInteract();
 	}
 }
 
 void AABSPlayerCharacter::SecondaryInteract(const FInputActionValue& InputActionValue)
 {
-	if (InteractionComp)
+	if (InteractAction)
 	{
-		InteractionComp->PrimaryInteract();
+		InteractAction->PrimaryInteract();
 	}
 }
 

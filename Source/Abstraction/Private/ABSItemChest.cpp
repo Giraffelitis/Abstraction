@@ -2,7 +2,7 @@
 
 #include "ABSItemChest.h"
 #include "ABSAction.h"
-#include "ABSInteractionTagsComponent.h"
+#include "ABSInteractionComponent.h"
 #include "Components/StaticMeshComponent.h"
 
 AABSItemChest::AABSItemChest()
@@ -12,7 +12,7 @@ AABSItemChest::AABSItemChest()
 	LidMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LidMesh"));
 	LidMesh->SetupAttachment(BaseMesh);
 	LidMesh->SetRelativeLocation(FVector(-35.0f, 0.0f, 50.0f));
-	InteractionTagsComp = CreateDefaultSubobject<UABSInteractionTagsComponent>(TEXT("InteractionTag Component"));
+	InteractionComp = CreateDefaultSubobject<UABSInteractionComponent>(TEXT("Interaction Component"));
 	TargetPitch = 110;
 }
 
@@ -20,40 +20,67 @@ void AABSItemChest::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if(InteractionTagsComp->ActiveGameplayTags.HasTagExact(FGameplayTag::RequestGameplayTag("Interaction.Activated")))
+	BindWithComponent();
+
+	if(InteractionComp->ActiveGameplayTags.HasTagExact(FGameplayTag::RequestGameplayTag("Interaction.Activated")))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Activated Opened");
-		OnLidOpened();
+		StartInteract();
 	}
 }
 
-void AABSItemChest::OnInteraction(AActor* Instigator)
+void AABSItemChest::BindWithComponent()
 {
+	InteractionComp->OnInteractedWith.AddDynamic(this, &AABSItemChest::OnInteraction);
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, "Binding Component");
+}
+
+void AABSItemChest::OnInteraction(AActor* InstigatingActor)
+{
+	UE_LOG(LogTemp, Log, TEXT("AABSItemChest::OnInteraction fired"))
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Interaction Found OnInteraction Triggered");
+	
 	//If its open close it and remove tag
-	if(InteractionTagsComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Interaction.Activated")))
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Interaction.Activated")))
 	{
-		InteractionTagsComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
-		OnLidOpened();
+		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
+		EndInteract();
 	}
 	//If its secured check if player has the proper key to open it
-	else if(InteractionTagsComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Interaction.Secure")))
+	else if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Interaction.Secure")))
 	{
 		//
 		//
-		//	
+		StartInteract();
 		//	
 		//	
 		//		
 	}
 	else
 	{
-		InteractionTagsComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
-		OnLidOpened();
+		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
+		StartInteract();
 	}
 }
 
-void AABSItemChest::OnLidOpened()
+void AABSItemChest::StartInteract()
 {
-	float CurrPitch = 110.0f;/*bLidOpened ? TargetPitch : 0.0f;*/
-	LidMesh->SetRelativeRotation(FRotator(CurrPitch, 0, 0));
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	IABSGameplayInterface::Execute_InteractionStart(this, MyPawn);
+}
+
+void AABSItemChest::EndInteract()
+{
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	IABSGameplayInterface::Execute_InteractionEnd(this, MyPawn);
+}
+
+UABSInteractionComponent* AABSItemChest::GetOwningComponent() const
+{
+	return InteractionComp;
+}
+
+void AABSItemChest::OnInteractedWithCallback(AActor* FocusedActor)
+{
+	UE_LOG(LogTemp, Log, TEXT("On Interacted With Callback on %s"), *GetHumanReadableName())
 }

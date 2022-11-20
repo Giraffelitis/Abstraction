@@ -29,5 +29,8 @@ class ABSTRACTION_API IABSGameplayInterface
 	FText GetInteractText(APawn* InstigatorPawn);
 	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	void Interact(APawn* InstigatorPawn);
+	void InteractionStart(APawn* InstigatorPawn);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void InteractionEnd(APawn* InstigatorPawn);
 };

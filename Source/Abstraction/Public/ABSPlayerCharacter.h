@@ -8,7 +8,7 @@
 
 struct FInputActionValue;
 class UABSInputConfig;
-class UABSInteractionComponent;
+class UABSInteractAction;
 class UCameraComponent;
 class UCameraShakeBase;
 class UGameplayTagsManager;
@@ -43,7 +43,7 @@ public:
 	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
 	
 	UPROPERTY(VisibleAnywhere)
-	UABSInteractionComponent* InteractionComp;
+	UABSInteractAction* InteractAction;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UABSAttributeComponent* AttributeComp;
