@@ -2,6 +2,7 @@
 
 
 #include "ABSInteractableSwitch.h"
+#include "ABSInteractionComponent.h"
 #include "Components/AudioComponent.h"
 
 AABSInteractableSwitch::AABSInteractableSwitch()
@@ -12,6 +13,7 @@ AABSInteractableSwitch::AABSInteractableSwitch()
 	SwitchMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SwitchMesh"));
 	SwitchMesh->SetRelativeRotation(FRotator(-35.0f, 0.0f, 50.0f));
 	SwitchMesh->SetupAttachment(BaseMesh);
+
 	SwitchAngle = 50;
 
 }

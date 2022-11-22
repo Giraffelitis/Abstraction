@@ -2,6 +2,7 @@
 
 
 #include "ABSInteractionComponent.h"
+#include "ABSWorldUserWidget.h"
 
 void UABSInteractionComponent::InteractedWith(AActor* FocusedActor) const
 {

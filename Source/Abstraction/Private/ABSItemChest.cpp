@@ -2,7 +2,9 @@
 
 #include "ABSItemChest.h"
 #include "ABSAction.h"
+#include "ABSActionComponent.h"
 #include "ABSInteractionComponent.h"
+#include "ABSPlayerCharacter.h"
 #include "Components/StaticMeshComponent.h"
 
 AABSItemChest::AABSItemChest()
@@ -47,17 +49,24 @@ void AABSItemChest::OnInteraction(AActor* InstigatingActor)
 		EndInteract();
 	}
 	//If its secured check if player has the proper key to open it
-	else if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Interaction.Secure")))
+	else if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("SecurityTag")))
 	{
-		//
-		//
-		StartInteract();
-		//	
-		//	
-		//		
+		UABSActionComponent* InstigatorComp = InstigatingActor->FindComponentByClass<UABSActionComponent>();
+		check(InstigatorComp)
+		if(InstigatorComp->ActiveGameplayTags.HasAllExact(InteractionComp->ActiveGameplayTags))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Open w/ Security");
+			InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
+			StartInteract();
+		}
+		else
+		{			
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Security Requirements not met");
+		}
 	}
 	else
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Open w/o Security");
 		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
 		StartInteract();
 	}

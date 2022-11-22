@@ -52,10 +52,10 @@ protected:
 private:
 
 	UPROPERTY()
-	UABSObjectivesWidget*	ObjectiveWidget = nullptr;
+	UABSObjectivesWidget* ObjectiveWidget = nullptr;
 	
 	UPROPERTY()
-	UUserWidget*	ObjectivesCompleteWidget = nullptr;
+	UUserWidget* ObjectivesCompleteWidget = nullptr;
 
 	TArray<const UABSObjectiveComponent*> Objectives;
 };

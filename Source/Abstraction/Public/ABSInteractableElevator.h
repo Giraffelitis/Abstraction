@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "ABSInteractableElevator.generated.h"
 
+class UABSInteractionComponent;
 
 UCLASS()
 class ABSTRACTION_API AABSInteractableElevator : public AActor, public IABSGameplayInterface

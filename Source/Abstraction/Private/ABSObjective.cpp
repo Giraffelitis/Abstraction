@@ -37,7 +37,7 @@ void UABSObjective::StartObjective_Implementation(AActor* Instigator)
 	GetOwningComponent()->OnObjectiveStarted.Broadcast(GetOwningComponent(), this);
 }
 
-void UABSObjective::StopObjective_Implementation(AActor* Instigator)
+void UABSObjective::CompleteObjective_Implementation(AActor* Instigator)
 {
 	UE_LOG(LogTemp, Log, TEXT("Stopped: %s"), *GetNameSafe(this));
 	//LogOnScreen(this, FString::Printf(TEXT("Stopped: %s"), *ActionName.ToString()), FColor::White);
@@ -45,7 +45,7 @@ void UABSObjective::StopObjective_Implementation(AActor* Instigator)
 	UABSObjectiveComponent* Comp = GetOwningComponent();
 	Comp->ObjectiveTags.RemoveTags(GrantsTags);
 
-	GetOwningComponent()->OnObjectiveStopped.Broadcast(GetOwningComponent(), this);
+	GetOwningComponent()->OnObjectiveCompleted.Broadcast(GetOwningComponent(), this);
 }
 
 UABSObjectiveComponent* UABSObjective::GetOwningComponent() const

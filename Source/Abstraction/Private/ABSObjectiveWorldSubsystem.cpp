@@ -11,16 +11,16 @@
 
 FString UABSObjectiveWorldSubsystem::GetCurrentObjectiveDescription(UABSObjectiveComponent* ObjectiveComponent)
 {
-//		if (ObjectiveComponent->ObjectiveTags.HasTag(Tags.Objective_Inactive))
-//		{
-//			return TEXT("N/A");
-//		}
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Inactive")))
+		{
+			return TEXT("N/A");
+		}
 
 		FString RetObjective = "Objectives[0]->GetDescription()";
-//		if (ObjectiveComponent->ObjectiveTags.HasTag(Tags.Objective_Complete))
-//		{
-//			RetObjective += TEXT(" Completed!");
-//		}
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed")))
+		{
+			RetObjective += TEXT(" Completed!");
+		}
 		return RetObjective;
 }
 
@@ -32,14 +32,14 @@ void UABSObjectiveWorldSubsystem::AddObjective(UABSObjectiveComponent* Objective
 	Objectives.AddUnique(ObjectiveComponent);
 	if (Objectives.Num() > PrevSize)
 	{
-		//ObjectiveComponent->OnStateChanged.AddUObject(this, &UABSObjectiveWorldSubsystem::OnObjectiveStateChanged);
+//		ObjectiveComponent->OnObjectiveStarted.AddDynamic(this, &UABSObjectiveWorldSubsystem::OnObjectiveStateChanged);
 	}
 }
 
 void UABSObjectiveWorldSubsystem::RemoveObjective(UABSObjectiveComponent* ObjectiveComponent)
 {
-//	int32 numRemoved = ObjectiveComponent->ObjectiveTags.HasTag();
-//	check(numRemoved);
+	int32 numRemoved = ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed"));
+	check(numRemoved);
 	Objectives.Remove(ObjectiveComponent);
 }
 
@@ -117,7 +117,7 @@ uint32 UABSObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 	uint32 ObjectivedCompleted = 0u;
 	for (const UABSObjectiveComponent* OC : Objectives)
 	{
-		if (OC /*&& OC->GetState() == EObjectiveState::OS_Completed*/)
+		if (OC && OC->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed")))
 		{
 			++ObjectivedCompleted;
 		}
@@ -137,14 +137,14 @@ void UABSObjectiveWorldSubsystem::OnObjectiveStateChanged(const UABSObjectiveCom
 	//check if game is over... 
 	if (ObjectiveWidget && ObjectivesCompleteWidget)
 	{
-		if (/*(ObjectiveState == EObjectiveState::OS_Completed) &&*/ GetCompletedObjectiveCount() == Objectives.Num())
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed")) && GetCompletedObjectiveCount() == Objectives.Num())
 		{
 			//GameOver
 			DisplayObjectivesCompleteWidget();
 		}
-		/*else
-		{*/
+		else
+		{
 			DisplayObjectiveWidget();
-		/*}*/
+		}
 	}
 }

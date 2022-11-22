@@ -9,7 +9,8 @@
 
 class UABSObjective;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveStateChanged, UABSObjectiveComponent*, OwningComp, UABSObjective*, Objective);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveStarted, UABSObjectiveComponent*, OwningComp, UABSObjective*, Objective);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveCompleted, UABSObjectiveComponent*, OwningComp, UABSObjective*, Objective);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UABSObjectiveComponent : public UActorComponent
@@ -24,10 +25,10 @@ public:
 	FGameplayTagContainer ObjectiveTags;
 
 	UPROPERTY(BlueprintAssignable)
-	FOnObjectiveStateChanged OnObjectiveStarted;
+	FOnObjectiveStarted OnObjectiveStarted;
 
 	UPROPERTY(BlueprintAssignable)
-	FOnObjectiveStateChanged OnObjectiveStopped;
+	FOnObjectiveCompleted OnObjectiveCompleted;
 
 	// Not currently used but might be needed for timed objectives?
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

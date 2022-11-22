@@ -43,12 +43,12 @@ protected:
 public:
 	void Initialize(UABSObjectiveComponent* NewObjectiveComp);
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Action")
+	UFUNCTION(BlueprintNativeEvent, Category = "Objective")
 	bool CanStart(AActor* Instigator);
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Action")
+	UFUNCTION(BlueprintNativeEvent, Category = "Objective")
 	void StartObjective(AActor* Instigator);
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Action")
-	void StopObjective(AActor* Instigator);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Objective")
+	void CompleteObjective(AActor* Instigator);
 };

@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "ABSInteractableSwitch.generated.h"
 
+class UABSInteractionComponent;
+
 UCLASS()
 class ABSTRACTION_API AABSInteractableSwitch : public AActor, public IABSGameplayInterface
 {

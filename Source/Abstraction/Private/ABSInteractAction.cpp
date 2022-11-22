@@ -23,6 +23,11 @@ UABSInteractAction::UABSInteractAction()
 	CollisionChannel = ECC_WorldDynamic;
 }
 
+void UABSInteractAction::Initialize(UABSInteractionComponent* NewActionComp)
+{
+	InteractionComp = NewActionComp;
+}
+
 void UABSInteractAction::BeginPlay()
 {
 	Super::BeginPlay();
@@ -89,8 +94,11 @@ void UABSInteractAction::FindBestInteractable()
 
 	if (FocusedActor)
 	{
+		
 		if (DefaultWidgetInstance == nullptr && ensure(DefaultWidgetClass))
 		{
+
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Display Interact");
 			DefaultWidgetInstance = CreateWidget<UABSWorldUserWidget>(GetWorld(), DefaultWidgetClass);
 		}
 
@@ -128,11 +136,11 @@ void UABSInteractAction::Interact(AActor* InFocus)
 {
 	if (InFocus == nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No Focus Actor to interact.");
 		return;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "UABSInteractAction::Interact was fired");
+	AActor* MyOwner = GetOwner();
+	check(MyOwner)
 	
 	UABSInteractionComponent* Comp = InFocus->FindComponentByClass<UABSInteractionComponent>();
 	if(Comp)
@@ -140,10 +148,11 @@ void UABSInteractAction::Interact(AActor* InFocus)
 		UE_LOG(LogTemp, Log, TEXT("InteractAction::Interact Found Component and asked it to fire InteractedWith function"))
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Component Found and Interaction was Broadcast");
 		
-		Comp->InteractedWith(InFocus);
+		Comp->InteractedWith(MyOwner);
 	}
-
-	
-	//IABSGameplayInterface::Execute_Interact(InFocus, MyPawn);
 }
 
+UABSInteractionComponent* UABSInteractAction::GetOwningComponent() const
+{
+	return InteractionComp;
+}

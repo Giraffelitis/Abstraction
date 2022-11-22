@@ -15,6 +15,7 @@ class UGameplayTagsManager;
 class UABSAttributeComponent;
 class UParticleSystemComponent;
 class UABSActionComponent;
+class UABSInteractionComponent;
 
 // Declaration of the delegate that will be called when the Primary Action is triggered
 // It is declared as dynamic so it can be accessed also in Blueprints
@@ -87,6 +88,10 @@ public:
 	void SecondaryInteract(const FInputActionValue& InputActionValue);
 	
 protected:
+
+	UPROPERTY(VisibleAnywhere)
+	UABSInteractionComponent* InteractionComp;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

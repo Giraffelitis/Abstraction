@@ -8,6 +8,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractedWith, class AActor*, FocusedActor);
 
+class UABSWorldUserWidget;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UABSInteractionComponent : public UActorComponent
 {
@@ -21,6 +23,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
 	FGameplayTagContainer ActiveGameplayTags;
 
+	// Creates In Editor option to select proper Widget
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UABSWorldUserWidget> DefaultWidgetClass;
+
+	UPROPERTY()
+	UABSWorldUserWidget* DefaultWidgetInstance;
+
 	void InteractedWith(AActor* FocusedActor) const;
+
+	void IsFocusedOn(AActor* FocusedActor);
+	void OutOfFocus() const;
 	
 };

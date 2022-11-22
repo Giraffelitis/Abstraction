@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "ABSInteractableDoor.generated.h"
 
+class UABSInteractionComponent;
+
 UCLASS()
 class ABSTRACTION_API AABSInteractableDoor : public AActor, public IABSGameplayInterface
 {

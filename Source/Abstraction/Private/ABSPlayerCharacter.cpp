@@ -10,6 +10,7 @@
 #include "Components/InputComponent.h"
 #include "EnhancedInput/Public/InputAction.h"
 #include "ABSEnhancedInputComponent.h"
+#include "ABSInteractionComponent.h"
 #include "ABSGameplayTags.h"
 #include "ABSInteractAction.h"
 #include "ABSActionComponent.h"
@@ -21,6 +22,7 @@ AABSPlayerCharacter::AABSPlayerCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	InteractionComp = CreateDefaultSubobject<UABSInteractionComponent>(TEXT("Interaction Component"));
 	InteractAction = CreateDefaultSubobject<UABSInteractAction>("InteractAction");
 	ActionComp = CreateDefaultSubobject<UABSActionComponent>("ActionComp");
 
@@ -34,6 +36,8 @@ AABSPlayerCharacter::AABSPlayerCharacter()
 	PlayerCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ThirdPersonCamera"));
 	PlayerCameraComponent->SetupAttachment(GetCapsuleComponent());
 	PlayerCameraComponent->bUsePawnControlRotation = true;
+
+
 }
 
 // Called when the game starts or when spawned
