@@ -13,20 +13,63 @@ AABSInteractableSwitch::AABSInteractableSwitch()
 	SwitchMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SwitchMesh"));
 	SwitchMesh->SetRelativeRotation(FRotator(-35.0f, 0.0f, 50.0f));
 	SwitchMesh->SetupAttachment(BaseMesh);
-
+	InteractionComp = CreateDefaultSubobject<UABSInteractionComponent>(TEXT("Interaction Component"));
+	
 	SwitchAngle = 50;
 
 }
 
-void AABSInteractableSwitch::OnInteraction(APawn* InstigatorPawn)
+void AABSInteractableSwitch::BeginPlay()
 {
-	bSwitchedOn = !bSwitchedOn;
-	OnSwitchedOn();
+	Super::BeginPlay();
+
+	BindWithComponent();
+
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
+	{
+		StartInteract();
+	}
 }
 
-void AABSInteractableSwitch::OnSwitchedOn()
+void AABSInteractableSwitch::BindWithComponent()
 {
-	float CurrAngle = bSwitchedOn ? SwitchAngle : 0.0f;
-	SwitchMesh->SetRelativeRotation(FRotator(0, CurrAngle, 0));
+	InteractionComp->OnInteractedWith.AddDynamic(this, &AABSInteractableSwitch::OnInteraction);
+}
+
+void AABSInteractableSwitch::OnInteraction(AActor* InstigatingActor)
+{	
+	//If its activated deactivate it and remove tag		Else add tag and Activate it.
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
+	{
+		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
+		EndInteract();
+	}
+	else
+	{
+		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
+		StartInteract();
+	}
+}
+
+void AABSInteractableSwitch::StartInteract()
+{
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	IABSGameplayInterface::Execute_InteractionStart(this, MyPawn);
+}
+
+void AABSInteractableSwitch::EndInteract()
+{
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	IABSGameplayInterface::Execute_InteractionEnd(this, MyPawn);
+}
+
+UABSInteractionComponent* AABSInteractableSwitch::GetOwningComponent() const
+{
+	return InteractionComp;
+}
+
+void AABSInteractableSwitch::OnInteractedWithCallback(AActor* FocusedActor)
+{
+	UE_LOG(LogTemp, Log, TEXT("On Interacted With Callback on %s"), *GetHumanReadableName())
 }
 

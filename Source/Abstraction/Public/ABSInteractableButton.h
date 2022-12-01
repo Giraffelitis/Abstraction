@@ -20,15 +20,26 @@ public:
 	UPROPERTY(BlueprintReadWrite, Meta =(InstanceEditable="true"))
 	float DepressDepth;
 
-	void OnInteraction(APawn* InstigatorPawn);
+	UFUNCTION()
+	void OnInteraction(AActor* InstigatingActor);
 
 protected:
+	virtual void BeginPlay() override;
+	
+	UFUNCTION(BlueprintCallable)
+	void StartInteract();
 
-	UPROPERTY(EditAnywhere)
-	bool bButtonPressed;
+	UFUNCTION(BlueprintCallable)
+	void EndInteract();
+ 
+	void BindWithComponent();
 
-	UFUNCTION()
-	void OnButtonPressed();
+	void OnInteractedWithCallback(AActor* FocusedActor);
+
+	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
+	UABSInteractionComponent* InteractionComp;
+
+	UABSInteractionComponent* GetOwningComponent() const;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* FrameMesh;

@@ -14,6 +14,7 @@
 #include "ABSGameplayTags.h"
 #include "ABSInteractAction.h"
 #include "ABSActionComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 // Sets default values
 AABSPlayerCharacter::AABSPlayerCharacter()
@@ -33,9 +34,12 @@ AABSPlayerCharacter::AABSPlayerCharacter()
 	TurnRateGamepad = 45.f;
 
 	// Create a CameraComponent	
+	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
+	SpringArmComp->SetupAttachment(RootComponent);
 	PlayerCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ThirdPersonCamera"));
-	PlayerCameraComponent->SetupAttachment(GetCapsuleComponent());
+	PlayerCameraComponent->SetupAttachment(SpringArmComp);
 	PlayerCameraComponent->bUsePawnControlRotation = true;
+
 
 
 }

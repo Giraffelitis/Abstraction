@@ -145,7 +145,6 @@ void UABSInteractAction::Interact(AActor* InFocus)
 	UABSInteractionComponent* Comp = InFocus->FindComponentByClass<UABSInteractionComponent>();
 	if(Comp)
 	{
-		UE_LOG(LogTemp, Log, TEXT("InteractAction::Interact Found Component and asked it to fire InteractedWith function"))
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Component Found and Interaction was Broadcast");
 		
 		Comp->InteractedWith(MyOwner);

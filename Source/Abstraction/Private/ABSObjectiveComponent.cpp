@@ -2,26 +2,43 @@
 
 
 #include "ABSObjectiveComponent.h"
+#include "ABSObjectiveWorldSubsystem.h"
+#include "Engine/World.h"
 
-// Sets default values for this component's properties
 UABSObjectiveComponent::UABSObjectiveComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	bWantsInitializeComponent = true;
+	PrimaryComponentTick.bCanEverTick = false;
+	this->ObjectiveTags.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Inactive"));
 }
 
-
-// Called when the game starts
-void UABSObjectiveComponent::BeginPlay()
+void UABSObjectiveComponent::UpdateObjectiveTag()
 {
-	Super::BeginPlay();	
+	if (this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Inactive")))
+	{
+		this->ObjectiveTags.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Active"));
+		OnStateChanged.Broadcast(this);
+	}
 }
 
 
-// Called every frame
-void UABSObjectiveComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UABSObjectiveComponent::InitializeComponent()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::InitializeComponent();
+	//register
+	UABSObjectiveWorldSubsystem* ObjectiveWorldSubsystem = GetWorld()->GetSubsystem<UABSObjectiveWorldSubsystem>();
+	if (ObjectiveWorldSubsystem)
+	{
+		ObjectiveWorldSubsystem->AddObjective(this);
+	}
 }
 
+void UABSObjectiveComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	UABSObjectiveWorldSubsystem* ObjectiveWorldSubsystem = GetWorld()->GetSubsystem<UABSObjectiveWorldSubsystem>();
+	if (ObjectiveWorldSubsystem)
+	{
+		ObjectiveWorldSubsystem->RemoveObjective(this);
+	}
+	Super::EndPlay(EndPlayReason);
+}

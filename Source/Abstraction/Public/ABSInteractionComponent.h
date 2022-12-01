@@ -6,7 +6,8 @@
 #include "GameplayTagContainer.h"
 #include "ABSInteractionComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractedWith, class AActor*, FocusedActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractedWith, class AActor*, InstigatingActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractionSuccess, class AActor*, FocusedActor);
 
 class UABSWorldUserWidget;
 
@@ -19,9 +20,15 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnInteractedWith OnInteractedWith;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnInteractedWith OnInteractionSuccess;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
 	FGameplayTagContainer ActiveGameplayTags;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
+	FGameplayTagContainer SecurityTags;
 
 	// Creates In Editor option to select proper Widget
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
@@ -30,9 +37,8 @@ public:
 	UPROPERTY()
 	UABSWorldUserWidget* DefaultWidgetInstance;
 
-	void InteractedWith(AActor* FocusedActor) const;
+	void InteractedWith(AActor* InstigatingActor) const;
 
-	void IsFocusedOn(AActor* FocusedActor);
-	void OutOfFocus() const;
+	void InteractionSuccessful(AActor* InstigatingActor) const;
 	
 };

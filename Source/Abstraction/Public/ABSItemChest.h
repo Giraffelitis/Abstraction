@@ -21,7 +21,7 @@ public:
 	float TargetPitch;
 
 	UFUNCTION()
-	void OnInteraction(AActor* Instigator);
+	void OnInteraction(AActor* InstigatingActor);
 
 protected:
 	virtual void BeginPlay() override;
@@ -30,13 +30,7 @@ protected:
 	void StartInteract();
 
 	UFUNCTION(BlueprintCallable)
-	void EndInteract();
-
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* BaseMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UStaticMeshComponent* LidMesh;
+	void EndInteract();	
 
 	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
 	UABSInteractionComponent* InteractionComp;
@@ -46,5 +40,11 @@ protected:
 	void OnInteractedWithCallback(AActor* FocusedActor);
 
 	UABSInteractionComponent* GetOwningComponent() const;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* BaseMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UStaticMeshComponent* LidMesh;
 
 };

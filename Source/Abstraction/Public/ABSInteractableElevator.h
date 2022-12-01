@@ -20,15 +20,16 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	float LiftHeight;
 
-	void OnInteraction(APawn* InstigatorPawn);
+	void OnInteraction(AActor* InstigatingActor);
 
 protected:
+	virtual void BeginPlay() override;
+	
+	UFUNCTION(BlueprintCallable)
+	void StartInteract();
 
-	UPROPERTY(BlueprintReadOnly)
-	bool bElevatorActivated;
-
-	UFUNCTION()
-	void OnElevatorActivated();
+	UFUNCTION(BlueprintCallable)
+	void EndInteract();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* PlatformMesh;
@@ -41,4 +42,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* RightRailingMesh;
+
+	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
+	UABSInteractionComponent* InteractionComp;
+	
+	void BindWithComponent();
+
+	void OnInteractedWithCallback(AActor* FocusedActor);
+
+	UABSInteractionComponent* GetOwningComponent() const;
 };

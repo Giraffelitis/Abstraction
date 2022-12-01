@@ -2,7 +2,6 @@
 
 #include "ABSInteractableButton.h"
 #include "ABSInteractionComponent.h"
-#include "Components/AudioComponent.h"
 
 AABSInteractableButton::AABSInteractableButton()
 {
@@ -11,19 +10,62 @@ AABSInteractableButton::AABSInteractableButton()
 
 	ButtonMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ButtonMesh"));
 	ButtonMesh->SetupAttachment(FrameMesh);
-
+	InteractionComp = CreateDefaultSubobject<UABSInteractionComponent>(TEXT("Interaction Component"));
+	
 	DepressDepth = 4;
 }
 
-void AABSInteractableButton::OnInteraction(APawn* InstigatorPawn)
+void AABSInteractableButton::BeginPlay()
 {
-	bButtonPressed = !bButtonPressed;
-	OnButtonPressed();
+	Super::BeginPlay();
+
+	BindWithComponent();
+
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
+	{
+		StartInteract();
+	}
 }
 
-void AABSInteractableButton::OnButtonPressed()
+void AABSInteractableButton::BindWithComponent()
 {
-	float CurrDepth = bButtonPressed ? DepressDepth : 0.0f;
-	ButtonMesh->SetRelativeLocation(FVector(0, CurrDepth, 0));
+	InteractionComp->OnInteractedWith.AddDynamic(this, &AABSInteractableButton::OnInteraction);
+}
+
+void AABSInteractableButton::OnInteraction(AActor* InstigatingActor)
+{	
+	//If its activated deactivate it and remove tag		Else add tag and Activate it.
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
+	{
+		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
+		EndInteract();
+	}
+	else
+	{
+		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
+		StartInteract();
+	}
+}
+
+void AABSInteractableButton::StartInteract()
+{
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	IABSGameplayInterface::Execute_InteractionStart(this, MyPawn);
+}
+
+void AABSInteractableButton::EndInteract()
+{
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	IABSGameplayInterface::Execute_InteractionEnd(this, MyPawn);
+}
+
+UABSInteractionComponent* AABSInteractableButton::GetOwningComponent() const
+{
+	return InteractionComp;
+}
+
+void AABSInteractableButton::OnInteractedWithCallback(AActor* FocusedActor)
+{
+	UE_LOG(LogTemp, Log, TEXT("On Interacted With Callback on %s"), *GetHumanReadableName())
 }
 

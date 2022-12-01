@@ -3,9 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
-#include "ABSObjectiveComponent.h"
 #include "ABSGameplayTags.h"
-#include "ABSObjective.h"
 #include "ABSObjectiveWorldSubsystem.generated.h"
 
 
@@ -34,14 +32,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnMapStart();
 	
-protected:
-
-	virtual void Deinitialize() override;
-
 	void CreateObjectiveWidgets();
 
 	void DisplayObjectiveWidget();
 	void RemoveObjectiveWidget();
+		
+protected:
+
+	virtual void Deinitialize() override;
 
 	void DisplayObjectivesCompleteWidget();
 	void RemoveObjectivesCompleteWidget();

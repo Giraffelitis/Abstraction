@@ -2,22 +2,22 @@
 
 
 #include "ABSObjectiveWorldSubsystem.h"
-#include "ABSGameplayTags.h"
 #include "Kismet/GameplayStatics.h"
 #include "../AbstractionGameModeBase.h"
 #include "Blueprint/UserWidget.h"
 #include "ABSObjectivesWidget.h"
+#include "ABSObjectiveComponent.h"
 #include "NativeGameplayTags.h"
 
 FString UABSObjectiveWorldSubsystem::GetCurrentObjectiveDescription(UABSObjectiveComponent* ObjectiveComponent)
 {
-		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Inactive")))
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Inactive")))
 		{
 			return TEXT("N/A");
 		}
 
 		FString RetObjective = "Objectives[0]->GetDescription()";
-		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed")))
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Completed")))
 		{
 			RetObjective += TEXT(" Completed!");
 		}
@@ -29,16 +29,20 @@ void UABSObjectiveWorldSubsystem::AddObjective(UABSObjectiveComponent* Objective
 	check(ObjectiveComponent);
 
 	size_t PrevSize = Objectives.Num();
-	Objectives.AddUnique(ObjectiveComponent);
-	if (Objectives.Num() > PrevSize)
-	{
-//		ObjectiveComponent->OnObjectiveStarted.AddDynamic(this, &UABSObjectiveWorldSubsystem::OnObjectiveStateChanged);
+	if(ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag")))
+	{		
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Purple, "ObjectiveTagFound");
+		Objectives.AddUnique(ObjectiveComponent);
+		if (Objectives.Num() > PrevSize)
+		{
+			ObjectiveComponent->OnStateChanged.AddUObject(this, &UABSObjectiveWorldSubsystem::OnObjectiveStateChanged);
+		}
 	}
 }
 
 void UABSObjectiveWorldSubsystem::RemoveObjective(UABSObjectiveComponent* ObjectiveComponent)
 {
-	int32 numRemoved = ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed"));
+	int32 numRemoved = ObjectiveComponent->OnStateChanged.RemoveAll(this);
 	check(numRemoved);
 	Objectives.Remove(ObjectiveComponent);
 }
@@ -117,7 +121,7 @@ uint32 UABSObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 	uint32 ObjectivedCompleted = 0u;
 	for (const UABSObjectiveComponent* OC : Objectives)
 	{
-		if (OC && OC->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed")))
+		if (OC && OC->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Completed")))
 		{
 			++ObjectivedCompleted;
 		}
@@ -137,7 +141,7 @@ void UABSObjectiveWorldSubsystem::OnObjectiveStateChanged(const UABSObjectiveCom
 	//check if game is over... 
 	if (ObjectiveWidget && ObjectivesCompleteWidget)
 	{
-		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("Objective.Completed")) && GetCompletedObjectiveCount() == Objectives.Num())
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Completed")) && GetCompletedObjectiveCount() == Objectives.Num())
 		{
 			//GameOver
 			DisplayObjectivesCompleteWidget();

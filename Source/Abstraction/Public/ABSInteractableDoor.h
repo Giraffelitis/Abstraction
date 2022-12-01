@@ -17,20 +17,29 @@ class ABSTRACTION_API AABSInteractableDoor : public AActor, public IABSGameplayI
 public:
 	AABSInteractableDoor();
 	
-	void OnInteraction(APawn* InstigatorPawn);
-
-protected:
 	UPROPERTY(BlueprintReadWrite, meta = (InstanceEditable="true"))
 	float TargetOpenAngle;
 
-	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn="true"))
-	bool IsSecured;
-	
-	UPROPERTY(BlueprintReadOnly)
-	bool bDoorOpened;
-
 	UFUNCTION()
-	void OnDoorOpened();
+	void OnInteraction(AActor* InstigatingActor);
+
+protected:
+	virtual void BeginPlay() override;
+	
+	UFUNCTION(BlueprintCallable)
+	void StartInteract();
+
+	UFUNCTION(BlueprintCallable)
+	void EndInteract();	
+
+	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
+	UABSInteractionComponent* InteractionComp;
+ 
+	void BindWithComponent();
+
+	void OnInteractedWithCallback(AActor* FocusedActor);
+
+	UABSInteractionComponent* GetOwningComponent() const;
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* FrameMesh;

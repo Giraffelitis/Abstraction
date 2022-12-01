@@ -1,11 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ABSItemChest.h"
-#include "ABSAction.h"
-#include "ABSActionComponent.h"
 #include "ABSInteractionComponent.h"
-#include "ABSPlayerCharacter.h"
-#include "Components/StaticMeshComponent.h"
 
 AABSItemChest::AABSItemChest()
 {
@@ -24,9 +20,8 @@ void AABSItemChest::BeginPlay()
 
 	BindWithComponent();
 
-	if(InteractionComp->ActiveGameplayTags.HasTagExact(FGameplayTag::RequestGameplayTag("Interaction.Activated")))
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Activated Opened");
 		StartInteract();
 	}
 }
@@ -34,40 +29,19 @@ void AABSItemChest::BeginPlay()
 void AABSItemChest::BindWithComponent()
 {
 	InteractionComp->OnInteractedWith.AddDynamic(this, &AABSItemChest::OnInteraction);
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, "Binding Component");
 }
 
 void AABSItemChest::OnInteraction(AActor* InstigatingActor)
-{
-	UE_LOG(LogTemp, Log, TEXT("AABSItemChest::OnInteraction fired"))
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Interaction Found OnInteraction Triggered");
-	
-	//If its open close it and remove tag
-	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("Interaction.Activated")))
+{	
+	//If its activated deactivate it and remove tag		Else add tag and Activate it.
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
 	{
-		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
+		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
 		EndInteract();
-	}
-	//If its secured check if player has the proper key to open it
-	else if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("SecurityTag")))
-	{
-		UABSActionComponent* InstigatorComp = InstigatingActor->FindComponentByClass<UABSActionComponent>();
-		check(InstigatorComp)
-		if(InstigatorComp->ActiveGameplayTags.HasAllExact(InteractionComp->ActiveGameplayTags))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Open w/ Security");
-			InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
-			StartInteract();
-		}
-		else
-		{			
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Security Requirements not met");
-		}
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Open w/o Security");
-		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("Interaction.Activated"));
+		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
 		StartInteract();
 	}
 }

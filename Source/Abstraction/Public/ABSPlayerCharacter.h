@@ -16,6 +16,7 @@ class UABSAttributeComponent;
 class UParticleSystemComponent;
 class UABSActionComponent;
 class UABSInteractionComponent;
+class USpringArmComponent;
 
 // Declaration of the delegate that will be called when the Primary Action is triggered
 // It is declared as dynamic so it can be accessed also in Blueprints
@@ -34,6 +35,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* PlayerCameraComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* SpringArmComp;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -43,7 +47,7 @@ public:
 	/** Called when the actor falls out of the world 'safely' (below KillZ and such) */
 	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
 	
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UABSInteractAction* InteractAction;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -89,7 +93,7 @@ public:
 	
 protected:
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UABSInteractionComponent* InteractionComp;
 
 	// Called when the game starts or when spawned

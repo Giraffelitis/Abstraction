@@ -37,21 +37,21 @@ void FABSGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(InputTag_Parry, "InputTag.Parry", "Parry input.");
 
 	//InteractionTags
-	AddTag(Interaction_Activated, "Interaction.Activated", "Is object activated");
-	AddTag(Interaction_Secure, "Interaction.Secure", "Is object secured?");
+	AddTag(InteractionTag_Activated, "InteractionTag.Activated", "Is object activated");
+	AddTag(InteractionTag_Secure, "InteractionTag.Secure", "Is object secured?");
 	
 	//Objective Tags
-	AddTag(Objective_Inactive, "ObjectiveTag.Inactive", "Objective Inactive.");
-	AddTag(Objective_Active, "ObjectiveTag.Active", "Object Active.");
-	AddTag(Objective_Completed, "ObjectiveTag.Complete", "Objective Complete.");
-	AddTag(Objective_InProgress, "ObjectiveTag.InProgress", "Objective is in progress.");
-	AddTag(Objective_ReadyToTurnIn, "ObjectiveTag.ReadyToTurnIn", "Objective is ready to be turned in.");
+	AddTag(ObjectiveTag_Inactive, "ObjectiveTag.Inactive", "Objective Inactive.");
+	AddTag(ObjectiveTag_Active, "ObjectiveTag.Active", "Object Active.");
+	AddTag(ObjectiveTag_Completed, "ObjectiveTag.Complete", "Objective Complete.");
+	AddTag(ObjectiveTag_InProgress, "ObjectiveTag.InProgress", "Objective is in progress.");
+	AddTag(ObjectiveTag_ReadyToTurnIn, "ObjectiveTag.ReadyToTurnIn", "Objective is ready to be turned in.");
 	
 	//Security Tags
-	AddTag(Security_Card_Red, "SecurityTag.Card.Red", "Red Security Card.");
-	AddTag(Security_Card_Green, "SecurityTag.Card.Green", "Green Security Card.");
-	AddTag(Security_Card_Yellow, "SecurityTag.Card.Yellow", "Yellow Security Card.");
-	AddTag(Security_Card_Blue, "SecurityTag.Card.Blue", "Blue Security Card.");
+	AddTag(SecurityTag_Card_Red, "SecurityTag.Card.Red", "Red Security Card.");
+	AddTag(SecurityTag_Card_Green, "SecurityTag.Card.Green", "Green Security Card.");
+	AddTag(SecurityTag_Card_Yellow, "SecurityTag.Card.Yellow", "Yellow Security Card.");
+	AddTag(SecurityTag_Card_Blue, "SecurityTag.Card.Blue", "Blue Security Card.");
 }
 
 void FABSGameplayTags::AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment)

@@ -4,13 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "GameplayTagContainer.h"
+#include "ABSGameplayTags.h"
 #include "ABSObjectiveComponent.generated.h"
 
-class UABSObjective;
+class UABSObjectiveComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveStarted, UABSObjectiveComponent*, OwningComp, UABSObjective*, Objective);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveCompleted, UABSObjectiveComponent*, OwningComp, UABSObjective*, Objective);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnObjectiveStateChanged, const UABSObjectiveComponent*);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UABSObjectiveComponent : public UActorComponent
@@ -21,22 +20,22 @@ public:
 	// Sets default values for this component's properties
 	UABSObjectiveComponent();
 
+	UFUNCTION(BlueprintCallable)
+	const FString& GetDescription() const { return Description; }
+
+	FOnObjectiveStateChanged OnStateChanged;
+
+	//Add Interaction and Security tags to this container.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
 	FGameplayTagContainer ObjectiveTags;
 
-	UPROPERTY(BlueprintAssignable)
-	FOnObjectiveStarted OnObjectiveStarted;
-
-	UPROPERTY(BlueprintAssignable)
-	FOnObjectiveCompleted OnObjectiveCompleted;
-
-	// Not currently used but might be needed for timed objectives?
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	
+	void UpdateObjectiveTag();
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;		
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	void InitializeComponent() override;
+
+	UPROPERTY(EditAnywhere)
+	FString Description;
+
 };
-/*	Need to create Objective class that will house functions that will add and remove tags through
- *	the different stages and scenarios involving objectives. reference action.cpp
- */

@@ -34,22 +34,22 @@ public:
 	FGameplayTag InputTag_Parry;
 
 	//InteractionTags
-	FGameplayTag Interaction_Activated;
-	FGameplayTag Interaction_Secure;
+	FGameplayTag InteractionTag_Activated;
+	FGameplayTag InteractionTag_Secure;
 
 	//ObjectiveTags
-	FGameplayTag Objective_Inactive;		// Not Currently Available
-	FGameplayTag Objective_Active;			// Available to Pickup
-	FGameplayTag Objective_InProgress;		// Currently in Progress
-	FGameplayTag Objective_ReadyToTurnIn;	// All requirements complete and ready to turn in
-	FGameplayTag Objective_Completed;		// Completed
+	FGameplayTag ObjectiveTag_Inactive;		// Not Currently Available
+	FGameplayTag ObjectiveTag_Active;			// Available to Pickup
+	FGameplayTag ObjectiveTag_InProgress;		// Currently in Progress
+	FGameplayTag ObjectiveTag_ReadyToTurnIn;	// All requirements complete and ready to turn in
+	FGameplayTag ObjectiveTag_Completed;		// Completed
 	
 
 	//SecurityTag
-	FGameplayTag Security_Card_Red;
-	FGameplayTag Security_Card_Green;
-	FGameplayTag Security_Card_Yellow;
-	FGameplayTag Security_Card_Blue;
+	FGameplayTag SecurityTag_Card_Red;
+	FGameplayTag SecurityTag_Card_Green;
+	FGameplayTag SecurityTag_Card_Yellow;
+	FGameplayTag SecurityTag_Card_Blue;
 	
 protected:
 

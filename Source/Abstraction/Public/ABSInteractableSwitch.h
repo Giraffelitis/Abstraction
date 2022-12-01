@@ -20,15 +20,26 @@ public:
 	UPROPERTY(EditAnywhere)
 	float SwitchAngle;
 
-	void OnInteraction(APawn* InstigatorPawn);
+	UFUNCTION()
+	void OnInteraction(AActor* InstigatingActor);
 
 protected:
+	virtual void BeginPlay() override;
+	
+	UFUNCTION(BlueprintCallable)
+	void StartInteract();
 
-	UPROPERTY(BlueprintReadOnly)
-	bool bSwitchedOn;
+	UFUNCTION(BlueprintCallable)
+	void EndInteract();	
 
-	UFUNCTION()
-	void OnSwitchedOn();
+	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
+	UABSInteractionComponent* InteractionComp;
+ 
+	void BindWithComponent();
+
+	void OnInteractedWithCallback(AActor* FocusedActor);
+
+	UABSInteractionComponent* GetOwningComponent() const;
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
