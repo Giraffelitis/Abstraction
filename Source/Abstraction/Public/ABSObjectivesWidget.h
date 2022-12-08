@@ -7,6 +7,10 @@
 #include "ABSObjectivesWidget.generated.h"
 
 class UTextBlock;
+class UVeritcalBox;
+class UVerticalBoxSlot;
+class UHorizontalBox;
+class UCheckBox;
 
 UCLASS()
 class ABSTRACTION_API UABSObjectivesWidget : public UUserWidget
@@ -19,4 +23,5 @@ public:
 protected:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* ObjectivesText;
+
 };

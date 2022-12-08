@@ -52,20 +52,20 @@ void UABSInteractAction::FindBestInteractable()
 	bool bDebugDraw = CVarDebugDrawInteraction.GetValueOnGameThread();
 
 	FCollisionObjectQueryParams ObjectQueryParams;
-	ObjectQueryParams.AddObjectTypesToQuery(CollisionChannel);
+	ObjectQueryParams.AddObjectTypesToQuery(CollisionChannel); // Checks for collisions based on CollisionChannel
 
-	AActor* MyOwner = GetOwner();
+	AActor* MyOwner = GetOwner(); // Gets Actor to start trace from
 
 	FVector EyeLocation;
 	FRotator EyeRotation;
-	MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+	MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);  // Sets Start point of trace
 
-	FVector End = EyeLocation + (EyeRotation.Vector() * TraceDistance);
+	FVector End = EyeLocation + (EyeRotation.Vector() * TraceDistance); //Sets end point of trace for interaction
 
-	TArray<FHitResult> Hits;
+	TArray<FHitResult> Hits; // Used to collect all Actors hit with Sweep
 
 	FCollisionShape Shape;
-	Shape.SetSphere(TraceRadius);
+	Shape.SetSphere(TraceRadius); // Sets shape and size for the end of the trace is used to make easier interaction and not needing pinpoint accuracy for smaller objects
 
 	bool bBlockingHit = GetWorld()->SweepMultiByObjectType(Hits, EyeLocation, End, FQuat::Identity, ObjectQueryParams, Shape);
 

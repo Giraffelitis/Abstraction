@@ -3,33 +3,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ABSGameplayInterface.h"
+#include "ABSInteractableActor.h"
 #include "GameFramework/Actor.h"
 #include "ABSInteractableElevator.generated.h"
 
-class UABSInteractionComponent;
-
 UCLASS()
-class ABSTRACTION_API AABSInteractableElevator : public AActor, public IABSGameplayInterface
+class ABSTRACTION_API AABSInteractableElevator : public AABSInteractableActor
 {
 	GENERATED_BODY()
 
 public:
 	AABSInteractableElevator();
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, meta = (InstanceEditable="true"))
 	float LiftHeight;
 
-	void OnInteraction(AActor* InstigatingActor);
-
 protected:
-	virtual void BeginPlay() override;
-	
-	UFUNCTION(BlueprintCallable)
-	void StartInteract();
-
-	UFUNCTION(BlueprintCallable)
-	void EndInteract();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* PlatformMesh;
@@ -42,13 +31,4 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* RightRailingMesh;
-
-	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
-	UABSInteractionComponent* InteractionComp;
-	
-	void BindWithComponent();
-
-	void OnInteractedWithCallback(AActor* FocusedActor);
-
-	UABSInteractionComponent* GetOwningComponent() const;
 };

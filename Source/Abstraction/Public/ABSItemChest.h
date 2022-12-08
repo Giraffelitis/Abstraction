@@ -3,44 +3,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ABSGameplayInterface.h"
+#include "ABSInteractableActor.h"
 #include "GameFramework/Actor.h"
 #include "ABSItemChest.generated.h"
 
-class UABSInteractionComponent;
-
 UCLASS()
-class ABSTRACTION_API AABSItemChest : public AActor, public IABSGameplayInterface
+class ABSTRACTION_API AABSItemChest : public AABSInteractableActor
 {
 	GENERATED_BODY()
 
 public:
 	AABSItemChest();
-	
-	UPROPERTY(EditAnywhere)
-	float TargetPitch;
-
-	UFUNCTION()
-	void OnInteraction(AActor* InstigatingActor);
 
 protected:
-	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere)
+	float TargetPitch;
 	
-	UFUNCTION(BlueprintCallable)
-	void StartInteract();
-
-	UFUNCTION(BlueprintCallable)
-	void EndInteract();	
-
-	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
-	UABSInteractionComponent* InteractionComp;
- 
-	void BindWithComponent();
-
-	void OnInteractedWithCallback(AActor* FocusedActor);
-
-	UABSInteractionComponent* GetOwningComponent() const;
-
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
 

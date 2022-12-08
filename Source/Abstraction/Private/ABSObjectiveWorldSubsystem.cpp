@@ -133,6 +133,9 @@ uint32 UABSObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 
 void UABSObjectiveWorldSubsystem::OnObjectiveStateChanged(const UABSObjectiveComponent* ObjectiveComponent)
 {
+
+	//ADD IN DIFFERENT SITUATIONS FOR STATE CHANGES
+	
 	if (Objectives.Num() == 0 || !Objectives.Contains(ObjectiveComponent))
 	{
 		return;
