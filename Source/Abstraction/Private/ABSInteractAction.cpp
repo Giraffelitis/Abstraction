@@ -97,8 +97,6 @@ void UABSInteractAction::FindBestInteractable()
 		
 		if (DefaultWidgetInstance == nullptr && ensure(DefaultWidgetClass))
 		{
-
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Display Interact");
 			DefaultWidgetInstance = CreateWidget<UABSWorldUserWidget>(GetWorld(), DefaultWidgetClass);
 		}
 

@@ -5,19 +5,19 @@
 #include "Kismet/GameplayStatics.h"
 #include "../AbstractionGameModeBase.h"
 #include "Blueprint/UserWidget.h"
-#include "ABSObjectivesWidget.h"
+#include "ABSObjectiveWidget.h"
 #include "ABSObjectiveComponent.h"
 #include "NativeGameplayTags.h"
 
 FString UABSObjectiveWorldSubsystem::GetCurrentObjectiveDescription(UABSObjectiveComponent* ObjectiveComponent)
 {
-		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Inactive")))
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available")))
 		{
 			return TEXT("N/A");
 		}
 
 		FString RetObjective = "Objectives[0]->GetDescription()";
-		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Completed")))
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed")))
 		{
 			RetObjective += TEXT(" Completed!");
 		}
@@ -31,7 +31,6 @@ void UABSObjectiveWorldSubsystem::AddObjective(UABSObjectiveComponent* Objective
 	size_t PrevSize = Objectives.Num();
 	if(ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag")))
 	{		
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Purple, "ObjectiveTagFound");
 		Objectives.AddUnique(ObjectiveComponent);
 		if (Objectives.Num() > PrevSize)
 		{
@@ -73,8 +72,8 @@ void UABSObjectiveWorldSubsystem::CreateObjectiveWidgets()
 		if (GameMode)
 		{
 			APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-			ObjectiveWidget = CreateWidget<UABSObjectivesWidget>(PlayerController, GameMode->ObjectiveWidgetClass);
-			ObjectivesCompleteWidget = CreateWidget<UUserWidget>(PlayerController, GameMode->ObjectivesCompleteWidgetClass);
+			ObjectiveWidget = CreateWidget<UABSObjectiveWidget>(PlayerController, GameMode->ObjectiveWidgetClass);
+			ObjectivesCompleteWidget = CreateWidget<UABSObjectiveWidget>(PlayerController, GameMode->ObjectivesCompleteWidgetClass);
 		}
 	}
 }
@@ -88,7 +87,7 @@ void UABSObjectiveWorldSubsystem::DisplayObjectiveWidget()
 			ObjectiveWidget->AddToViewport();
 		}
 		
-		ObjectiveWidget->UpdateObjectiveText(GetCompletedObjectiveCount(), Objectives.Num());
+	//	ObjectiveWidget->UpdateObjectiveText(GetCompletedObjectiveCount(), Objectives.Num());
 	}
 }
 
@@ -121,7 +120,7 @@ uint32 UABSObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 	uint32 ObjectivedCompleted = 0u;
 	for (const UABSObjectiveComponent* OC : Objectives)
 	{
-		if (OC && OC->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Completed")))
+		if (OC && OC->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed")))
 		{
 			++ObjectivedCompleted;
 		}
@@ -133,7 +132,7 @@ uint32 UABSObjectiveWorldSubsystem::GetCompletedObjectiveCount()
 
 void UABSObjectiveWorldSubsystem::OnObjectiveStateChanged(const UABSObjectiveComponent* ObjectiveComponent)
 {
-
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Purple, "ObjectiveTagFound");
 	//ADD IN DIFFERENT SITUATIONS FOR STATE CHANGES
 	
 	if (Objectives.Num() == 0 || !Objectives.Contains(ObjectiveComponent))
@@ -144,7 +143,7 @@ void UABSObjectiveWorldSubsystem::OnObjectiveStateChanged(const UABSObjectiveCom
 	//check if game is over... 
 	if (ObjectiveWidget && ObjectivesCompleteWidget)
 	{
-		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Completed")) && GetCompletedObjectiveCount() == Objectives.Num())
+		if (ObjectiveComponent->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed")) && GetCompletedObjectiveCount() == Objectives.Num())
 		{
 			//GameOver
 			DisplayObjectivesCompleteWidget();

@@ -3,12 +3,12 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
-#include "ABSGameplayTags.h"
 #include "ABSObjectiveWorldSubsystem.generated.h"
 
-
+class UABSObjectiveEvents;
+class UABSObjectiveHandler;
 class UABSObjectiveComponent;
-class UABSObjectivesWidget;
+class UABSObjectiveWidget;
 class UUserWidget;
 
 UCLASS()
@@ -35,6 +35,7 @@ public:
 	void CreateObjectiveWidgets();
 
 	void DisplayObjectiveWidget();
+	
 	void RemoveObjectiveWidget();
 		
 protected:
@@ -42,6 +43,7 @@ protected:
 	virtual void Deinitialize() override;
 
 	void DisplayObjectivesCompleteWidget();
+	
 	void RemoveObjectivesCompleteWidget();
 
 	uint32 GetCompletedObjectiveCount();
@@ -50,10 +52,10 @@ protected:
 private:
 
 	UPROPERTY()
-	UABSObjectivesWidget* ObjectiveWidget = nullptr;
-	
+	UABSObjectiveWidget* ObjectiveWidget = nullptr;
+
 	UPROPERTY()
-	UUserWidget* ObjectivesCompleteWidget = nullptr;
+	UABSObjectiveWidget* ObjectivesCompleteWidget = nullptr;
 
 	TArray<const UABSObjectiveComponent*> Objectives;
 };

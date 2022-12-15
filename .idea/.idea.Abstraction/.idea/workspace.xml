@@ -4,36 +4,432 @@
     <projectFile>Intermediate/ProjectFiles/Abstraction.vcxproj</projectFile>
     <projectFile>Intermediate/ProjectFiles/UE5.vcxproj</projectFile>
   </component>
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7a574ac-39a6-45bc-be9b-dca57b9b934a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableActor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableActor.h" afterDir="false" />
+    <list default="true" id="f043db98-c68f-43c6-9670-4738ab6a433f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Components/AC_Quest_Actor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Components/AC_Quest_PlayerController.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Components/AC_Quest_PlayerState.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/EUI_RUNME.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestEvents/BP_QuestEvents.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestEvents/BP_QuestEvents_ButtonDestroy.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestEvents/BP_QuestEvents_ButtonSpawn.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestEvents/BP_QuestEvents_GiveQuestItems.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestEvents/BP_QuestEvents_PlayCutscene.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestGameMode.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/BP_QuestIndicator.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Basic.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Basic_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Fullturn.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Fullturn_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Halfturn.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Halfturn_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Pointer.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Arrow_Pointer_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_At.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_At_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Bull.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Bull_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Circle.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Circle_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Cupcake.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Cupcake_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Dollar.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Dollar_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Euro.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Euro_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Pound.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Pound_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Yen.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Currency_Yen_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Delivery.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Delivery_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Exclamation.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Exclamation_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Honey.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Honey_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Key.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Key_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Keys.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Keys_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Percent.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Percent_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Question.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Question_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Square.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestIndicator/Meshes/SM_Indicator_Square_Empty.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/AC_QuestObjective.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Collect/AC_QuestObjective_Collect.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Collect/BP_QuestObjective_CollectIndicator.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Defeat/AC_QuestObjective_Defeat.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Defeat/BP_QuestObjective_DefeatIndicator.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Defeat/BP_QuestObjective_DefeatPawnSample.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Defeat/BP_QuestObjective_DefeatPawn_Sample_Faux.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Interact/AC_QuestObjective_Interact.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Interact/BP_QuestObjective_InteractIndicator.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Inventory/AC_QuestObjective_Inventory.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Travel/AC_QuestObjective_Travel.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestObjectives/Travel/BP_QuestObjective_Travel_Helper.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestPlayerCharacter.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/QuestPlayerController.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/BPFL_SharedFunctions.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/DataTables/DT_Quests.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Enums/E_QuestIndicatorAnimation.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Enums/E_QuestIndicatorAnimationEaseType.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Enums/E_QuestIndicator_MultipleHandler.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Enums/E_QuestState.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Enums/E_QuestType.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Interfaces/BPI_QuestIndicator.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Interfaces/BPI_QuestInteract.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/SaveGames/BP_SaveGame_PlayerQuestObjectivesData.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/SaveGames/BP_SaveGame_PlayerQuestObjectivesState.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/SaveGames/BP_SaveGame_PlayerQuestStates.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/SaveGames/BP_SaveGame_PlayerQuestsTracking.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_Quest.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_QuestIndicatorAnimation.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_QuestIndicatorMaterials.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_QuestObjective.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_QuestRewards.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_QuestStateChange.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_QuestStateDrop.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Blueprints/Variables/Structures/F_QuestText.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Animations/Jog_Fwd.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Materials/Layers/ML_Latex_Black.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Materials/Layers/ML_ShinyPlastic_Beige.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Materials/Layers/ML_ShinyPlastic_Beige_Logo.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Materials/Layers/ML_SoftMetal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Materials/M_MannequinUE4_Body.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Materials/M_MannequinUE4_ChestLogo.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Meshes/SK_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Meshes/SK_Mannequin_PhysicsAsset.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Meshes/SK_Mannequin_Skeleton.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Rigs/IK_UE4_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Rigs/RTG_UE4Manny_UE5Manny.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Rigs/RTG_UE5Manny_UE4Manny.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin_MAT_MASKA.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin__normals.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_UELogo_Mask.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequin_UE4/Textures/T_UELogo_N_TGA.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/ABP_Manny.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/ABP_Quinn.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/BS_MM_WalkRun.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/MM_Fall_Loop.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/MM_Idle.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/MM_Jump.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/MM_Land.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/MM_Run_Fwd.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/MM_Walk_Fwd.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Manny/MM_Walk_InPlace.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Quinn/BS_MF_Unarmed_WalkRun.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Quinn/MF_Idle.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Quinn/MF_Run_Fwd.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Animations/Quinn/MF_Walk_Fwd.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Functions/CA_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Functions/ChromaticCurve.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Functions/MF_Diffraction.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Functions/MF_logo3layers.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Functions/ML_BaseColorFallOff.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Instances/Manny/MI_Manny_01.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Instances/Manny/MI_Manny_02.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Instances/Quinn/MI_Quinn_01.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/Instances/Quinn/MI_Quinn_02.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Materials/M_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Meshes/Mannequin_LODSettings.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Meshes/SKM_Manny.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Meshes/SKM_Manny_Simple.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Meshes/SKM_Quinn.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Meshes/SKM_Quinn_Simple.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Meshes/SK_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/ABP_Manny_PostProcess.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/ABP_Quinn_PostProcess.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/CR_Mannequin_BasicFootIK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/CR_Mannequin_Body.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/CR_Mannequin_Procedural.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/IK_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/PA_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_calf_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_calf_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_calf_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_calf_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_clavicle_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_clavicle_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_clavicle_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_clavicle_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_foot_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_foot_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_foot_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_foot_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_hand_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_hand_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_hand_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_hand_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_lowerarm_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_lowerarm_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_lowerarm_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_lowerarm_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_thigh_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_thigh_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_thigh_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_thigh_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_upperarm_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_upperarm_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_upperarm_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Manny/Manny_upperarm_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_calf_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_calf_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_calf_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_calf_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_clavicle_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_clavicle_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_clavicle_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_clavicle_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_foot_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_foot_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_foot_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_foot_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_hand_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_hand_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_hand_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_hand_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_lowerarm_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_lowerarm_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_lowerarm_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_lowerarm_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_thigh_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_thigh_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_thigh_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_thigh_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_upperarm_l_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_upperarm_l_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_upperarm_r_anim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/Poses/Quinn/Quinn_upperarm_r_pose.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Rigs/RTG_Mannequin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_01_ASAOPMASK_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_01_BN.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_01_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_01_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_01_MSR_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_01_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_01_Tan.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_02_ASAOPMASK_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_02_BN.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_02_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_02_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_02_MSR_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_02_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Manny/T_Manny_02_Tan.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_BN.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_MSR_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_01ID_Tan.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_01_ASAOMASK_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_01_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_BN.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_MSR_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_02ID_Tan.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_02_ASAOMASK_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Quinn/T_Quinn_02_CCRCCPlastic_MSK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Characters/Mannequins/Textures/Shared/T_UE_Logo_M.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Cutscenes/LS_Lily.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Cutscenes/LS_timmy1.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Materials/MF_ProcGrid.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Materials/MI_PrototypeGrid_Gray_02.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Materials/MI_PrototypeGrid_TopDark.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Materials/MI_Solid_Blue.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Materials/M_PrototypeGrid.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Materials/M_Solid.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Meshes/SM_ChamferCube.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Meshes/SM_Cube.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Meshes/SM_Cylinder.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Meshes/SM_QuarterCylinder.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Meshes/SM_Ramp.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/LevelPrototyping/Textures/T_GridChecker_A.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/Buttons/BP_Button.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/Buttons/BP_Button_GiveItems.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/Buttons/BP_Button_QuestState.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/Buttons/BP_Button_ResetAllQuests.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/DemoIndicator/BP_Button_IndicatorDemo.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/DemoIndicator/BP_IndicatorDemo.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/DemoIndicator/BP_ToggleDemoIndicatorWidget.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/DemoIndicator/UI_IndicatorDemo.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/LevelPortal/BP_LevelPortal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/RespawnPoint/BP_RespawnPoint.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/RespawnPoint/BP_RespawnVolume.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/TeleportTube/BP_TeleportTube.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/TeleportTube/Materials/M_TeleportRipple.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/TeleportTube/Particles/P_AttackRipple.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/TeleportTube/Particles/P_TeleportRipple.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/MapHelpers/TeleportTube/Textures/T_TeleportRippleRing.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/GlassMaterial/MF_NormalStrength.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/GlassMaterial/MI_Glass_Clear.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/GlassMaterial/MI_Glass_Semi.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/GlassMaterial/M_Glass_Panels_NM.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/GlassMaterial/PM_Glass.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Flat_Black.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Flat_Blue.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Flat_Green.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Flat_Red.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Flat_White.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Flat_Yellow.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Glow_Blue.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Glow_Gold.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Glow_Gold_Faint.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Glow_Green.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Glow_Green_Faint.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Glow_Red.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Glow_White.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Metallic_Bronze.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Metallic_Gold.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Metallic_Green.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Metallic_Red.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Metallic_Silver.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Metallic_Titanium.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Shiny_Black.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/MI_Shiny_Red.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/M_Flat.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/M_Glow.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/M_Metallic.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/M_Shiny.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Manny/MI_Manny_Blue_Body.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Manny/MI_Manny_Blue_Head.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Manny/MI_Manny_Green_Body.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Manny/MI_Manny_Green_Head.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Quinn/MI_Quinn_Purple_Body.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Quinn/MI_Quinn_Purple_Head.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Text/MI_GlowText.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Materials/Text/M_GlowText.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_Box.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_BoxSmall.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_Button.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_RespawnText.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_Sphere.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_StageWall.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_Steps.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_Tube.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Meshes/SM_UnrealLogo.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_exclamation_blue.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_exclamation_gray.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_exclamation_green.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_exclamation_red.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_exclamation_yellow.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_questionmark_blue.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_questionmark_gray.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_questionmark_green.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_questionmark_red.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/QuestIndicatorIcons/T_icon_questionmark_yellow.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/RewardsNumericIcons/T_Icon_XP.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/RewardsNumericIcons/T_icon_currency.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/RewardsNumericIcons/T_icon_reputation.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/T_blue_sphere.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/T_gold_sphere.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/T_loot_box.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/T_loot_box_extreme.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Icons/T_red_sphere.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Images/T_bar-fill.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Images/T_circle-white.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Images/T_gradient-transparent-black.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Images/T_gradient-transparent-white.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/Textures/Images/T_shadow-bottom.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/ThirdPerson/Blueprints/BP_ThirdPersonGameMode.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Maps/MAP_StartHere.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/Maps/MAP_TestTravel.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestLog/UI_QuestLog.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestLog/UI_QuestLog_Details.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestLog/UI_QuestLog_Quest.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestLog/UI_QuestLog_RewardItem.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestTracking/UI_QuestTracking_Quest.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestTracking/UI_QuestTracking_QuestObjective.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestWindow/RT_UI_QuestWindow_Details_TargetCamera.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestWindow/UI_QuestWindow.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestWindow/UI_QuestWindow_Details.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestWindow/UI_QuestWindow_Details_RewardItem.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestWindow/UI_QuestWindow_MultipleQuests.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/QuestWindow/UI_QuestWindow_MultipleQuests_Quest.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/DynomegaQuestSystem/UIs/WBP_ObjectiveHUD.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/0/ER/2YBLEK3WO7YYQ49UIVURB2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/0/IJ/0W436RAI5AQJ22ODL9FJLB.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/0/ON/0SJ5ROU1OJAC8D4MSB6BXG.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/1/I9/SEYYT9FEOW5G6HGUZWIMFH.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/1/R1/WEH917W637N5C5EUJGM46I.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/2/2C/295BWLLGIFVKLY0LJB7VM9.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/2/84/WPXCMH6MU0CWTMUDGHSJJL.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/2/D5/X54E82TFT3U9TLJYULOQ4I.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/2/GM/5X6SERDBJ7MP25WYE7RKBW.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/2/MD/FGJ7DSDRYD250MCC1V3SN3.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/3/XY/I466PGVBQUF3ZAHQMJDUUR.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/4/0E/3RSVFNRFC3GHG3RKAM3FKV.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/5/DW/QATV4OOZQ0D9GTGHQ519E8.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/5/PX/T7UTJQ4MQKWL8YJ34F6FQ6.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/5/WY/ZNPOO18ZN79HDZG2H7F0DD.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/6/GH/TZHKLU50HE11YJAJ3LWO22.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/6/T1/B72S3LT38UDSCWFZTI1TNM.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/8/AH/OVASRG2S99S0T93L3KOSEJ.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/8/ED/HYEDIST1XXNIJND3YVAI48.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/8/O0/AEZI1PJO37WWZ5NQ6WDWVK.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/8/S9/1OPSK62SDTFIUQSD9WJMVM.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/9/LB/4HNFEEXGK40M2ME96OUHJC.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/9/Z1/CESKZ5B92SSIK7NG1U71BT.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/A/43/DJUJUJRH2AYLYG2SA265D5.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/A/49/6NKD97SJFOS9H3BL0J0YN0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/A/I2/CMVW76U1JJYT356S3OSA06.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/A/JN/98PK9ROC0KBFUSI7SCVGUG.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/A/U7/3L7U9I6U50S4JFIMB52V42.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/B/FW/XUMJ0JLO1U1SNN87D6P6HC.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/B/IT/06P4HXTZGENCNHSZBWL05G.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/B/K1/MPK96HAQDBRY8557X6KENW.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/B/ND/VBF71Y7D57X1NQYJIB3DD7.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/B/RJ/ZBPG67AEG90X4QQAA9STVD.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/C/H7/3XERQML102U89515HAV4RB.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/C/ZF/S0GQJN5BQ34KEIH3DVYIKJ.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/D/1J/MHGKVSRIDLJW4JLWXF1EU5.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/E/5X/KSSXB4MUFK2OQC42S95JI1.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/E/NM/5KBXJXIGEQZP0B7LB5188G.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/E/TI/HYG3OBI60B7IAOG17ZDREZ.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/F/5C/62VSKHL16FEN992CVFRJ9E.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/D/SY/Z4CTQ4LG3YV10EKPD0UE8Q.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalObjects__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/0/0I/5EUAFXCXDP1EQ2MIGILAQG.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalObjects__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/0/8Z/GSYS3J05CLC0LH179X8BYF.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalObjects__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/2/1W/JVHKY7WW8E9BJTDG2YLWSA.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalObjects__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/4/12/LZ4JO0QXYFFMSRJYNFEKAI.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalObjects__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/6/Y4/CTP5XSETS86WHQU4B0IZZE.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalObjects__/DynomegaQuestSystem/Demo/ThirdPerson/Maps/ThirdPersonMap/C/61/IYB06B61F72CA1KR21JNT1.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Abstraction/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Abstraction/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Abstraction/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Abstraction/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableDoor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableDoor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableElevator.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableElevator.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Actors/BP_ABSItemChest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/BP_ABSItemChest.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Actors/Player/BP_ABSPlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/Player/BP_ABSPlayerCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Actors/Player/BP_ABSPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/Player/BP_ABSPlayerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Data/GameplayTags.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/GameMode/CustomGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/GameMode/CustomGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/2DLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/2DLevel.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/Functionality_TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Functionality_TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Widgets/WBP_ObjectivesWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/WBP_ObjectivesWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/AbstractionGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/AbstractionGameModeBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/Menu.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/OptionsMenu.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/WBP_ObjectivesCompleted.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/WBP_ObjectivesWidget.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSGameplayTags.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSGameplayTags.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractAction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractAction.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableButton.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableDoor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableElevator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableElevator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableSwitch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractableSwitch.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSItemChest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSItemChest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractionComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveWorldSubsystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveWorldSubsystem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectivesWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectivesWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInputConfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInputConfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableButton.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableDoor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableDoor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableElevator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableElevator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableSwitch.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractableSwitch.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSItemChest.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSItemChest.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectivesWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectivesWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectivesWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSPlayerCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSPlayerCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSGameplayTags.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSGameplayTags.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractionComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSInteractionComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveWorldSubsystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveWorldSubsystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectivesWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSPlayerController.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,23 +439,20 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+  <component name="ProjectId" id="2IgqaLmS7Xmcz1clEOW7LEMAH06" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectId" id="2HuN7AIPho0Kd0lndkR9FsuGHNH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -187,79 +580,36 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a7a574ac-39a6-45bc-be9b-dca57b9b934a" name="Changes" comment="" />
-      <created>1669130841017</created>
+      <changelist id="f043db98-c68f-43c6-9670-4738ab6a433f" name="Changes" comment="" />
+      <created>1670613638124</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1669130841017</updated>
-      <workItem from="1669130867699" duration="5077000" />
-      <workItem from="1669258990137" duration="1910000" />
-      <workItem from="1669268921898" duration="697000" />
-      <workItem from="1669275584243" duration="3778000" />
-      <workItem from="1669330369139" duration="5471000" />
-      <workItem from="1669341088081" duration="153000" />
-      <workItem from="1669394339735" duration="4451000" />
-      <workItem from="1669434159826" duration="462000" />
-      <workItem from="1669435480854" duration="596000" />
-      <workItem from="1669443173408" duration="2448000" />
-      <workItem from="1669488927825" duration="1139000" />
-      <workItem from="1669495982975" duration="68000" />
-      <workItem from="1669496075488" duration="7526000" />
-      <workItem from="1669519632801" duration="691000" />
-      <workItem from="1669529265580" duration="7645000" />
-      <workItem from="1669738632196" duration="6479000" />
-      <workItem from="1669912229848" duration="11765000" />
-      <workItem from="1670084806637" duration="339000" />
-      <workItem from="1670085297200" duration="90000" />
-      <workItem from="1670085463887" duration="31000" />
-      <workItem from="1670097467507" duration="748000" />
-      <workItem from="1670103120050" duration="331000" />
-      <workItem from="1670108984652" duration="1037000" />
-      <workItem from="1670112020281" duration="331000" />
-      <workItem from="1670172644896" duration="315000" />
-      <workItem from="1670174698358" duration="92000" />
-      <workItem from="1670261942174" duration="654000" />
-      <workItem from="1670272298849" duration="621000" />
-      <workItem from="1670275840599" duration="1311000" />
-      <workItem from="1670467185021" duration="1407000" />
-      <workItem from="1670472743732" duration="3492000" />
-      <workItem from="1670515491455" duration="10933000" />
+      <updated>1670613638124</updated>
+      <workItem from="1670613641294" duration="7161000" />
+      <workItem from="1670623538186" duration="4878000" />
+      <workItem from="1670634170055" duration="88000" />
+      <workItem from="1670634345442" duration="134000" />
+      <workItem from="1670634557662" duration="434000" />
+      <workItem from="1670635089503" duration="2709000" />
+      <workItem from="1670642461379" duration="2427000" />
+      <workItem from="1670691130485" duration="7015000" />
+      <workItem from="1670712114344" duration="1113000" />
+      <workItem from="1670718295558" duration="732000" />
+      <workItem from="1670778944512" duration="2011000" />
+      <workItem from="1670876703000" duration="3089000" />
+      <workItem from="1670884154961" duration="12931000" />
+      <workItem from="1670952985757" duration="7395000" />
+      <workItem from="1671040986265" duration="8100000" />
+      <workItem from="1671124872415" duration="156000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Abstraction/Private/ABSPlayerCharacter.cpp</url>
-          <line>3</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Abstraction/Private/ABSPlayerCharacter.cpp</url>
-          <line>61</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

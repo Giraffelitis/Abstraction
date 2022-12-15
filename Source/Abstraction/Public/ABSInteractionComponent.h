@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "ABSGameplayInterface.h"
 #include "ABSInteractionComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractedWith, class AActor*, InstigatingActor);
@@ -12,7 +13,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractionSuccess, class AActor*
 class UABSWorldUserWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ABSTRACTION_API UABSInteractionComponent : public UActorComponent
+class ABSTRACTION_API UABSInteractionComponent : public UActorComponent, public IABSGameplayInterface
 {
 	GENERATED_BODY()
 
@@ -22,7 +23,7 @@ public:
 	FOnInteractedWith OnInteractedWith;
 
 	UPROPERTY(BlueprintAssignable)
-	FOnInteractedWith OnInteractionSuccess;
+	FOnInteractionSuccess OnInteractionSuccess;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
 	FGameplayTagContainer ActiveGameplayTags;
@@ -36,9 +37,10 @@ public:
 
 	UPROPERTY()
 	UABSWorldUserWidget* DefaultWidgetInstance;
-
-	void InteractedWith(AActor* InstigatingActor) const;
+	
+	void InteractedWith(AActor* InstigatingActor);
 
 	void InteractionSuccessful(AActor* InstigatingActor) const;
-	
+
 };
+

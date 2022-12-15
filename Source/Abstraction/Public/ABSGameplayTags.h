@@ -38,13 +38,28 @@ public:
 	FGameplayTag InteractionTag_Secure;
 
 	//ObjectiveTags
-	FGameplayTag ObjectiveTag_Inactive;		// Not Currently Available
-	FGameplayTag ObjectiveTag_Active;			// Available to Pickup
-	FGameplayTag ObjectiveTag_InProgress;		// Currently in Progress
-	FGameplayTag ObjectiveTag_ReadyToTurnIn;	// All requirements complete and ready to turn in
-	FGameplayTag ObjectiveTag_Completed;		// Completed
-	
+	FGameplayTag ObjectiveTag_Type_MainStory;
+	FGameplayTag ObjectiveTag_Type_SideMission;
+	FGameplayTag ObjectiveTag_Type_Repeatable;
 
+	//ObjectiveTags States
+	FGameplayTag ObjectiveTag_State_Failed;				// Not Currently Available
+	FGameplayTag ObjectiveTag_State_NotAvailableYet;	// Not Available to pickup yet	
+	FGameplayTag ObjectiveTag_State_Available;			// Available to Pickup
+	FGameplayTag ObjectiveTag_State_InProgress;			// Currently in Progress
+	FGameplayTag ObjectiveTag_State_ReadyToTurnIn;		// All requirements complete and ready to turn in
+	FGameplayTag ObjectiveTag_State_Completed;			// Completed
+
+	//ObjectiveTags Types
+	FGameplayTag ObjectiveTag_Interact_Activate;
+	FGameplayTag ObjectiveTag_Interact_Deactivate;
+	FGameplayTag ObjectiveTag_Interact_Pickup;
+	FGameplayTag ObjectiveTag_Interact_Deliver;
+	FGameplayTag ObjectiveTag_Interact_Heal;
+	FGameplayTag ObjectiveTag_Interact_Destroy;
+	FGameplayTag ObjectiveTag_Location_Enter;
+	FGameplayTag ObjectiveTag_Location_Exit;
+	
 	//SecurityTag
 	FGameplayTag SecurityTag_Card_Red;
 	FGameplayTag SecurityTag_Card_Green;

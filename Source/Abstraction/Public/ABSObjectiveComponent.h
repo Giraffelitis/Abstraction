@@ -8,6 +8,7 @@
 #include "ABSObjectiveComponent.generated.h"
 
 class UABSObjectiveComponent;
+class UABSInteractionComponent;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnObjectiveStateChanged, const UABSObjectiveComponent*);
 
@@ -22,8 +23,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	const FString& GetDescription() const { return Description; }
-
+	
 	FOnObjectiveStateChanged OnStateChanged;
+
+	UABSInteractionComponent* InteractionComp;
 
 	//Add Interaction and Security tags to this container.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")

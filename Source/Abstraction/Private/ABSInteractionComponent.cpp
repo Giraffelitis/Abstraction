@@ -2,13 +2,14 @@
 
 
 #include "ABSInteractionComponent.h"
+#include "ABSObjectiveComponent.h"
 #include "ABSObjectiveWorldSubsystem.h"
-#include "ABSWorldUserWidget.h"
 
-
-void UABSInteractionComponent::InteractedWith(AActor* InstigatingActor) const
+void UABSInteractionComponent::InteractedWith(AActor* InstigatingActor)
 {
 	UE_LOG(LogTemp, Log, TEXT("InteractionComponent::InteractedWith Function triggered"))
+
+	UABSObjectiveComponent* ObjectiveComp = InstigatingActor->FindComponentByClass<UABSObjectiveComponent>();
 	//If its secured check if player has the proper key to open it
 	 if(this->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("SecurityTag")))
 	{

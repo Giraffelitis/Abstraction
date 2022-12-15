@@ -39,9 +39,7 @@ AABSPlayerCharacter::AABSPlayerCharacter()
 	PlayerCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ThirdPersonCamera"));
 	PlayerCameraComponent->SetupAttachment(SpringArmComp);
 	PlayerCameraComponent->bUsePawnControlRotation = true;
-
-
-
+	
 }
 
 // Called when the game starts or when spawned
