@@ -21,7 +21,8 @@ void AABSInteractableActor::BeginPlay()
 
 	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
 	{
-		StartInteract();
+		APawn* MyPawn = Cast<APawn>(GetOwner());
+		Execute_InteractionStart(this, MyPawn);
 	}
 }
 
@@ -31,30 +32,19 @@ void AABSInteractableActor::BindWithComponent()
 }
 
 void AABSInteractableActor::OnInteraction(AActor* InstigatingActor)
-{	
+{
+	APawn* MyPawn = Cast<APawn>(GetOwner());
 	//If its activated deactivate it and remove tag		Else add tag and Activate it.
 	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
 	{
 		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
-		EndInteract();
+		Execute_InteractionEnd(this, MyPawn);
 	}
 	else
 	{
 		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
-		StartInteract();
+		Execute_InteractionStart(this, MyPawn);
 	}
-}
-
-void AABSInteractableActor::StartInteract()
-{
-	APawn* MyPawn = Cast<APawn>(GetOwner());
-	IABSGameplayInterface::Execute_InteractionStart(this, MyPawn);
-}
-
-void AABSInteractableActor::EndInteract()
-{
-	APawn* MyPawn = Cast<APawn>(GetOwner());
-	IABSGameplayInterface::Execute_InteractionEnd(this, MyPawn);
 }
 
 UABSInteractionComponent* AABSInteractableActor::GetOwningComponent() const

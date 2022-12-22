@@ -10,5 +10,4 @@ UCLASS()
 class ABSTRACTION_API UABSObjectiveWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
 };

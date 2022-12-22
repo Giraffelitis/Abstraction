@@ -41,9 +41,9 @@ void FABSGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(InteractionTag_Secure, "InteractionTag.Secure", "Is object secured?");
 	
 	//Objective Tags
-	AddTag(ObjectiveTag_Type_MainStory, "ObjectiveTag.Type.MainStory", "Main Story Mission");
-	AddTag(ObjectiveTag_Type_SideMission, "ObjectiveTag.Type.SideMission", "Side Mission");
-	AddTag(ObjectiveTag_Type_Repeatable, "ObjectiveTag.Type.Repeatable", "Repeatable Mission");
+	AddTag(ObjectiveTag_Class_MainStory, "ObjectiveTag.Class.MainStory", "Main Story Mission");
+	AddTag(ObjectiveTag_Class_SideMission, "ObjectiveTag.Class.SideMission", "Side Mission");
+	AddTag(ObjectiveTag_Class_Repeatable, "ObjectiveTag.Class.Repeatable", "Repeatable Mission");
 	
 	AddTag(ObjectiveTag_State_Failed, "ObjectiveTag.State.Failed", "Objective Failed");
 	AddTag(ObjectiveTag_State_NotAvailableYet, "ObjectiveTag.State.NotAvailableYet", "Objective Not Yet Available");
@@ -52,15 +52,10 @@ void FABSGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(ObjectiveTag_State_InProgress, "ObjectiveTag.State.InProgress", "Objective is in progress.");
 	AddTag(ObjectiveTag_State_ReadyToTurnIn, "ObjectiveTag.State.ReadyToTurnIn", "Objective is ready to be turned in.");
 
-	AddTag( ObjectiveTag_Interact_Activate, "ObjectiveTag.Interact.Activate", "Objective to Activate Object");
-	AddTag( ObjectiveTag_Interact_Deactivate, "ObjectiveTag.Interact.Deactivate", "Objective to Deactivate Object");
-	AddTag( ObjectiveTag_Interact_Pickup, "ObjectiveTag.Interact.Pickup", "Objective to Pickup Object");
-	AddTag( ObjectiveTag_Interact_Deliver, "ObjectiveTag.Interact.Deliver", "Objective to Deliver Object");
-	AddTag( ObjectiveTag_Interact_Heal, "ObjectiveTag.Interact.Heal", "Objective to Heal Object");
-	AddTag( ObjectiveTag_Interact_Destroy, "ObjectiveTag.Interact.Destroy", "Objective to Kill or Destroy Object");
-	
-	AddTag( ObjectiveTag_Location_Enter, "ObjectiveTag.Location.Enter", "Objective to Enter an area");
-	AddTag( ObjectiveTag_Location_Exit, "ObjectiveTag.Location.Exit", "Objective to exit an area");
+	AddTag(ObjectiveTag_Type_Interact, "ObjectiveTag.Type.Interact", "Objective to Interact with object or actor");
+	AddTag(ObjectiveTag_Type_Collect, "ObjectiveTag.Type.Collect", "Objective to collect objects or actors");
+	AddTag(ObjectiveTag_Type_Defeat, "ObjectiveTag.Type.Defeat", "Objective to defeat actor(s)");
+	AddTag(ObjectiveTag_Type_Travel, "ObjectiveTag.Type.Travel", "Objective to travel to location");	
 	
 	//Security Tags
 	AddTag(SecurityTag_Card_Red, "SecurityTag.Card.Red", "Red Security Card.");

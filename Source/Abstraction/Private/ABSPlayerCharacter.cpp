@@ -5,8 +5,6 @@
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/DamageType.h"
 #include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "Particles/ParticleSystemComponent.h"
 #include "Components/InputComponent.h"
 #include "EnhancedInput/Public/InputAction.h"
 #include "ABSEnhancedInputComponent.h"

@@ -3,85 +3,75 @@
 
 #include "ABSObjectiveComponent.h"
 #include "ABSInteractionComponent.h"
-#include "ABSObjectiveWorldSubsystem.h"
+#include "ABSObjectiveSubsystem.h"
+#include "ABSPlayerCharacter.h"
 #include "Engine/World.h"
 
 UABSObjectiveComponent::UABSObjectiveComponent()
 {
 	bWantsInitializeComponent = true;
-	PrimaryComponentTick.bCanEverTick = false;
-}
-
-void UABSObjectiveComponent::UpdateObjectiveTag()
-{
-	if (!this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed")))
-	{
-		if (this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Failed")))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Failed Objective has been reset");
-			this->ObjectiveTags.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
-			OnStateChanged.Broadcast(this);
-			this->ObjectiveTags.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Failed"));
-		}
-	
-		if (this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.NotAvailableYet")))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "New Objective Available");
-			this->ObjectiveTags.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
-			OnStateChanged.Broadcast(this);
-			this->ObjectiveTags.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.NotAvailableYet"));		
-		}
-	
-		if (this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available")))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Objective added to Log");
-			this->ObjectiveTags.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"));
-			OnStateChanged.Broadcast(this);
-			this->ObjectiveTags.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
-		}
-	
-		if (this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress")))
-		{
-			if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.Interact.Activate")))
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Objective Completed");
-				this->ObjectiveTags.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed"));
-				OnStateChanged.Broadcast(this);
-				this->ObjectiveTags.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"));
-			}
-		}
-
-		if (this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.ReadyToTurnIn")))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Objective is completed");
-			this->ObjectiveTags.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed"));
-			OnStateChanged.Broadcast(this);
-			this->ObjectiveTags.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.ReadyToTurnIn"));
-		}		
-	}
-	else if (this->ObjectiveTags.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed")))
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Objective added to History Log");
-	}
+	PrimaryComponentTick.bCanEverTick = false;	
 }
 
 void UABSObjectiveComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 	//register
-	UABSObjectiveWorldSubsystem* ObjectiveWorldSubsystem = GetWorld()->GetSubsystem<UABSObjectiveWorldSubsystem>();
-	if (ObjectiveWorldSubsystem)
+	UABSObjectiveSubsystem* ObjectiveSubsystem = GetWorld()->GetSubsystem<UABSObjectiveSubsystem>();
+	if (ObjectiveSubsystem)
 	{
-		ObjectiveWorldSubsystem->AddObjective(this);
+		FName ObjID = ObjectiveData->ObjectiveData.ObjectiveID;
+		ObjectiveSubsystem->AddObjective(ObjID);
 	}
 }
 
-void UABSObjectiveComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+void UABSObjectiveComponent::OnObjectiveInteract()
 {
-	UABSObjectiveWorldSubsystem* ObjectiveWorldSubsystem = GetWorld()->GetSubsystem<UABSObjectiveWorldSubsystem>();
-	if (ObjectiveWorldSubsystem)
-	{
-		ObjectiveWorldSubsystem->RemoveObjective(this);
+	UABSObjectiveSubsystem* ObjectiveSubsystem = GetWorld()->GetSubsystem<UABSObjectiveSubsystem>();
+	if(!bObjectiveGiver)
+	{	
+		if(!ObjectiveData->ObjectiveData.ObjectiveState.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"))) return;			
+		
+		if (!ObjectiveData->ObjectiveData.bIsCompleted)
+		{			
+			ObjectiveData->ObjectiveData.ObjectiveState.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"));
+			ObjectiveData->ObjectiveData.ObjectiveState.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed"));
+
+			OnStateChanged.Broadcast(this);
+			if (ObjectiveSubsystem)
+			{
+				ObjectiveSubsystem->UpdateObjectiveList();
+			}
+			
+			ObjectiveData->ObjectiveData.bIsCompleted = true;
+		}
+		else
+		{
+			OnStateChanged.Broadcast(this);
+			if (ObjectiveSubsystem)
+			{
+				ObjectiveSubsystem->UpdateObjectiveList();
+			}
+		}
 	}
-	Super::EndPlay(EndPlayReason);
+	else
+	{
+		if(!ObjectiveData->ObjectiveData.ObjectiveState.HasTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"))) return;
+				
+		ObjectiveData->ObjectiveData.ObjectiveState.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
+		ObjectiveData->ObjectiveData.ObjectiveState.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"));
+
+		OnStateChanged.Broadcast(this);
+		if (ObjectiveSubsystem)
+		{
+			ObjectiveSubsystem->UpdateObjectiveList();
+		}
+	}
+};
+
+
+void UABSObjectiveComponent::ResetObjective()
+{
+	ObjectiveData->ObjectiveData.ObjectiveState.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
+	ObjectiveData->ObjectiveData.bIsCompleted = false;
 }

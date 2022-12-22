@@ -3,20 +3,24 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ABSObjectiveData.h"
 #include "GameFramework/Character.h"
 #include "ABSPlayerCharacter.generated.h"
 
 struct FInputActionValue;
-class UABSInputConfig;
-class UABSInteractAction;
+class USpringArmComponent;
 class UCameraComponent;
 class UCameraShakeBase;
 class UGameplayTagsManager;
-class UABSAttributeComponent;
 class UParticleSystemComponent;
+
+class UABSInputConfig;
+class UABSInteractAction;
+class UABSAttributeComponent;
+class UABSObjectiveData;
 class UABSActionComponent;
 class UABSInteractionComponent;
-class USpringArmComponent;
+
 
 // Declaration of the delegate that will be called when the Primary Action is triggered
 // It is declared as dynamic so it can be accessed also in Blueprints
@@ -90,6 +94,15 @@ public:
 	void PrimaryInteract(const FInputActionValue& InputActionValue);
 
 	void SecondaryInteract(const FInputActionValue& InputActionValue);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Events")
+	void OnShowObjectiveInfo(FObjectiveData Objective);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Events")
+	void OnShowObjectiveCompleted(const FText& Message);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Events")
+	void OnShowUpdatedObjectiveList(const TArray<FText>& ObjectiveTextList);
 	
 protected:
 
@@ -121,4 +134,5 @@ protected:
 	float ForceFeedbackIntensity = 1.0f;
 	UPROPERTY(EditAnywhere, Category="Force Feedback")
 	float ForceFeedbackDuration = 1.0f;
+	
 };

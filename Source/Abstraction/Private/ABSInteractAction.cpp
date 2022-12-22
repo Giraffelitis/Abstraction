@@ -4,7 +4,7 @@
 #include "ABSInteractAction.h"
 #include "ABSInteractionComponent.h"
 #include "ABSGameplayInterface.h"
-#include "ABSItemChest.h"
+#include "ABSObjectiveComponent.h"
 #include "DrawDebugHelpers.h"
 #include "ABSWorldUserWidget.h"
 
@@ -140,12 +140,17 @@ void UABSInteractAction::Interact(AActor* InFocus)
 	AActor* MyOwner = GetOwner();
 	check(MyOwner)
 	
-	UABSInteractionComponent* Comp = InFocus->FindComponentByClass<UABSInteractionComponent>();
-	if(Comp)
+	UABSInteractionComponent* InteractComp = InFocus->FindComponentByClass<UABSInteractionComponent>();
+	UABSObjectiveComponent* ObjectiveComp = InFocus->FindComponentByClass<UABSObjectiveComponent>();
+	if(InteractComp)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Component Found and Interaction was Broadcast");
-		
-		Comp->InteractedWith(MyOwner);
+		InteractComp->InteractedWith(MyOwner);
+	}
+	
+	if(ObjectiveComp)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Component Found and Interaction was Broadcast");		
+		ObjectiveComp->OnObjectiveInteract();
 	}
 }
 

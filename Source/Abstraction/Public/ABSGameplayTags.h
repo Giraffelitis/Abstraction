@@ -38,9 +38,9 @@ public:
 	FGameplayTag InteractionTag_Secure;
 
 	//ObjectiveTags
-	FGameplayTag ObjectiveTag_Type_MainStory;
-	FGameplayTag ObjectiveTag_Type_SideMission;
-	FGameplayTag ObjectiveTag_Type_Repeatable;
+	FGameplayTag ObjectiveTag_Class_MainStory;
+	FGameplayTag ObjectiveTag_Class_SideMission;
+	FGameplayTag ObjectiveTag_Class_Repeatable;
 
 	//ObjectiveTags States
 	FGameplayTag ObjectiveTag_State_Failed;				// Not Currently Available
@@ -51,14 +51,10 @@ public:
 	FGameplayTag ObjectiveTag_State_Completed;			// Completed
 
 	//ObjectiveTags Types
-	FGameplayTag ObjectiveTag_Interact_Activate;
-	FGameplayTag ObjectiveTag_Interact_Deactivate;
-	FGameplayTag ObjectiveTag_Interact_Pickup;
-	FGameplayTag ObjectiveTag_Interact_Deliver;
-	FGameplayTag ObjectiveTag_Interact_Heal;
-	FGameplayTag ObjectiveTag_Interact_Destroy;
-	FGameplayTag ObjectiveTag_Location_Enter;
-	FGameplayTag ObjectiveTag_Location_Exit;
+	FGameplayTag ObjectiveTag_Type_Interact;
+	FGameplayTag ObjectiveTag_Type_Collect;
+	FGameplayTag ObjectiveTag_Type_Defeat;
+	FGameplayTag ObjectiveTag_Type_Travel;
 	
 	//SecurityTag
 	FGameplayTag SecurityTag_Card_Red;

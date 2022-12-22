@@ -10,16 +10,17 @@
 //to retrieve this object use below code
 //AGameModeBase* GameMode = Cast<AAbstractionGameModeBase>(World->GetAuthGameMode());
 
+class UABSObjectiveData;
+
+
 UCLASS()
 class ABSTRACTION_API AAbstractionGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
 	void StartPlay() override;
-
+	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUserWidget> ObjectiveWidgetClass;
 
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> ObjectivesCompleteWidgetClass;
 };

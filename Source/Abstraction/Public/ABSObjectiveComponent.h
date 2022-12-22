@@ -3,17 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ABSGameplayInterface.h"
+#include "GameplayTagContainer.h"
 #include "Components/ActorComponent.h"
-#include "ABSGameplayTags.h"
 #include "ABSObjectiveComponent.generated.h"
 
-class UABSObjectiveComponent;
-class UABSInteractionComponent;
+class UABSObjectiveData;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnObjectiveStateChanged, const UABSObjectiveComponent*);
+DECLARE_MULTICAST_DELEGATE_OneParam(FRegisterObjective, const FName);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ABSTRACTION_API UABSObjectiveComponent : public UActorComponent
+class ABSTRACTION_API UABSObjectiveComponent : public UActorComponent, public IABSGameplayInterface
 {
 	GENERATED_BODY()
 
@@ -21,24 +22,29 @@ public:
 	// Sets default values for this component's properties
 	UABSObjectiveComponent();
 
-	UFUNCTION(BlueprintCallable)
-	const FString& GetDescription() const { return Description; }
-	
+	void OnObjectiveInteract();
+
 	FOnObjectiveStateChanged OnStateChanged;
 
-	UABSInteractionComponent* InteractionComp;
+	FRegisterObjective RegisterID;
 
 	//Add Interaction and Security tags to this container.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
 	FGameplayTagContainer ObjectiveTags;
 
-	void UpdateObjectiveTag();
+	void ResetObjective();
+	
 protected:
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	void InitializeComponent() override;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UABSObjectiveData* ObjectiveData;
 
-	UPROPERTY(EditAnywhere)
-	FString Description;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bObjectiveGiver = false;
+	
+	UPROPERTY(EditAnywhere, Category = "Objectives")
+	FName ObjectiveID;
 
+private:
+	virtual void InitializeComponent() override;
 };

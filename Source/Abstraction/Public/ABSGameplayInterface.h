@@ -25,12 +25,17 @@ class ABSTRACTION_API IABSGameplayInterface
 	UFUNCTION(BlueprintNativeEvent)
 	void OnActorLoaded();
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interact")
 	FText GetInteractText(APawn* InstigatorPawn);
 	
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interact")
 	void InteractionStart(APawn* InstigatorPawn);
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interact")
 	void InteractionEnd(APawn* InstigatorPawn);
+
+	/** Objective System **/
+	//Actual implementation of the Interact
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interact")
+	void OnObjectiveInteract_Implementation();
 };

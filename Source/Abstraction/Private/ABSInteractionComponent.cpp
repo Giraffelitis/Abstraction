@@ -3,7 +3,6 @@
 
 #include "ABSInteractionComponent.h"
 #include "ABSObjectiveComponent.h"
-#include "ABSObjectiveWorldSubsystem.h"
 
 void UABSInteractionComponent::InteractedWith(AActor* InstigatingActor)
 {

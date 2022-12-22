@@ -20,16 +20,10 @@ public:
 	AABSInteractableActor();
 
 	UFUNCTION()
-void OnInteraction(AActor* InstigatingActor);
+	void OnInteraction(AActor* InstigatingActor);
 
 protected:
 	virtual void BeginPlay() override;
-	
-	UFUNCTION(BlueprintCallable)
-	void StartInteract();
-
-	UFUNCTION(BlueprintCallable)
-	void EndInteract();	
 
 	UPROPERTY(VisibleAnywhere, meta = (InstanceEditable = "true"))
 	UABSInteractionComponent* InteractionComp;
