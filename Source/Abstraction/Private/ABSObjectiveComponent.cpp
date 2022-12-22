@@ -23,6 +23,8 @@ void UABSObjectiveComponent::InitializeComponent()
 		FName ObjID = ObjectiveData->ObjectiveData.ObjectiveID;
 		ObjectiveSubsystem->AddObjective(ObjID);
 	}
+
+	ResetObjective();
 }
 
 void UABSObjectiveComponent::OnObjectiveInteract()
@@ -37,21 +39,21 @@ void UABSObjectiveComponent::OnObjectiveInteract()
 			ObjectiveData->ObjectiveData.ObjectiveState.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"));
 			ObjectiveData->ObjectiveData.ObjectiveState.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed"));
 
+			if (ObjectiveSubsystem)
+			{
+				ObjectiveSubsystem->UpdateObjectiveList();
+			}
 			OnStateChanged.Broadcast(this);
+			ObjectiveData->ObjectiveData.bIsCompleted = true;
+		}
+		else
+		{
 			if (ObjectiveSubsystem)
 			{
 				ObjectiveSubsystem->UpdateObjectiveList();
 			}
 			
-			ObjectiveData->ObjectiveData.bIsCompleted = true;
-		}
-		else
-		{
 			OnStateChanged.Broadcast(this);
-			if (ObjectiveSubsystem)
-			{
-				ObjectiveSubsystem->UpdateObjectiveList();
-			}
 		}
 	}
 	else
@@ -61,11 +63,11 @@ void UABSObjectiveComponent::OnObjectiveInteract()
 		ObjectiveData->ObjectiveData.ObjectiveState.RemoveTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
 		ObjectiveData->ObjectiveData.ObjectiveState.AddTag(FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"));
 
-		OnStateChanged.Broadcast(this);
 		if (ObjectiveSubsystem)
 		{
 			ObjectiveSubsystem->UpdateObjectiveList();
 		}
+		OnStateChanged.Broadcast(this);
 	}
 };
 

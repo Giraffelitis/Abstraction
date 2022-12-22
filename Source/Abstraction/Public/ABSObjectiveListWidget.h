@@ -7,6 +7,7 @@
 #include "ABSObjectiveListWidget.generated.h"
 
 class UTextBlock;
+class UABSObjectiveComponent;
 
 UCLASS()
 class ABSTRACTION_API UABSObjectiveListWidget : public UUserWidget
@@ -35,6 +36,10 @@ protected:
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* Objective4;
 
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+	UPROPERTY(BlueprintReadWrite)
 	TArray<FText> ObjectiveTextList;
+	
+private:
+
+	UABSObjectiveComponent* ObjectiveComponent;
 };

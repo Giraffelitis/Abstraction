@@ -7,34 +7,35 @@
 void UABSObjectiveListWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
-	Objective0->SetText(FText::FromString(TEXT("Open The Door")));
-	Objective1->SetText(FText::FromString(TEXT("Ride The Elevator")));
-	Objective2->SetText(FText::FromString(TEXT("Open The Chest")));
+
+	Objective0->SetText(FText::FromString(TEXT("Close the Chest")));
+	Objective1->SetText(FText::FromString(TEXT("Open The Door")));
+	Objective2->SetText(FText::FromString(TEXT("Ride the Elevator")));
 	Objective3->SetText(FText::FromString(TEXT("Flip The Switch")));
 	Objective4->SetText(FText::FromString(TEXT("")));
-	
 }
 
 void UABSObjectiveListWidget::UpdateList(TArray<FText> NewList)
 {
+	
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UABSObjectiveListWidget::UpdateList Called");	
 	/*
-	 *		Getting an access violation when trying to update the values during gameplay and cannot figure out why. 
+	 *		It gives a read access violation error here I think it has to do with calling it from the subsystem instead of from a delegate listener? 
 	 *
-	for (int i = 0; i < NewList.Num(); i++)
+	for (int i = 0; i < ObjectiveTextList.Num(); i++)
 	{
 		switch (i)
 		{
 		case 0:
-			{Objective0->SetText(FText(NewList[i])); break; }
+			{Objective0->SetText(FText(ObjectiveTextList[i])); break; }
 		case 1:
-			{Objective1->SetText(FText(NewList[i])); break; }
+			{Objective1->SetText(FText(ObjectiveTextList[i])); break; }
 		case 2:
-			{Objective2->SetText(FText(NewList[i])); break; }
+			{Objective2->SetText(FText(ObjectiveTextList[i])); break; }
 		case 3:
-			{Objective3->SetText(FText(NewList[i])); break; }
+			{Objective3->SetText(FText(ObjectiveTextList[i])); break; }
 		case 4:
-			{Objective4->SetText(FText(NewList[i])); break; }
+			{Objective4->SetText(FText(ObjectiveTextList[i])); break; }
 		default:
 			{}
 		}

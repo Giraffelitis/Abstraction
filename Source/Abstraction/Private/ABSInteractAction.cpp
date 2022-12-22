@@ -148,8 +148,7 @@ void UABSInteractAction::Interact(AActor* InFocus)
 	}
 	
 	if(ObjectiveComp)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "Component Found and Interaction was Broadcast");		
+	{	
 		ObjectiveComp->OnObjectiveInteract();
 	}
 }

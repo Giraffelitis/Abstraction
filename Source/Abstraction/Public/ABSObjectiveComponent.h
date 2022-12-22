@@ -32,6 +32,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
 	FGameplayTagContainer ObjectiveTags;
 
+	UFUNCTION(BlueprintCallable)
 	void ResetObjective();
 	
 protected:
