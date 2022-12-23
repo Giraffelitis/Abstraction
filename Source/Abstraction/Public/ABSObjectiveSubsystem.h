@@ -6,6 +6,7 @@
 #include "Subsystems/WorldSubsystem.h"
 #include "ABSObjectiveSubsystem.generated.h"
 
+class UABSObjectiveComponent;
 class UABSObjectiveData;
 class UABSObjectiveListWidget;
 
@@ -20,9 +21,12 @@ public:
 
 	void CreateObjectiveWidget(TSubclassOf<UUserWidget> ObjectiveWidgetClass);
 	void DisplayObjectiveWidget();
+	void RemoveObjectiveWidget();
 
-	void AddObjective(const FName ObjectiveID);
+	void AddObjective(UABSObjectiveComponent* ObjectiveComponent, UABSObjectiveData* ObjData);
 
+	void OnObjectiveStateChanged(const UABSObjectiveComponent* ObjectiveComponent);
+	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Objective")
 	FObjectiveData FindObjective(FName ObjectiveID, bool& Success);
 
@@ -30,17 +34,17 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Objective")
 	UABSObjectiveData* ObjectiveDatabase;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Objective")
-	UABSObjectiveListWidget* ObjectiveListWidget;
 	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Objective")
 	void UpdateObjectiveList(); 
 
 private:
-
-	TArray<FName> ObjectiveFNameList;
+	
+	TArray<UABSObjectiveData*> ObjectiveDataList;
+	TArray<UABSObjectiveData*> NewObjectiveList;
+	TArray<bool> NewObjectiveListBool;
 	
 	UUserWidget* ObjectiveWidget = nullptr;
+	
 	
 };

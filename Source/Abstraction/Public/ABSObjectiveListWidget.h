@@ -6,6 +6,9 @@
 #include "Blueprint/UserWidget.h"
 #include "ABSObjectiveListWidget.generated.h"
 
+class UABSObjectiveData;
+class UVerticalBox;
+class UHorizontalBox;
 class UTextBlock;
 class UABSObjectiveComponent;
 
@@ -15,31 +18,17 @@ class ABSTRACTION_API UABSObjectiveListWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void UpdateList(TArray<FText> NewList);
+	
+	void UpdateList(TArray<UABSObjectiveData*> UpdatedObjective);
 
 protected:
 
-	virtual void NativeConstruct() override;
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	FText ObjectiveListText;
 	
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* Objective0;
-	
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* Objective1;
-	
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* Objective2;
-	
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* Objective3;
-	
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* Objective4;
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	bool ObjectiveListBool;
 
-	UPROPERTY(BlueprintReadWrite)
-	TArray<FText> ObjectiveTextList;
-	
-private:
-
-	UABSObjectiveComponent* ObjectiveComponent;
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UVerticalBox* ObjectiveListVerticalBox;
 };

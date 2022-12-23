@@ -6,19 +6,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f043db98-c68f-43c6-9670-4738ab6a433f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Data/ElevatorSwitch.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Data/CloseChest.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Data/ElevatorUp.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Data/FalltoDeath.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Data/FlipSwitch.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Abstraction/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Abstraction/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableDoor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableDoor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableElevator.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/BP_ABSInteractableElevator.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Actors/BP_ABSItemChest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Actors/BP_ABSItemChest.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Data/ElevatorSwitch.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Data/ElevatorSwitch.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Data/OpenDoor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Data/OpenDoor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Data/TestObjective.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Data/TestObjective.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/Functionality_TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Functionality_TestLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/WBP_ObjectiveUI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/WBP_ObjectiveUI.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/WBP_Objectives.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/WBP_Objectives.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSGameplayTags.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSGameplayTags.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractAction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractAction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSInteractionComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveListWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveListWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveSubsystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Private/ABSObjectiveSubsystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveData.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveListWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveListWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveSubsystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Abstraction/Public/ABSObjectiveSubsystem.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +56,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.44808742&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -213,7 +222,8 @@
       <workItem from="1671674128949" duration="3437000" />
       <workItem from="1671679306146" duration="1827000" />
       <workItem from="1671686387357" duration="11702000" />
-      <workItem from="1671719287978" duration="5136000" />
+      <workItem from="1671719287978" duration="30501000" />
+      <workItem from="1671777536482" duration="14182000" />
     </task>
     <servers />
   </component>

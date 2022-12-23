@@ -2,43 +2,39 @@
 
 
 #include "ABSObjectiveListWidget.h"
+#include "ABSObjectiveData.h"
+#include "Blueprint/WidgetTree.h"
+#include "Components/CheckBox.h"
+#include "Components/HorizontalBox.h"
+#include "Components/ScaleBox.h"
 #include "Components/TextBlock.h"
+#include "Components/VerticalBox.h"
 
-void UABSObjectiveListWidget::NativeConstruct()
+void UABSObjectiveListWidget::UpdateList(TArray<UABSObjectiveData*> UpdatedObjective)
 {
-	Super::NativeConstruct();
-
-	Objective0->SetText(FText::FromString(TEXT("Close the Chest")));
-	Objective1->SetText(FText::FromString(TEXT("Open The Door")));
-	Objective2->SetText(FText::FromString(TEXT("Ride the Elevator")));
-	Objective3->SetText(FText::FromString(TEXT("Flip The Switch")));
-	Objective4->SetText(FText::FromString(TEXT("")));
-}
-
-void UABSObjectiveListWidget::UpdateList(TArray<FText> NewList)
-{
-	
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, "UABSObjectiveListWidget::UpdateList Called");	
-	/*
-	 *		It gives a read access violation error here I think it has to do with calling it from the subsystem instead of from a delegate listener? 
-	 *
-	for (int i = 0; i < ObjectiveTextList.Num(); i++)
+	if( ObjectiveListVerticalBox->GetChildrenCount() > 0)
 	{
-		switch (i)
-		{
-		case 0:
-			{Objective0->SetText(FText(ObjectiveTextList[i])); break; }
-		case 1:
-			{Objective1->SetText(FText(ObjectiveTextList[i])); break; }
-		case 2:
-			{Objective2->SetText(FText(ObjectiveTextList[i])); break; }
-		case 3:
-			{Objective3->SetText(FText(ObjectiveTextList[i])); break; }
-		case 4:
-			{Objective4->SetText(FText(ObjectiveTextList[i])); break; }
-		default:
-			{}
-		}
+		ObjectiveListVerticalBox->ClearChildren();
 	}
-	*/
+	
+	for(int i = 0; i < UpdatedObjective.Num(); i++)
+	{
+		ObjectiveListText = UpdatedObjective[i]->ObjectiveData.Message;
+		ObjectiveListBool = (UpdatedObjective[i]->ObjectiveData.ObjectiveState == (FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Completed")));
+			
+		UHorizontalBox* HorizontalBox = WidgetTree->ConstructWidget<UHorizontalBox>();
+		ObjectiveListVerticalBox->AddChildToVerticalBox(HorizontalBox);
+
+		UScaleBox* ScaleBox = WidgetTree->ConstructWidget<UScaleBox>();
+		HorizontalBox->AddChildToHorizontalBox(ScaleBox);
+		ScaleBox->SetRenderScale(FVector2d(1.5f, 1.5f));
+		
+		UCheckBox* CheckBox = WidgetTree->ConstructWidget<UCheckBox>();
+		ScaleBox->AddChild(CheckBox);
+		CheckBox->SetIsChecked(ObjectiveListBool);
+				
+		UTextBlock* TextBlock = WidgetTree->ConstructWidget<UTextBlock>();
+		HorizontalBox->AddChildToHorizontalBox(TextBlock);
+		TextBlock->SetText(FText(ObjectiveListText));
+	}
 }

@@ -26,15 +26,12 @@ public:
 
 	FOnObjectiveStateChanged OnStateChanged;
 
-	FRegisterObjective RegisterID;
-
-	//Add Interaction and Security tags to this container.
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
-	FGameplayTagContainer ObjectiveTags;
+	FRegisterObjective RegisterID;	
 
 	UFUNCTION(BlueprintCallable)
 	void ResetObjective();
-	
+	FGameplayTag GetObjectiveState();
+
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -48,4 +45,6 @@ protected:
 
 private:
 	virtual void InitializeComponent() override;
+
+	FGameplayTag ObjectiveStateTag;
 };

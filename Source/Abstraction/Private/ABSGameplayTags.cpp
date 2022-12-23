@@ -48,7 +48,7 @@ void FABSGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(ObjectiveTag_State_Failed, "ObjectiveTag.State.Failed", "Objective Failed");
 	AddTag(ObjectiveTag_State_NotAvailableYet, "ObjectiveTag.State.NotAvailableYet", "Objective Not Yet Available");
 	AddTag(ObjectiveTag_State_Available, "ObjectiveTag.State.Available", "Objective Available");
-	AddTag(ObjectiveTag_State_Completed, "ObjectiveTag.State.Complete", "Objective Complete.");
+	AddTag(ObjectiveTag_State_Completed, "ObjectiveTag.State.Completed", "Objective Complete.");
 	AddTag(ObjectiveTag_State_InProgress, "ObjectiveTag.State.InProgress", "Objective is in progress.");
 	AddTag(ObjectiveTag_State_ReadyToTurnIn, "ObjectiveTag.State.ReadyToTurnIn", "Objective is ready to be turned in.");
 

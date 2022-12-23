@@ -31,10 +31,7 @@ struct FObjectiveData : public FTableRowBase
 	FGameplayTag ObjectiveType;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Objectives)
-	FGameplayTagContainer ObjectiveState;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Objectives)
-	bool bIsCompleted;
+	FGameplayTag ObjectiveState;	
 };
 
 UCLASS()

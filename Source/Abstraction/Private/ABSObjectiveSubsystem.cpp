@@ -2,6 +2,8 @@
 
 
 #include "ABSObjectiveSubsystem.h"
+
+#include "ABSObjectiveComponent.h"
 #include "ABSObjectiveData.h"
 #include "ABSObjectiveListWidget.h"
 #include "Blueprint/UserWidget.h"
@@ -17,22 +19,46 @@ void UABSObjectiveSubsystem::CreateObjectiveWidget(TSubclassOf<UUserWidget> Obje
 	if(ObjectiveWidget == nullptr)
 	{
 		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-		ObjectiveWidget = CreateWidget<UUserWidget>(PlayerController, ObjectiveWidgetClass);
+		if(PlayerController)
+			ObjectiveWidget = CreateWidget<UUserWidget>(PlayerController, ObjectiveWidgetClass);
 	}
 }
 
 void UABSObjectiveSubsystem::DisplayObjectiveWidget()
 {
-	if(ObjectiveWidget)
+	if (ObjectiveWidget)
 	{
-		ObjectiveWidget->AddToViewport();
+		if (!ObjectiveWidget->IsInViewport())
+		{
+			ObjectiveWidget->AddToViewport();
+		}
 	}
 }
 
-void UABSObjectiveSubsystem::AddObjective(const FName ObjectiveID)
+void UABSObjectiveSubsystem::RemoveObjectiveWidget()
 {
-	size_t PrevSize = ObjectiveFNameList.Num();
-	ObjectiveFNameList.AddUnique(ObjectiveID);
+	if (ObjectiveWidget)
+	{
+		if (ObjectiveWidget->IsInViewport())
+		{
+			ObjectiveWidget->RemoveFromParent();
+		}
+	}
+}
+
+void UABSObjectiveSubsystem::AddObjective(UABSObjectiveComponent* ObjectiveComponent, UABSObjectiveData* ObjData)
+{
+	size_t PrevSize = ObjectiveDataList.Num();
+	ObjectiveDataList.AddUnique(ObjData);
+	if (ObjectiveDataList.Num() > PrevSize)
+	{
+		ObjectiveComponent->OnStateChanged.AddUObject(this, &UABSObjectiveSubsystem::OnObjectiveStateChanged);
+	}
+}
+
+void UABSObjectiveSubsystem::OnObjectiveStateChanged(const UABSObjectiveComponent* ObjectiveComponent)
+{
+	DisplayObjectiveWidget();
 }
 
 FObjectiveData UABSObjectiveSubsystem::FindObjective_Implementation(FName ObjectiveID, bool& Success)
@@ -53,10 +79,17 @@ FObjectiveData UABSObjectiveSubsystem::FindObjective_Implementation(FName Object
 
 void UABSObjectiveSubsystem::UpdateObjectiveList_Implementation()
 {
-	TArray<FText> NewObjectiveTextList;
-	for (int i = 0; i < ObjectiveFNameList.Num(); i++)
+	for (int i = 0; i < ObjectiveDataList.Num(); i++)
 	{
-		NewObjectiveTextList.Add(FText::FromName(ObjectiveFNameList[i]));
+		if (ObjectiveDataList[i]->ObjectiveData.ObjectiveState == FGameplayTag::RequestGameplayTag("ObjectiveTag.State.InProgress"))
+		{
+			NewObjectiveList.AddUnique(ObjectiveDataList[i]);
+		}
 	}
-	ObjectiveListWidget->UpdateList(NewObjectiveTextList);
+	
+	UABSObjectiveListWidget* ObjectiveListWidget = Cast<UABSObjectiveListWidget>(ObjectiveWidget);
+	if(ObjectiveListWidget)
+		ObjectiveListWidget->UpdateList(NewObjectiveList); 
+
+	DisplayObjectiveWidget();
 }

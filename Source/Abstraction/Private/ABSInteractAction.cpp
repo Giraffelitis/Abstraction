@@ -141,16 +141,22 @@ void UABSInteractAction::Interact(AActor* InFocus)
 	check(MyOwner)
 	
 	UABSInteractionComponent* InteractComp = InFocus->FindComponentByClass<UABSInteractionComponent>();
-	UABSObjectiveComponent* ObjectiveComp = InFocus->FindComponentByClass<UABSObjectiveComponent>();
+	
 	if(InteractComp)
 	{
 		InteractComp->InteractedWith(MyOwner);
 	}
 	
-	if(ObjectiveComp)
-	{	
-		ObjectiveComp->OnObjectiveInteract();
-	}
+	// Build array to loop through multiple objective comps on a single actor
+	TInlineComponentArray<UABSObjectiveComponent*> ObjectiveCompArray;
+	InFocus->GetComponents(ObjectiveCompArray);
+	for (UABSObjectiveComponent* ObjectiveComp : ObjectiveCompArray)
+	{
+		if(ObjectiveComp)
+		{	
+			ObjectiveComp->OnObjectiveInteract();
+		}
+	}	
 }
 
 UABSInteractionComponent* UABSInteractAction::GetOwningComponent() const
