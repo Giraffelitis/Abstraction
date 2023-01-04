@@ -28,4 +28,5 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (ExposeOnSpawn=true))
 	AActor* AttachedActor;
+	
 };

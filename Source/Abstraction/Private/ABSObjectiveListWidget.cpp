@@ -4,6 +4,7 @@
 #include "ABSObjectiveListWidget.h"
 #include "ABSObjectiveData.h"
 #include "Blueprint/WidgetTree.h"
+#include "Components/BackgroundBlur.h"
 #include "Components/CheckBox.h"
 #include "Components/HorizontalBox.h"
 #include "Components/ScaleBox.h"
@@ -25,6 +26,10 @@ void UABSObjectiveListWidget::UpdateList(TArray<UABSObjectiveData*> UpdatedObjec
 		UHorizontalBox* HorizontalBox = WidgetTree->ConstructWidget<UHorizontalBox>();
 		ObjectiveListVerticalBox->AddChildToVerticalBox(HorizontalBox);
 
+		UBackgroundBlur* BackgroundBlur = WidgetTree->ConstructWidget<UBackgroundBlur>();
+		ObjectiveListVerticalBox->AddChildToVerticalBox(BackgroundBlur);
+		BackgroundBlur->SetBlurStrength(10.0f);
+		
 		UScaleBox* ScaleBox = WidgetTree->ConstructWidget<UScaleBox>();
 		HorizontalBox->AddChildToHorizontalBox(ScaleBox);
 		ScaleBox->SetRenderScale(FVector2d(1.5f, 1.5f));

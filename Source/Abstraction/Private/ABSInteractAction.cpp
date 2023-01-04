@@ -15,17 +15,15 @@ static TAutoConsoleVariable<bool> CVarDebugDrawInteraction(TEXT("su.InteractionD
 UABSInteractAction::UABSInteractAction()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	// Since we use Camera info in Tick we want the most up to date camera position for tracing
+	bInteractSuccess = false;
+
+	// We are using Camera info in Tick so we want the most up to date camera position for tracing
 	PrimaryComponentTick.TickGroup = TG_PostUpdateWork;
 
+	//Set the distance and radius for the trace to locate interactable objects and set the collision channel set for interaction
 	TraceRadius = 30.0f;
 	TraceDistance = 500.0f;
 	CollisionChannel = ECC_WorldDynamic;
-}
-
-void UABSInteractAction::Initialize(UABSInteractionComponent* NewActionComp)
-{
-	InteractionComp = NewActionComp;
 }
 
 void UABSInteractAction::BeginPlay()
@@ -33,11 +31,9 @@ void UABSInteractAction::BeginPlay()
 	Super::BeginPlay();
 }
 
-
 void UABSInteractAction::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 
 	APawn* MyPawn = Cast<APawn>(GetOwner());
 	if (MyPawn->IsLocallyControlled())
@@ -46,32 +42,39 @@ void UABSInteractAction::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	}
 }
 
-
 void UABSInteractAction::FindBestInteractable()
 {
 	bool bDebugDraw = CVarDebugDrawInteraction.GetValueOnGameThread();
 
+	// Check for collisions based on CollisionChannel
 	FCollisionObjectQueryParams ObjectQueryParams;
-	ObjectQueryParams.AddObjectTypesToQuery(CollisionChannel); // Checks for collisions based on CollisionChannel
+	ObjectQueryParams.AddObjectTypesToQuery(CollisionChannel); 
 
-	AActor* MyOwner = GetOwner(); // Gets Actor to start trace from
-
+	// Gets Actor to start trace from and their EyeLocation and Rotation
+	AActor* MyOwner = GetOwner(); 
 	FVector EyeLocation;
 	FRotator EyeRotation;
-	MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);  // Sets Start point of trace
 
-	FVector End = EyeLocation + (EyeRotation.Vector() * TraceDistance); //Sets end point of trace for interaction
+	// Sets Start point of trace
+	MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);  
 
-	TArray<FHitResult> Hits; // Used to collect all Actors hit with Sweep
+	//Sets end point of trace for interaction
+	FVector End = EyeLocation + (EyeRotation.Vector() * TraceDistance); 
 
+	// Collects all Actors hit with Sweep
+	TArray<FHitResult> Hits; 
+
+	// Sets shape and size for the end of the trace is used to make easier interaction and not needing pinpoint accuracy for smaller objects
 	FCollisionShape Shape;
-	Shape.SetSphere(TraceRadius); // Sets shape and size for the end of the trace is used to make easier interaction and not needing pinpoint accuracy for smaller objects
+	Shape.SetSphere(TraceRadius); 
 
+	// Fires sweep and returns all objects collided with based on params above
 	bool bBlockingHit = GetWorld()->SweepMultiByObjectType(Hits, EyeLocation, End, FQuat::Identity, ObjectQueryParams, Shape);
 
+	// Sets debug info colors
 	FColor LineColor = bBlockingHit ? FColor::Green : FColor::Red;
 
-	// Clear ref before trying to fill
+	// Clears ref before trying to fill
 	FocusedActor = nullptr;
 
 	for (FHitResult Hit : Hits)
@@ -130,6 +133,7 @@ void UABSInteractAction::PrimaryInteract()
 	Interact(FocusedActor);
 }
 
+
 void UABSInteractAction::Interact(AActor* InFocus)
 {
 	if (InFocus == nullptr)
@@ -144,22 +148,28 @@ void UABSInteractAction::Interact(AActor* InFocus)
 	
 	if(InteractComp)
 	{
-		InteractComp->InteractedWith(MyOwner);
+		bInteractSuccess = InteractComp->InteractedWith(MyOwner);
 	}
-	
-	// Build array to loop through multiple objective comps on a single actor
-	TInlineComponentArray<UABSObjectiveComponent*> ObjectiveCompArray;
-	InFocus->GetComponents(ObjectiveCompArray);
-	for (UABSObjectiveComponent* ObjectiveComp : ObjectiveCompArray)
-	{
-		if(ObjectiveComp)
-		{	
-			ObjectiveComp->OnObjectiveInteract();
-		}
-	}	
+	UpdateObjective(InFocus);
 }
 
-UABSInteractionComponent* UABSInteractAction::GetOwningComponent() const
+void UABSInteractAction::UpdateObjective(AActor* InFocus)
 {
-	return InteractionComp;
+	if(bInteractSuccess)
+	{
+		// Build array to collect and loop through if there are multiple objective components on a single actor 
+		TInlineComponentArray<UABSObjectiveComponent*> ObjectiveCompArray;
+		InFocus->GetComponents(ObjectiveCompArray);
+		if(!ObjectiveCompArray.IsEmpty())
+		{
+			for (UABSObjectiveComponent* ObjectiveComp : ObjectiveCompArray)
+			{
+				if(ObjectiveComp)
+				{	
+					ObjectiveComp->OnObjectiveInteractWith();
+				}
+			}
+			bInteractSuccess = false;
+		}
+	}
 }

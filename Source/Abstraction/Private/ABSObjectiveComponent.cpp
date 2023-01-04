@@ -10,7 +10,7 @@
 UABSObjectiveComponent::UABSObjectiveComponent()
 {
 	bWantsInitializeComponent = true;
-	PrimaryComponentTick.bCanEverTick = false;	
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UABSObjectiveComponent::InitializeComponent()
@@ -28,7 +28,12 @@ void UABSObjectiveComponent::InitializeComponent()
 	ResetObjective();
 }
 
-void UABSObjectiveComponent::OnObjectiveInteract()
+void UABSObjectiveComponent::OnObjectiveInteractWith()
+{
+		OnObjectiveUpdate();
+}
+
+void UABSObjectiveComponent::OnObjectiveUpdate()
 {
 	UABSObjectiveSubsystem* ObjectiveSubsystem = GetWorld()->GetSubsystem<UABSObjectiveSubsystem>();
 	
@@ -73,7 +78,8 @@ void UABSObjectiveComponent::OnObjectiveInteract()
 
 void UABSObjectiveComponent::ResetObjective()
 {
-	ObjectiveData->ObjectiveData.ObjectiveState = (FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
+	if(ObjectiveData)
+		ObjectiveData->ObjectiveData.ObjectiveState = (FGameplayTag::RequestGameplayTag("ObjectiveTag.State.Available"));
 }
 
 FGameplayTag UABSObjectiveComponent::GetObjectiveState()

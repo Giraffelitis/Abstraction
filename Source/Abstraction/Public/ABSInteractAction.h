@@ -20,8 +20,6 @@ class ABSTRACTION_API UABSInteractAction : public UActorComponent
 public:
 	UABSInteractAction();
 
-	void Initialize(UABSInteractionComponent* NewActionComp);
-
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	void PrimaryInteract();
@@ -55,13 +53,14 @@ protected:
 
 	UPROPERTY()
 	UABSWorldUserWidget* DefaultWidgetInstance;
-
-	/* Tag Container used to get the parent component the actions are attached to */
-    UFUNCTION(BlueprintCallable, Category = "Action")
-    UABSInteractionComponent* GetOwningComponent() const;
     
     /* Tag Container used to add Tags to owning actor when activated, and to remove when action stops */
     UPROPERTY(EditDefaultsOnly, Category = "Tags")
     FGameplayTagContainer GrantsTags;
+	
+	bool bInteractSuccess;
 
+private:
+
+	void UpdateObjective(AActor* InFocus);
 };

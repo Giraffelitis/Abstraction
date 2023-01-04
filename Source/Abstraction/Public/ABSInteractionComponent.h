@@ -8,9 +8,11 @@
 #include "ABSInteractionComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractedWith, class AActor*, InstigatingActor);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractionSuccess, class AActor*, FocusedActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractionFailure, class AActor*, InstigatingActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractionSuccess, class AActor*, InstigatingActor);
 
 class UABSWorldUserWidget;
+class UABSSecurityComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UABSInteractionComponent : public UActorComponent, public IABSGameplayInterface
@@ -18,19 +20,33 @@ class ABSTRACTION_API UABSInteractionComponent : public UActorComponent, public 
 	GENERATED_BODY()
 
 public:
+	
+	UABSInteractionComponent();
 
 	UPROPERTY(BlueprintAssignable)
 	FOnInteractedWith OnInteractedWith;
 
 	UPROPERTY(BlueprintAssignable)
+	FOnInteractionFailure OnInteractionFailure;
+	
+	UPROPERTY(BlueprintAssignable)
 	FOnInteractionSuccess OnInteractionSuccess;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
 	FGameplayTagContainer ActiveGameplayTags;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
-	FGameplayTagContainer SecurityTags;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
+	FGameplayTagContainer RequiredSecurityTags;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
+	FGameplayTagContainer GrantedSecurityTags;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Message")
+	FText InteractFailMessage;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Message")
+	FText InteractSuccessMessage;
+	
 	// Creates In Editor option to select proper Widget
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<UABSWorldUserWidget> DefaultWidgetClass;
@@ -38,9 +54,9 @@ public:
 	UPROPERTY()
 	UABSWorldUserWidget* DefaultWidgetInstance;
 	
-	void InteractedWith(AActor* InstigatingActor);
+	bool InteractedWith(AActor* InstigatingActor);
 
-	void InteractionSuccessful(AActor* InstigatingActor) const;
+	void CheckInteractionSuccess(AActor* InstigatingActor) const;
 
 };
 

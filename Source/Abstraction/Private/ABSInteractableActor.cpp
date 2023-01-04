@@ -19,7 +19,7 @@ void AABSInteractableActor::BeginPlay()
 
 	BindWithComponent();
 
-	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Activated")))
 	{
 		APawn* MyPawn = Cast<APawn>(GetOwner());
 		Execute_InteractionStart(this, MyPawn);
@@ -28,21 +28,21 @@ void AABSInteractableActor::BeginPlay()
 
 void AABSInteractableActor::BindWithComponent()
 {
-	InteractionComp->OnInteractedWith.AddDynamic(this, &AABSInteractableActor::OnInteraction);
+	InteractionComp->OnInteractionSuccess.AddDynamic(this, &AABSInteractableActor::OnInteraction);
 }
 
 void AABSInteractableActor::OnInteraction(AActor* InstigatingActor)
 {
 	APawn* MyPawn = Cast<APawn>(GetOwner());
 	//If its activated deactivate it and remove tag		Else add tag and Activate it.
-	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated")))
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Activated")))
 	{
-		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
+		InteractionComp->ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Activated"));
 		Execute_InteractionEnd(this, MyPawn);
 	}
 	else
 	{
-		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.Activated"));
+		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Activated"));
 		Execute_InteractionStart(this, MyPawn);
 	}
 }
