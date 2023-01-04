@@ -4,33 +4,61 @@
 #include "ABSInteractionComponent.h"
 #include "ABSObjectiveComponent.h"
 
-void UABSInteractionComponent::InteractedWith(AActor* InstigatingActor)
+UABSInteractionComponent::UABSInteractionComponent()
+{
+	ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Unknown"));
+}
+
+bool UABSInteractionComponent::InteractedWith(AActor* InstigatingActor)
 {
 	UE_LOG(LogTemp, Log, TEXT("InteractionComponent::InteractedWith Function triggered"))
+	ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Unknown"));
 
+	OnInteractedWith.Broadcast(InstigatingActor);
+	
 	//If its secured check if player has the proper key to open it
-	 if(this->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("SecurityTag")))
+	if(this->RequiredSecurityTags.HasTag(FGameplayTag::RequestGameplayTag("SecurityTag")))
 	{
 		check(InstigatingActor)
 	 	UABSInteractionComponent* Comp = InstigatingActor->FindComponentByClass<UABSInteractionComponent>();
 	 	if(Comp)
-			if(Comp->ActiveGameplayTags.HasAllExact(this->SecurityTags))
+			if(Comp->ActiveGameplayTags.HasAll(this->RequiredSecurityTags))
 			{
-				OnInteractedWith.Broadcast(InstigatingActor);
+				if(ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Blocked")))
+				{
+					ActiveGameplayTags.RemoveTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Blocked"));
+				}
+				
+				ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Available"));
+				
+				CheckInteractionSuccess(InstigatingActor);
+				return true;
 			}
-			else
-			{			
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Security Requirements not met");
-			}
+	 	
+			ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Blocked"));
+
+			OnInteractionFailure.Broadcast(InstigatingActor);
+			return false;
 	}
-	 else
-	 {
-	 	OnInteractedWith.Broadcast(InstigatingActor);
-	 }
+	
+	ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Available"));
+	
+	CheckInteractionSuccess(InstigatingActor);
+	return true;	
 }
 
-void UABSInteractionComponent::InteractionSuccessful(AActor* FocusedActor) const
+void UABSInteractionComponent::CheckInteractionSuccess(AActor* InstigatingActor) const
 {
-
+	if(this->GrantedSecurityTags.HasTag(FGameplayTag::RequestGameplayTag("SecurityTag")))
+	{
+		check(InstigatingActor)
+				 UABSInteractionComponent* Comp = InstigatingActor->FindComponentByClass<UABSInteractionComponent>();
+		if(Comp)
+		{
+			Comp->ActiveGameplayTags.AppendTags(GrantedSecurityTags);
+		}
+	}
+	
+	OnInteractionSuccess.Broadcast(InstigatingActor);
 }
 

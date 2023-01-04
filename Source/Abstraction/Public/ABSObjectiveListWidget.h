@@ -8,7 +8,6 @@
 
 class UABSObjectiveData;
 class UVerticalBox;
-class UHorizontalBox;
 class UTextBlock;
 class UABSObjectiveComponent;
 

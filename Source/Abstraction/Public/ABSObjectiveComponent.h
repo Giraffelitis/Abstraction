@@ -11,22 +11,19 @@
 class UABSObjectiveData;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnObjectiveStateChanged, const UABSObjectiveComponent*);
-DECLARE_MULTICAST_DELEGATE_OneParam(FRegisterObjective, const FName);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UABSObjectiveComponent : public UActorComponent, public IABSGameplayInterface
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
+public:
+	
 	UABSObjectiveComponent();
 
-	void OnObjectiveInteract();
+	void OnObjectiveInteractWith();
 
 	FOnObjectiveStateChanged OnStateChanged;
-
-	FRegisterObjective RegisterID;	
 
 	UFUNCTION(BlueprintCallable)
 	void ResetObjective();
@@ -34,14 +31,13 @@ public:
 
 protected:
 
+	void OnObjectiveUpdate();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UABSObjectiveData* ObjectiveData;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bObjectiveGiver = false;
-	
-	UPROPERTY(EditAnywhere, Category = "Objectives")
-	FName ObjectiveID;
 
 private:
 	virtual void InitializeComponent() override;

@@ -34,8 +34,10 @@ public:
 	FGameplayTag InputTag_Parry;
 
 	//InteractionTags
-	FGameplayTag InteractionTag_Activated;
-	FGameplayTag InteractionTag_Secure;
+	FGameplayTag InteractionTag_State_Activated;
+	FGameplayTag InteractionTag_State_Available;
+	FGameplayTag InteractionTag_State_Blocked;
+	FGameplayTag InteractionTag_State_Unknown;
 
 	//ObjectiveTags
 	FGameplayTag ObjectiveTag_Class_MainStory;

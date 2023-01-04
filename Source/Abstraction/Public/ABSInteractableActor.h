@@ -22,6 +22,7 @@ public:
 	UFUNCTION()
 	void OnInteraction(AActor* InstigatingActor);
 
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -33,6 +34,5 @@ protected:
 	void OnInteractedWithCallback(AActor* FocusedActor);
 
 	UABSInteractionComponent* GetOwningComponent() const;
-
 
 };

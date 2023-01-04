@@ -15,7 +15,7 @@ void UABSWorldUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	{
 		RemoveFromParent();
 
-		UE_LOG(LogTemp, Warning, TEXT("AttachedActor no longer valid, removing Health Widget."));
+		UE_LOG(LogTemp, Warning, TEXT("AttachedActor no longer valid, removing Widget."));
 		return;
 	}
 
