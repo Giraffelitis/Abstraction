@@ -2,7 +2,6 @@
 
 
 #include "ABSObjectiveSubsystem.h"
-
 #include "ABSObjectiveComponent.h"
 #include "ABSObjectiveData.h"
 #include "ABSObjectiveListWidget.h"
@@ -58,7 +57,7 @@ void UABSObjectiveSubsystem::AddObjective(UABSObjectiveComponent* ObjectiveCompo
 
 void UABSObjectiveSubsystem::OnObjectiveStateChanged(const UABSObjectiveComponent* ObjectiveComponent)
 {
-	DisplayObjectiveWidget();
+		DisplayObjectiveWidget();
 }
 
 FObjectiveData UABSObjectiveSubsystem::FindObjective_Implementation(FName ObjectiveID, bool& Success)
@@ -85,11 +84,10 @@ void UABSObjectiveSubsystem::UpdateObjectiveList_Implementation()
 		{
 			NewObjectiveList.AddUnique(ObjectiveDataList[i]);
 		}
-	}
-	
-	UABSObjectiveListWidget* ObjectiveListWidget = Cast<UABSObjectiveListWidget>(ObjectiveWidget);
-	if(ObjectiveListWidget)
-		ObjectiveListWidget->UpdateList(NewObjectiveList); 
+	}	
+		UABSObjectiveListWidget* ObjectiveListWidget = Cast<UABSObjectiveListWidget>(ObjectiveWidget);
+		if(ObjectiveListWidget)
+			ObjectiveListWidget->UpdateList(NewObjectiveList); 
 
-	DisplayObjectiveWidget();
+		DisplayObjectiveWidget();
 }

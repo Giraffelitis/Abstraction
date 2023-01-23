@@ -6,7 +6,7 @@
 
 UABSInteractionComponent::UABSInteractionComponent()
 {
-	ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Unknown"));
+//	ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Unknown"));
 }
 
 bool UABSInteractionComponent::InteractedWith(AActor* InstigatingActor)

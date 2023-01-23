@@ -3,23 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ABSObjectiveData.h"
 #include "GameFramework/Character.h"
 #include "ABSPlayerCharacter.generated.h"
 
+class UABSPortalManager;
 struct FInputActionValue;
+class UABSObjectiveData;
 class USpringArmComponent;
 class UCameraComponent;
 class UCameraShakeBase;
 class UGameplayTagsManager;
 class UParticleSystemComponent;
-
+class UBoxComponent;
 class UABSInputConfig;
 class UABSInteractAction;
 class UABSAttributeComponent;
 class UABSObjectiveData;
 class UABSActionComponent;
 class UABSInteractionComponent;
+class AABSPlayerController;
 
 
 // Declaration of the delegate that will be called when the Primary Action is triggered
@@ -34,7 +36,12 @@ class ABSTRACTION_API AABSPlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AABSPlayerCharacter();
+		
+	AABSPlayerController* GetPlayerController();
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> PortalProjectileClass;
+	
 	/** First person camera */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* PlayerCameraComponent;
@@ -64,9 +71,12 @@ public:
 	/** Delegate to whom anyone can subscribe to receive this event */
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnUseItem OnUseItem;
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UABSActionComponent* ActionComp;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UABSPortalManager* PortalManagerComp;
 
 	/** The input config that maps Input Actions to Input Tags*/
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
@@ -103,6 +113,11 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Events")
 	void OnShowUpdatedObjectiveList(const TArray<FText>& ObjectiveTextList);
+
+	void TickActor(float DeltaTime, ELevelTick TickType, FActorTickFunction& ThisTickFunction) override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Trace")
+	FCollisionProfileName CollisionProfile;
 	
 protected:
 

@@ -3,8 +3,8 @@
 
 #include "ABSObjectiveComponent.h"
 #include "ABSInteractionComponent.h"
+#include "ABSObjectiveData.h"
 #include "ABSObjectiveSubsystem.h"
-#include "ABSPlayerCharacter.h"
 #include "Engine/World.h"
 
 UABSObjectiveComponent::UABSObjectiveComponent()

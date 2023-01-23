@@ -12,7 +12,11 @@
 #include "ABSGameplayTags.h"
 #include "ABSInteractAction.h"
 #include "ABSActionComponent.h"
+#include "ABSPlayerController.h"
+#include "ABSPortalManager.h"
+#include "ABSPortalProjectile.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AABSPlayerCharacter::AABSPlayerCharacter()
@@ -24,9 +28,7 @@ AABSPlayerCharacter::AABSPlayerCharacter()
 	InteractionComp = CreateDefaultSubobject<UABSInteractionComponent>(TEXT("Interaction Component"));
 	InteractAction = CreateDefaultSubobject<UABSInteractAction>("InteractAction");
 	ActionComp = CreateDefaultSubobject<UABSActionComponent>("ActionComp");
-
-	// Set size for collision capsule
-	//GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
+	PortalManagerComp = CreateDefaultSubobject<UABSPortalManager>(TEXT("PortalManagerComp"));
 
 	// set our turn rates for input
 	TurnRateGamepad = 45.f;
@@ -34,16 +36,39 @@ AABSPlayerCharacter::AABSPlayerCharacter()
 	// Create a CameraComponent	
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComp->SetupAttachment(RootComponent);
+	
 	PlayerCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ThirdPersonCamera"));
 	PlayerCameraComponent->SetupAttachment(SpringArmComp);
 	PlayerCameraComponent->bUsePawnControlRotation = true;
 	
 }
 
+void AABSPlayerCharacter::TickActor(float DeltaTime, ELevelTick TickType, FActorTickFunction& ThisTickFunction)
+{
+	Super::TickActor(DeltaTime, TickType, ThisTickFunction);
+
+	if( UGameplayStatics::GetPlayerController(GetWorld(), 0) != nullptr )
+	{
+		PortalManagerComp->Update(DeltaTime);
+	}
+}
+
+AABSPlayerController* AABSPlayerCharacter::GetPlayerController()
+{
+	if( UGameplayStatics::GetPlayerController(GetWorld(), 0) != nullptr )
+	{
+		AABSPlayerController* PC = Cast<AABSPlayerController>( UGameplayStatics::GetPlayerController(GetWorld(), 0) );
+		return PC;
+	}
+	return nullptr;
+}
 // Called when the game starts or when spawned
 void AABSPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PortalManagerComp->SetControllerOwner(this->GetPlayerController());
+	PortalManagerComp->Init();
 }
 
 
@@ -52,6 +77,27 @@ void AABSPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FRotator CurrentRotation = GetActorRotation();
+	FRotator UpdatedRotation = CurrentRotation;
+	if(CurrentRotation.Roll > 0 + KINDA_SMALL_NUMBER)
+	{
+		UpdatedRotation.Roll *= 0.9f;
+	}
+	else if(CurrentRotation.Roll < 0 - KINDA_SMALL_NUMBER)
+	{
+		UpdatedRotation.Roll *= 0.9f;
+	}
+
+	if(CurrentRotation.Pitch > 0 + KINDA_SMALL_NUMBER)
+	{
+		UpdatedRotation.Pitch *= 0.9f;
+	}
+	else if(CurrentRotation.Pitch < 0 - KINDA_SMALL_NUMBER)
+	{
+		UpdatedRotation.Pitch *= 0.9f;
+	}
+
+	this->SetActorRotation(UpdatedRotation);		
 }
 
 // Called to bind functionality to input
@@ -74,7 +120,6 @@ void AABSPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 	ABSEnhancedInputComponent->BindActionByTag(InputConfig, GameplayTags.InputTag_Attack_Secondary, ETriggerEvent::Triggered, this, &AABSPlayerCharacter::SecondaryAttack);
 	ABSEnhancedInputComponent->BindActionByTag(InputConfig, GameplayTags.InputTag_Sprint, ETriggerEvent::Triggered, this, &AABSPlayerCharacter::SprintStart);	
 	ABSEnhancedInputComponent->BindActionByTag(InputConfig, GameplayTags.InputTag_Parry, ETriggerEvent::Triggered, this, &AABSPlayerCharacter::Parry);
-
 }
 
 void AABSPlayerCharacter::OnPrimaryAction()
@@ -152,12 +197,32 @@ void AABSPlayerCharacter::SprintStop(const FInputActionValue& InputActionValue)
 
 void AABSPlayerCharacter::PrimaryAttack(const FInputActionValue& InputActionValue)
 {
-	ActionComp->StartActionByName(this, "PrimaryAttack");
+	//ActionComp->StartActionByName(this, "PrimaryAttack");
+
+	FVector LHandLocation = GetMesh()->GetSocketLocation("hand_lSocket");
+
+	FTransform SpawnTM = FTransform(GetControlRotation(), LHandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
+	PortalManagerComp->PortalProjectile = GetWorld()->SpawnActor<AABSPortalProjectile>(PortalProjectileClass, SpawnTM, SpawnParams);
+	PortalManagerComp->NewLeftPortalProjectile.Broadcast();
 }
 
 void AABSPlayerCharacter::SecondaryAttack(const FInputActionValue& InputActionValue)
 {
-	ActionComp->StartActionByName(this, "PrimaryAttack");
+	//ActionComp->StartActionByName(this, "SecondaryAttack");
+	
+	FVector RHandLocation = GetMesh()->GetSocketLocation("hand_rSocket");
+	
+	FTransform SpawnTM = FTransform(GetControlRotation(), RHandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	PortalManagerComp->PortalProjectile = GetWorld()->SpawnActor<AABSPortalProjectile>(PortalProjectileClass, SpawnTM, SpawnParams);
+	PortalManagerComp->NewRightPortalProjectile.Broadcast();
 }
 
 void AABSPlayerCharacter::Parry(const FInputActionValue& InputActionValue)

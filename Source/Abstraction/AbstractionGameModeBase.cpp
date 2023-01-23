@@ -12,7 +12,6 @@ void AAbstractionGameModeBase::StartPlay()
 	if(ObjectiveSubsystem)
 	{
 		ObjectiveSubsystem->CreateObjectiveWidget(ObjectiveWidgetClass);
-		ObjectiveSubsystem->DisplayObjectiveWidget();
 	}
 }
 
