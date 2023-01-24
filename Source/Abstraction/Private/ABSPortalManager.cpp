@@ -215,7 +215,6 @@ void UABSPortalManager::UpdateCapture(AABSPortal* Portal)
         	FTransform SceneCaptureTransform = UKismetMathLibrary::MakeRelativeTransform(CameraTransform, OriginPortalTransform);
 
             //Update SceneCapture Position
-
             Target->SceneCapture->SetRelativeTransform(SceneCaptureTransform);
 
             //-------------------------------
@@ -223,7 +222,7 @@ void UABSPortalManager::UpdateCapture(AABSPortal* Portal)
             //SceneCapture and the Target of the portal
             //-------------------------------
             Target->SceneCapture->ClipPlaneNormal = Target->GetActorForwardVector();
-            Target->SceneCapture->ClipPlaneBase = Target->GetActorLocation() + (Target->SceneCapture->ClipPlaneNormal); //Offset to avoid visible pixel border        	
+            Target->SceneCapture->ClipPlaneBase = Target->GetActorLocation() - (Target->SceneCapture->ClipPlaneNormal); //Offset to avoid visible pixel border        	
         }
 
         // Switch on the valid Portal

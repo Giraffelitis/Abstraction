@@ -60,7 +60,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Portal")
 	void TeleportActor( AActor* ActorToTeleport );
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* FrontBoxComponent;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

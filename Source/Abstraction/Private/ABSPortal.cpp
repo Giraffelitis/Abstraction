@@ -214,16 +214,14 @@ void AABSPortal::TeleportActor(AActor* ActorToTeleport)
 	FHitResult HitResult;
 	FVector NewLocation = PortalHelper->ConvertLocationToActorSpace(ActorToTeleport->GetActorLocation(), this, Target);
 
-	ActorToTeleport->SetActorLocation(NewLocation, false, &HitResult, ETeleportType::TeleportPhysics );
-
 	//-------------------------------
 	//Compute and apply new rotation
 	//-------------------------------
 	FRotator NewRotation = PortalHelper->ConvertRotationToActorSpace(ActorToTeleport->GetActorRotation(), this, Target);
-
-	//Apply new rotation
 	FRotator InvertRotation = FRotator(0.0f, 180.0f, 0.0f);
-	ActorToTeleport->SetActorRelativeRotation(NewRotation += InvertRotation);
+
+	ActorToTeleport->SetActorLocation(NewLocation, false, &HitResult, ETeleportType::TeleportPhysics );
+	ActorToTeleport->SetActorRelativeRotation(NewRotation + InvertRotation);
 	
 	//-------------------------------
 	//If we are teleporting a character we need to    
