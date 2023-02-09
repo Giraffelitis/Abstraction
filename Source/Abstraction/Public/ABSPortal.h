@@ -85,7 +85,7 @@ protected:
 
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere)
 	USceneComponent* SceneCaptureAttachPoint; 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)

@@ -206,8 +206,8 @@ void AABSPlayerCharacter::PrimaryAttack(const FInputActionValue& InputActionValu
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	
-	PortalManagerComp->PortalProjectile = GetWorld()->SpawnActor<AABSPortalProjectile>(PortalProjectileClass, SpawnTM, SpawnParams);
-	PortalManagerComp->NewLeftPortalProjectile.Broadcast();
+//	PortalManagerComp->PortalProjectile = GetWorld()->SpawnActor<AABSPortalProjectile>(PortalProjectileClass, SpawnTM, SpawnParams);
+//	PortalManagerComp->NewLeftPortalProjectile.Broadcast();
 }
 
 void AABSPlayerCharacter::SecondaryAttack(const FInputActionValue& InputActionValue)
@@ -221,8 +221,8 @@ void AABSPlayerCharacter::SecondaryAttack(const FInputActionValue& InputActionVa
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	PortalManagerComp->PortalProjectile = GetWorld()->SpawnActor<AABSPortalProjectile>(PortalProjectileClass, SpawnTM, SpawnParams);
-	PortalManagerComp->NewRightPortalProjectile.Broadcast();
+//	PortalManagerComp->PortalProjectile = GetWorld()->SpawnActor<AABSPortalProjectile>(PortalProjectileClass, SpawnTM, SpawnParams);
+//	PortalManagerComp->NewRightPortalProjectile.Broadcast();
 }
 
 void AABSPlayerCharacter::Parry(const FInputActionValue& InputActionValue)

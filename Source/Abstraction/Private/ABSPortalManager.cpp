@@ -230,8 +230,10 @@ void UABSPortalManager::UpdateCapture(AABSPortal* Portal)
 
         // Assign the Render Target
     	Portal->SetRTT(Portal->PortalTexture);
-        Portal->SceneCapture->TextureTarget = Portal->PortalTexture;
-    	
+    	if(IsValid(Target))
+    	{
+    		Portal->SceneCapture->TextureTarget = Target->PortalTexture;
+    	}
         // Get the Projection Matrix
         Portal->SceneCapture->CustomProjectionMatrix = ControllerOwner->GetCameraProjectionMatrix();
 
