@@ -45,6 +45,11 @@ void AABSInteractableActor::OnInteraction(AActor* InstigatingActor)
 		InteractionComp->ActiveGameplayTags.AddTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Activated"));
 		Execute_InteractionStart(this, MyPawn);
 	}
+
+	if(InteractionComp->ActiveGameplayTags.HasTag(FGameplayTag::RequestGameplayTag("InteractionTag.State.Collectible")))
+	{
+		
+	}
 }
 
 UABSInteractionComponent* AABSInteractableActor::GetOwningComponent() const

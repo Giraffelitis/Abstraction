@@ -13,8 +13,7 @@ class ABSTRACTION_API AABSPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-public:
-	
+public:	
 	FMatrix GetCameraProjectionMatrix();
 	
 	UABSPortalManager* GetPortalManager() {return PortalManager; }

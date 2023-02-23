@@ -181,10 +181,8 @@ bool AABSPortal::IsPointCrossingPortal(FVector Point)
 
 	bWasInFront = PortalHelper->IsPointInsideBox(Point, FrontBoxComponent);
 	
-	if(bIsCrossing)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, TEXT("Portal Crossed"));
-	}
+	//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, TEXT("Portal Crossed"));
+
 	return bIsCrossing;
 }
 
@@ -248,11 +246,13 @@ void AABSPortal::TeleportActor(AActor* ActorToTeleport)
 
 			FVector TargetVector = FVector(Target->GetActorForwardVector() + Target->GetActorRightVector() + Target->GetActorUpVector() );
 			FVector NewVelocity = Dots * TargetVector;
-
+			
 			PC->PostNetReceiveVelocity(NewVelocity);
 		}
+		PC->SetActorRotation(Target->GetActorRotation());
+		PC->PostTeleportCorrection();
 	}
-
+	
 	//Cleanup Teleport
 	LastPosition = NewLocation;
 }

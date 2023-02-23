@@ -18,6 +18,7 @@ AABSPortalProjectile::AABSPortalProjectile()
 	SphereComp = CreateDefaultSubobject<USphereComponent>("Sphere Component");
 	SphereComp->SetCollisionObjectType(ECC_WorldDynamic);
 	SphereComp->SetCollisionProfileName("Portal");
+	SphereComp->SetSphereRadius(64.0f);
 	RootComponent = SphereComp;
 
 	SphereComp->OnComponentHit.AddDynamic(this, &AABSPortalProjectile::OnHit);

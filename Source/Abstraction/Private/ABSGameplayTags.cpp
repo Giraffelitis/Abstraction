@@ -41,6 +41,7 @@ void FABSGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(InteractionTag_State_Available,"InteractionTag.State.Available", "Object is available for use");
 	AddTag(InteractionTag_State_Blocked,"InteractionTag.State.Blocked", "Object is blocked from being used");
 	AddTag(InteractionTag_State_Unknown,"InteractionTag.State.Unknown", "Object Status Unknown");
+	AddTag(InteractionTag_State_Collectible,"InteractionTag.State.Collectible", "Object can be collected");
 	
 	//Objective Tags
 	AddTag(ObjectiveTag_Class_MainStory, "ObjectiveTag.Class.MainStory", "Main Story Mission");

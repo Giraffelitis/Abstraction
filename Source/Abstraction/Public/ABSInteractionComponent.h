@@ -12,7 +12,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractionFailure, class AActor*
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteractionSuccess, class AActor*, InstigatingActor);
 
 class UABSWorldUserWidget;
-class UABSSecurityComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ABSTRACTION_API UABSInteractionComponent : public UActorComponent, public IABSGameplayInterface

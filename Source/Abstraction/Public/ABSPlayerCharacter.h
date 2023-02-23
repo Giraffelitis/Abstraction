@@ -6,6 +6,10 @@
 #include "GameFramework/Character.h"
 #include "ABSPlayerCharacter.generated.h"
 
+// Declaration of the delegate that will be called when the Primary Action is triggered
+// It is declared as dynamic so it can be accessed also in Blueprints
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUseItem);
+
 class UABSPortalManager;
 struct FInputActionValue;
 class UABSObjectiveData;
@@ -22,11 +26,6 @@ class UABSObjectiveData;
 class UABSActionComponent;
 class UABSInteractionComponent;
 class AABSPlayerController;
-
-
-// Declaration of the delegate that will be called when the Primary Action is triggered
-// It is declared as dynamic so it can be accessed also in Blueprints
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUseItem);
 
 UCLASS()
 class ABSTRACTION_API AABSPlayerCharacter : public ACharacter
@@ -51,36 +50,7 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	/** Called when the actor falls out of the world 'safely' (below KillZ and such) */
-	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UABSInteractAction* InteractAction;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UABSAttributeComponent* AttributeComp;
-
-	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	float TurnRateGamepad;
-
-	/** Delegate to whom anyone can subscribe to receive this event */
-	UPROPERTY(BlueprintAssignable, Category = "Interaction")
-	FOnUseItem OnUseItem;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UABSActionComponent* ActionComp;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UABSPortalManager* PortalManagerComp;
-
-	/** The input config that maps Input Actions to Input Tags*/
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	UABSInputConfig* InputConfig;	
+	void PostTeleportCorrection();
 
 	/** Handles moving forward/backward/left/right */
 	void Input_Move(const FInputActionValue& InputActionValue);
@@ -90,6 +60,9 @@ public:
 
 	/** Handles Jumping */
 	void Input_Jump(const FInputActionValue& InputActionValue);
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent);
 
 	void SprintStart(const FInputActionValue& InputActionValue);
 
@@ -105,6 +78,36 @@ public:
 
 	void SecondaryInteract(const FInputActionValue& InputActionValue);
 
+	/** Called when the actor falls out of the world 'safely' (below KillZ and such) */
+	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UABSInteractionComponent* InteractionComp;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UABSInteractAction* InteractAction;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UABSAttributeComponent* AttributeComp;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UABSActionComponent* ActionComp;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UABSPortalManager* PortalManagerComp;
+
+	/** The input config that maps Input Actions to Input Tags*/
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	UABSInputConfig* InputConfig;
+
+	/** Delegate to whom anyone can subscribe to receive this event */
+	UPROPERTY(BlueprintAssignable, Category = "Interaction")
+	FOnUseItem OnUseItem;
+	
+	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	float TurnRateGamepad;
+	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Events")
 	void OnShowObjectiveInfo(FObjectiveData Objective);
 
@@ -121,14 +124,10 @@ public:
 	
 protected:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UABSInteractionComponent* InteractionComp;
-
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay() override;	
 
-	/** Activates primary action of held item. */
-	void OnPrimaryAction();
+	void OnDeath(bool IsFellOut);
 
 	/**
 	 * Called via input to turn at a given rate.
@@ -142,11 +141,13 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
-	void OnDeath(bool IsFellOut);
+	/** Activates primary action of held item. */
+	void OnPrimaryAction();
 
 	// Force Feedback values.
 	UPROPERTY(EditAnywhere, Category="Force Feedback")
 	float ForceFeedbackIntensity = 1.0f;
+	
 	UPROPERTY(EditAnywhere, Category="Force Feedback")
 	float ForceFeedbackDuration = 1.0f;
 	

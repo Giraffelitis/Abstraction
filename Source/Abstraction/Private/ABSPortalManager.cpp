@@ -79,6 +79,9 @@ void UABSPortalManager::SetControllerOwner(AABSPlayerController* NewOwner )
 
 void UABSPortalManager::SpawnLeftPortal(FTransform SpawnTM)
 {
+	//-----------------------------------
+	// Destroy existing portal
+	//-----------------------------------
 	if(LeftPortal)
 	{
 		LeftPortal->Destroy();
@@ -86,7 +89,10 @@ void UABSPortalManager::SpawnLeftPortal(FTransform SpawnTM)
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	
+
+	//-----------------------------------
+	// Spawn new portal and update links
+	//-----------------------------------
 	LeftPortal = GetWorld()->SpawnActor<AABSPortal>(PortalToSpawn, SpawnTM, SpawnParams);
 	if(RightPortal)
 	{
@@ -96,6 +102,9 @@ void UABSPortalManager::SpawnLeftPortal(FTransform SpawnTM)
 }
 void UABSPortalManager::SpawnRightPortal(FTransform SpawnTM)
 {
+	//-----------------------------------
+	// Destroy existing portal
+	//-----------------------------------
 	if(RightPortal)
 	{
 		RightPortal->Destroy();
@@ -103,7 +112,10 @@ void UABSPortalManager::SpawnRightPortal(FTransform SpawnTM)
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	
+
+	//-----------------------------------
+	// Spawn new portal and update links
+	//-----------------------------------
 	RightPortal = GetWorld()->SpawnActor<AABSPortal>(PortalToSpawn, SpawnTM, SpawnParams);
 	if(LeftPortal)
 	{

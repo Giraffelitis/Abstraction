@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "ABSInteractableActor.h"
-#include "GameFramework/Actor.h"
 #include "ABSInteractableElevator.generated.h"
 
 UCLASS()

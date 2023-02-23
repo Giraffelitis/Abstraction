@@ -7,7 +7,6 @@
 #include "GameFramework/Actor.h"
 #include "ABSInteractableActor.generated.h"
 
-
 class UABSInteractionComponent;
 
 UCLASS()

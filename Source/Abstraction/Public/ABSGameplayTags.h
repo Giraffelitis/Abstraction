@@ -38,6 +38,7 @@ public:
 	FGameplayTag InteractionTag_State_Available;
 	FGameplayTag InteractionTag_State_Blocked;
 	FGameplayTag InteractionTag_State_Unknown;
+	FGameplayTag InteractionTag_State_Collectible;
 
 	//ObjectiveTags
 	FGameplayTag ObjectiveTag_Class_MainStory;
