@@ -1,4 +1,4 @@
 # Abstraction
 Abstract Game IPUE
 
-This is my second term at CG Spectrum learning project. I am in the process of developing it further it is still buggy and broken but it will turn into something great byt the end. Currently I am still implementing base functionality and getting the core components setup. 
+This is my projetc from my second term at CG Specturm. I added I built a small objective based game where you have to navigate through door which are portals to different areas of the map to find the keys to unlock a final door to make it to the end. 
